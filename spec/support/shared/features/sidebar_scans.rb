@@ -37,12 +37,12 @@ shared_examples_for 'Scans sidebar' do |options = {}|
         expect(scans).to have_content scan.name
     end
 
-    scenario 'user sees amount of issues' do
+    scenario 'user sees amount of entries' do
         expect(scans.find("#sidebar-scans-id-#{scan.id} .badge")).to have_content scan.issues.size
     end
 
     scenario 'user sees scan link with filtering options' do
-        expect(scans).to have_xpath "//a[starts-with(@href, '#{site_scan_path( site, scan )}/issues?filter') and not(@data-method)]"
+        expect(scans).to have_xpath "//a[starts-with(@href, '#{site_scan_path( site, scan )}/entries?filter') and not(@data-method)]"
     end
 
 end

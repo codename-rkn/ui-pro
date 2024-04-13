@@ -1,7 +1,7 @@
 <%
    revision              = scan.last_revision
-   scan_max_severity     = scan.issues.max_severity || 'none'
-   revision_max_severity = revision.issues.max_severity  || 'none'
+   scan_max_severity     = scan.entries.max_severity || 'none'
+   revision_max_severity = revision.entries.max_severity  || 'none'
    with_status           = !!local_assigns[:with_status]
 %>
 
@@ -50,14 +50,14 @@
     </td>
 
     <td>
-        <span class="revision-issue-count">
-            <%= revision.issues.size %>
+        <span class="revision-entry-count">
+            <%= revision.entries.size %>
         </span>
 
         /
 
-        <span class="scan-issue-count">
-            <%= scan.issues.size %>
+        <span class="scan-entry-count">
+            <%= scan.entries.size %>
         </span>
     </td>
 

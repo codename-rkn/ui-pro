@@ -1,8 +1,8 @@
 <%= render(
-  partial: 'shared/scan_results/issues',
+  partial: 'shared/scan_results/entries',
   formats: :js,
   locals: {
-    data: @issues_summary,
+    data: @entries_summary,
     site: @site,
     sidebar_partial_path: 'sites/sidebar'
   }

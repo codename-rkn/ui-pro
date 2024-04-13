@@ -1,7 +1,7 @@
-<% if issue.remarks.any? %>
+<% if entry.remarks.any? %>
     <%
        remarks = {}
-       issue.remarks.sort_by(&:id).each do |remark|
+       entry.remarks.sort_by(&:id).each do |remark|
            (remarks[remark.author] ||= []) << remark.text
        end
     %>
@@ -11,7 +11,7 @@
             <div class="card-header">
                 <i class="fa fa-info-circle"></i>
 
-                System components have attached some insights to this issue.
+                System components have attached some insights to this entry.
             </div>
 
             <div class="card-body">

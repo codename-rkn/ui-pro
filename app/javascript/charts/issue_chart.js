@@ -31,7 +31,7 @@ export default class IssueChart {
         labels: [],
         datasets: [
           {
-            label: 'Issues',
+            label: 'Entries',
             data: [],
             backgroundColor: '#1f77b4'
           },
@@ -82,10 +82,10 @@ export default class IssueChart {
       return;
     }
 
-    const { labels, issueNames, severityIndexForIssue } = data;
+    const { labels, entryNames, severityIndexForIssue } = data;
 
     this.chartInstance.data.labels = labels;
-    this.chartInstance.data.datasets[0].data = issueNames;
+    this.chartInstance.data.datasets[0].data = entryNames;
     this.chartInstance.data.datasets[1].data = severityIndexForIssue;
     this.chartInstance.update();
   }

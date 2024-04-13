@@ -1,11 +1,11 @@
 #    $ sudo -u postgres psql
-#    postgres=# CREATE USER "scnr-pro" WITH PASSWORD 'secret';
-#    postgres=# ALTER USER "scnr-pro" superuser;
+#    postgres=# CREATE USER "rkn-pro" WITH PASSWORD 'secret';
+#    postgres=# ALTER USER "rkn-pro" superuser;
 production:
     host: localhost
     adapter: postgresql
     encoding: unicode
     pool: 100
-    username: scnr-pro
+    username: rkn-pro
     password: secret
-    database: scnr_pro_production
+    database: rkn_pro_production

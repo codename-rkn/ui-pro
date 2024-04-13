@@ -2,7 +2,7 @@
     <ul class="nav nav-pills nav-stacked flex-column">
         <li class="nav-item">
             <%= link_to_with_filters @scan, class: "nav-link #{('active' if params[:controller] == 'scans')}" do %>
-                <% if @issue %>
+                <% if @entry %>
                     <i class="fa fa-arrow-left"></i>
                 <% end %>
 

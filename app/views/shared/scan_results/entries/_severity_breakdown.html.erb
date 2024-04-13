@@ -1,0 +1,34 @@
+<%
+   entry_count  = severities.values.inject(:+)
+   severities   = severities.reject { |_, count| count == 0 }
+   severities_a = severities.keys
+%>
+
+<div class="entry-severity-breakdown">
+    <% if @sitemap_entry %>
+        Page
+        <%= link_to_url_with_external(
+                    external: @sitemap_entry.url,
+                    internal: sitemap_entry_url( @sitemap_entry ),
+                    display_path_only: true,
+                    class: "text-severity text-severity-#{severities.keys.first}"
+            )
+        %>
+        has
+    <% else %>
+        There <%= entry_count == 1 ? 'is' : 'are' %>
+    <% end %>
+
+    <% severities_a.each_with_index do |severity, i| %>
+        <%= 'and' if i > 0 && severity == severities_a[severities_a.size-1] %>
+
+        <a href="#entry-summary-severity-<%= severity %>">
+            <span class="text-severity text-severity-<%= severity %>">
+                <strong><%= severities[severity] %> <%= severity %></strong>
+            </span>
+        </a>
+        <%= ',' unless severities.size == 1 || i >= severities_a.size - i %>
+    <% end %>
+
+    severity <%= 'entry'.pluralize( severities.size ) %>.
+</div>

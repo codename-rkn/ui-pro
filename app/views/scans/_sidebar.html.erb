@@ -32,20 +32,20 @@
                    max_severity   = revision_data[revision.id] ?
                            revision_data[revision.id][:max_severity] : nil
 
-                   issue_count    = revision_data[revision.id] ?
-                           revision_data[revision.id][:issue_count] : 0
+                   entry_count    = revision_data[revision.id] ?
+                           revision_data[revision.id][:entry_count] : 0
 
-                   if issue_count == 0
+                   if entry_count == 0
                        max_severity = 'none'
                    end
             %>
 
                 <li class="nav-item" id="sidebar-revisions-id-<%= revision.id %>"
 
-                    <% if issue_count > 0 %>
-                        title="<%= pluralize issue_count, 'new issue' %> with a maximum severity of <%= max_severity %>."
+                    <% if entry_count > 0 %>
+                        title="<%= pluralize entry_count, 'new entry' %> with a maximum severity of <%= max_severity %>."
                     <% else %>
-                        title="<%= pluralize issue_count, 'new issue' %>."
+                        title="<%= pluralize entry_count, 'new entry' %>."
                     <% end %>
                 >
 
@@ -56,15 +56,15 @@
                             &ndash;
                             <%= pluralize revision.sitemap_entries.size, 'page' %>
 
-                            <% if (reviewed_issues = revision.reviewed_issues.size) > 0 %>
-                                , <%= reviewed_issues %> reviewed
-                                <%= 'issue'.pluralize reviewed_issues %>
+                            <% if (reviewed_entries = revision.reviewed_entries.size) > 0 %>
+                                , <%= reviewed_entries %> reviewed
+                                <%= 'entry'.pluralize reviewed_entries %>
                             <% end %>
                         </span>
 
                         <span>
                             <span class="badge rounded-pill badge-severity-<%= max_severity %>">
-                                <%= issue_count %>
+                                <%= entry_count %>
                             </span>
                         </span>
                     <% end %>

@@ -28,7 +28,7 @@ class SitesController < ApplicationController
             return
         end
 
-        redirect_to issues_site_path( @site, filter_params )
+        redirect_to entries_site_path( @site, filter_params )
     end
 
     # POST /sites
@@ -94,13 +94,13 @@ class SitesController < ApplicationController
         @site
     end
 
-    def prepare_issue_data
-        issues_summary_data(
+    def prepare_entry_data
+        entries_summary_data(
             site:      @site,
             sitemap:   @site.sitemap_entries,
             scans:     @scans.order( id: :desc ),
             revisions: @site.revisions.order( id: :desc ),
-            issues:    scan_results_issues
+            entries:    scan_results_entries
         )
     end
 

@@ -1,6 +1,6 @@
 production:
     adapter: sqlite3
-    database: "<%= (path = ENV['SCNR_PRO_DB_DIR']) ? path : 'db' %>/production.sqlite3"
+    database: "<%= (path = ENV['RKN_PRO_DB_DIR']) ? path : 'db' %>/production.sqlite3"
     pool: 50
     timeout: 5000
 
@@ -9,15 +9,15 @@ development:
     adapter: postgresql
     encoding: unicode
     pool: 100
-    username: scnr-pro
-    password: <%= ENV['SCNR_PRO_PG_PASSWD'] %>
-    database: scnr_pro_development
+    username: rkn-pro
+    password: <%= ENV['RKN_PRO_PG_PASSWD'] %>
+    database: rkn_pro_development
 
 test:
     host: localhost
     adapter: postgresql
     encoding: unicode
     pool: 100
-    username: scnr-pro
-    password: <%= ENV['SCNR_PRO_PG_PASSWD'] %>
-    database: scnr_pro_test
+    username: rkn-pro
+    password: <%= ENV['RKN_PRO_PG_PASSWD'] %>
+    database: rkn_pro_test

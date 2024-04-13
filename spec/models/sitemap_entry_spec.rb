@@ -48,11 +48,11 @@ describe SitemapEntry do
         end
 
         describe ':with_issues' do
-            it 'returns entries with issues'
+            it 'returns entries with entries'
         end
 
         describe ':without_issues' do
-            it 'returns entries without issues'
+            it 'returns entries without entries'
         end
 
         describe ':default' do

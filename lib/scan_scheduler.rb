@@ -14,7 +14,7 @@ class ScanScheduler
 
     include Helpers::ErrorHandling
     include Helpers::Instance
-    include Helpers::Issue
+    include Helpers::Entry
     include Helpers::Logging
     include Helpers::Scan
     include Helpers::Slots
@@ -82,7 +82,7 @@ class ScanScheduler
     end
 
     def reset
-        reset_issue_state
+        reset_entry_state
         reset_scan_state
         reset_instance_state
     end

@@ -1,7 +1,7 @@
 setup = ->
     scrollToChild( '.highlight-container', '.highlight' )
-    $('select#issue_state').on 'change', ->
-        $('.edit_issue').submit()
+    $('select#entry_state').on 'change', ->
+        $('.edit_entry').submit()
 
 jQuery ->
     setup()

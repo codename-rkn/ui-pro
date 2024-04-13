@@ -69,29 +69,29 @@ shared_examples_for 'Revisions sidebar' do |options = {}|
         expect(sidebar).to have_content "#{sz} #{'page'.pluralize sz}"
     end
 
-    scenario 'user sees amount of new issues' do
+    scenario 'user sees amount of new entries' do
         expect(sidebar.find('span.badge')).to have_text revision.issues.size.to_s
     end
 
-    feature 'when there are no reviewed issues' do
+    feature 'when there are no reviewed entries' do
         scenario 'user does not see auto-review info' do
             expect(sidebar).to_not have_text "#{revision.reviewed_issues.size} reviewed"
         end
     end
 
-    feature 'when there are reviewed issues' do
+    feature 'when there are reviewed entries' do
         before do
             revision.issues.first.update( reviewed_by_revision: revision )
             revisions_sidebar_refresh
         end
 
-        scenario 'user sees amount of auto-reviewed issues' do
+        scenario 'user sees amount of auto-reviewed entries' do
             expect(sidebar).to have_text "#{revision.reviewed_issues.size} reviewed"
         end
     end
 
     scenario 'user sees revision link with filtering options' do
-        expect(sidebar).to have_xpath "//a[starts-with(@href, '#{site_scan_revision_path( site, scan, revision )}/issues?filter') and not(@data-method)]"
+        expect(sidebar).to have_xpath "//a[starts-with(@href, '#{site_scan_revision_path( site, scan, revision )}/entries?filter') and not(@data-method)]"
     end
 
 end

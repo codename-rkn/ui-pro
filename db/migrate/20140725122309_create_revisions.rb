@@ -13,7 +13,7 @@ class CreateRevisions < ActiveRecord::Migration[5.1]
       t.datetime :started_at
       t.datetime :stopped_at
 
-      t.integer :issues_count, default: 0
+      t.integer :entries_count, default: 0
       t.integer :sitemap_entries_count, default: 0
 
       t.timestamps

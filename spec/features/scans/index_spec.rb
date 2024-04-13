@@ -167,7 +167,7 @@ feature 'Scans index' do
             expect(scans).to have_content scan.sitemap_entries.size
         end
 
-        scenario 'user sees amount of issues' do
+        scenario 'user sees amount of entries' do
             expect(scans).to have_content scan.issues.size
         end
 

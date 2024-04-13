@@ -1,28 +1,28 @@
-class IssuesController < ApplicationController
+class EntriesController < ApplicationController
     before_action :authenticate_user!
     protect_from_forgery except: :update
 
     before_action :set_site
     before_action :set_scan
     before_action :set_revision
-    before_action :set_issue
+    before_action :set_entry
 
-    # GET /issues/1
-    # GET /issues/1.json
+    # GET /entries/1
+    # GET /entries/1.json
     def show
     end
 
-    # PATCH/PUT /issues/1
-    # PATCH/PUT /issues/1.json
+    # PATCH/PUT /entries/1
+    # PATCH/PUT /entries/1.json
     def update
         respond_to do |format|
-            if @issue.update_state( issue_params[:state] )
+            if @entry.update_state( entry_params[:state] )
                 format.html { redirect_back fallback_location: root_path, notice: 'Issue was successfully updated.' }
-                format.json { render :show, status: :ok, location: @issue }
+                format.json { render :show, status: :ok, location: @entry }
                 format.js { head :ok }
             else
                 format.html { render :edit }
-                format.json { render json: @issue.errors, status: :unprocessable_entity }
+                format.json { render json: @entry.errors, status: :unprocessable_entity }
             end
         end
     end
@@ -49,7 +49,7 @@ class IssuesController < ApplicationController
         raise ActionController::RoutingError.new( 'Revision not found.' ) if !@revision
     end
 
-    def set_issue
+    def set_entry
         page_preloads = [
             {
                 dom: [
@@ -72,7 +72,7 @@ class IssuesController < ApplicationController
 
         # TODO: Can fall into some sort of loop sometimes with a lot of
         # data_flow_sinks.
-        @issue = @revision.issues.includes(:sitemap_entry).
+        @entry = @revision.entries.includes(:sitemap_entry).
             includes( reviewed_by_revision: :scan ).
             includes( input_vector: :sitemap_entry ).
             includes(:platform).includes(:remarks).
@@ -83,8 +83,8 @@ class IssuesController < ApplicationController
             find( params[:id] )
     end
 
-    def issue_params
-        params.require(:issue).permit( permitted_attributes )
+    def entry_params
+        params.require(:entry).permit( permitted_attributes )
     end
 
     def permitted_attributes

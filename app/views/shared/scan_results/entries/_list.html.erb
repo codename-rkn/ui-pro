@@ -1,0 +1,167 @@
+<%
+    force_show_logged_by      = local_assigns[:force_show_logged_by]
+    hide_state_icon           = local_assigns[:hide_state_icon]
+    show_reviewed_by_revision = local_assigns[:show_reviewed_by_revision]
+    siblings = {}
+%>
+
+<div class="row">
+  <div class="col-md-12">
+    <div>
+      <table class="table table-sm table-borderless table-hover table-striped table-entry-summary">
+        <thead>
+        <% if !hide_state_icon %>
+          <th></th>
+        <% end %>
+
+        <th>Name</th>
+        <th>Type</th>
+        <th>Sinks</th>
+        <th>Platforms</th>
+
+        <% if !@sitemap_entry %>
+          <th>Resource</th>
+        <% end %>
+
+        <% if show_reviewed_by_revision %>
+          <th>Reviewed by</th>
+        <% end %>
+
+        <% if force_show_logged_by || (!@scan || !@revision) %>
+          <th>Logged by</th>
+        <% end %>
+        </thead>
+        <tbody>
+
+<%
+    scoped_find_each( data[:entries] ) do |entry|
+        next if siblings[entry.digest]
+        siblings[entry.digest] = true
+%>
+            <tr id="<%= id %>-entry-<%= entry.digest %>">
+
+                <% if !hide_state_icon %>
+                    <td id="<%= id %>-entry-<%= entry.digest %>-state-icon">
+                        <%= link_to site_scan_revision_entry_path( entry.site_id, entry.scan, entry.revision, entry ),
+                                    title: entry.state.humanize do %>
+                            <i class="fa fa-<%= entry_state_to_icon entry.state %>">
+                            </i>
+                        <% end %>
+                    </td>
+                <% end %>
+
+                <td id="<%= id %>-entry-<%= entry.digest %>-affected_input_name">
+                  <code><%= entry.input_vector.affected_input_name %></code>
+                </td>
+
+                <td id="<%= id %>-entry-<%= entry.digest %>-vector-kind">
+                    <code><%= entry.input_vector.kind %></code>
+                </td>
+
+              <td id="<%= id %>-entry-<%= entry.digest %>-characteristics">
+                <code><%= entry.sinks.map(&:name).join( ", " ) %></code>
+              </td>
+
+              <td id="<%= id %>-entry-<%= entry.digest %>-platforms">
+                <code><%= entry.platforms.join( ", " ) %></code>
+              </td>
+
+                <% if !@sitemap_entry %>
+                    <td id="<%= id %>-entry-<%= entry.digest %>-vector-action">
+                        <%= link_to_url_with_external(
+                                external: entry.input_vector.action,
+                                internal: sitemap_entry_url( entry.sitemap_entry ),
+                                display_path_only: true
+                            )
+                        %>
+                    </td>
+                <% end %>
+
+                <% if show_reviewed_by_revision %>
+                    <%
+                       reviewer = entry.reviewed_by_revision
+                    %>
+                    <td id="<%= id %>-entry-<%= entry.digest %>-reviewer">
+                        <%= link_to "#{reviewer} of #{reviewer.scan} scan",
+                                    site_scan_revision_path(
+                                            reviewer.site_id,
+                                            reviewer.scan_id,
+                                            reviewer,
+                                            filter_params
+                                    ) %>
+                    </td>
+                <% end %>
+
+                <% if force_show_logged_by || (!@scan || !@revision) %>
+                    <td id="<%= id %>-entry-<%= entry.digest %>-loggers">
+                        <% if !force_show_logged_by && @scan %>
+                            <%= link_to entry.revision,
+                                        site_scan_revision_path(
+                                                entry.site_id,
+                                                entry.scan_id,
+                                                entry.revision_id,
+                                                filter_params
+                                        ) %>
+                        <% else %>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <% if !hide_state_icon %>
+                                        <%= link_to "#{entry.revision} of #{entry.scan} scan",
+                                                    site_scan_revision_path(
+                                                            entry.site_id,
+                                                            entry.scan_id,
+                                                            entry.revision_id,
+                                                            filter_params
+                                                    ) %>
+                                    <% else %>
+                                        <%= link_to "#{entry.revision} of #{entry.scan} scan",
+                                                    site_scan_revision_entry_path(
+                                                            entry.site_id,
+                                                            entry.scan_id,
+                                                            entry.revision_id,
+                                                            entry,
+                                                            filter_params
+                                                    ) %>
+                                    <% end %>
+                                </li>
+
+                                <%
+                                   entry.siblings.each do |sibling|
+                                       # If the sibling is this entry then it won't
+                                       # have scan and revision data preloaded so
+                                       # do this little optimization here.
+                                       next if sibling.id == entry.id
+                                %>
+                                    <li>
+                                    <% if !hide_state_icon %>
+                                        <%= link_to "#{sibling.revision} of #{sibling.scan} scan",
+                                                        site_scan_revision_path(
+                                                                sibling.site_id,
+                                                                sibling.scan_id,
+                                                                sibling.revision_id,
+                                                                filter_params
+                                                        ) %>
+                                    <% else %>
+                                        <%= link_to "#{sibling.revision} of #{sibling.scan} scan",
+                                                    site_scan_revision_entry_path(
+                                                            sibling.site_id,
+                                                            sibling.scan_id,
+                                                            sibling.revision_id,
+                                                            sibling,
+                                                            filter_params
+                                                    ) %>
+                                    <% end %>
+                                </li>
+                            <% end %>
+                            </ul>
+                        <% end %>
+                    </td>
+                <% end %>
+            </tr>
+
+<% end %>
+</tbody>
+</table>
+</div>
+</div>
+</div>

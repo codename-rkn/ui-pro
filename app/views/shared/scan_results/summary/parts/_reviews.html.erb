@@ -1,24 +1,24 @@
 <%
    count = 0
    by_state = {}
-   issues   = @summary[:reviews]
+   entries   = @summary[:reviews]
 
-   group_issues = proc do |group, issue|
-       state = issue.auto_review_status
+   group_entries = proc do |group, entry|
+       state = entry.auto_review_status
 
        count += 1
 
        group[state] ||= []
-       group[state] << issue
+       group[state] << entry
    end
 
-   if issues.is_a? Array
-       issues.each do |issue|
-           group_issues.call by_state, issue
+   if entries.is_a? Array
+       entries.each do |entry|
+           group_entries.call by_state, entry
        end
    else
-       scoped_find_each( issues ) do |issue|
-           group_issues.call by_state, issue
+       scoped_find_each( entries ) do |entry|
+           group_entries.call by_state, entry
        end
    end
 
@@ -34,13 +34,13 @@
 
 <% if count > 0 %>
     <div class="live-stream-entry">
-        <% by_state.each do |state, issue_group| %>
+        <% by_state.each do |state, entry_group| %>
 
             <div class="row">
                 <div class="col-md-12">
                     <h3>
-                        <%= issue_group.size %> <%= state %>
-                        <%= 'issue'.pluralize issue_group.size %>
+                        <%= entry_group.size %> <%= state %>
+                        <%= 'entry'.pluralize entry_group.size %>
                     </h3>
                 </div>
             </div>
@@ -48,10 +48,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="list-unstyled">
-                        <% issue_group.each do |issue| %>
+                        <% entry_group.each do |entry| %>
                             <li>
-                                <%= render partial: '/shared/scan_results/summary/parts/issue',
-                                               locals: { issue: issue } %>
+                                <%= render partial: '/shared/scan_results/summary/parts/entry',
+                                               locals: { entry: entry } %>
                             </li>
                         <% end %>
                     </ul>

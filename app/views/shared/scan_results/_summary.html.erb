@@ -1,11 +1,9 @@
 <%
     coverage_entry_count = @revision.sitemap_entries.coverage.size
-    issue_count          = @revision.issues.size
-    max_severity         = @revision.issues.max_severity
-    severities           = @revision.issues.count_severities
+    entry_count          = @revision.entries.size
     performance_snapshot = @revision.performance_snapshot
 
-    reviewed_issues_count = @revision.reviewed_issues.size
+    reviewed_entries_count = @revision.reviewed_entries.size
 
     reliabilities_t = {
       excellent: 0,
@@ -50,48 +48,24 @@
 
         <div class="col-md-5">
             <h3>
-                <strong><%= issue_count %></strong>
-                <%= 'issue'.pluralize issue_count %>
-
-                <% if issue_count > 0 %>
-                  ,
-                    <span class="text-muted fs-6">
-                        with a maximum severity of
-
-                        <span class="badge label-severity-<%= max_severity %>">
-                            <%= max_severity.capitalize %>
-                        </span>
-                    </span>
-                <% end %>
+                <strong><%= entry_count %></strong>
+                <%= 'entry'.pluralize entry_count %>
             </h3>
         </div>
 
         <div class="col-md-3">
             <h3>
                 <strong>
-                    <%= reviewed_issues_count %>
+                    <%= reviewed_entries_count %>
                 </strong>
 
-                reviewed <%= 'issue'.pluralize reviewed_issues_count %>
+                reviewed <%= 'entry'.pluralize reviewed_entries_count %>
             </h3>
         </div>
     </div>
 </div>
 
 <div id="live-stream-container">
-    <% if issue_count > 0 %>
-        <div class="row">
-            <div class="col-md-12">
-                <h4 id="live-stream-issue-severity-breakdown">
-                    <%= render partial: '/shared/scan_results/issues/severity_breakdown',
-                               locals: {
-                                       severities: severities
-                               } %>
-                </h4>
-            </div>
-        </div>
-    <% end %>
-
     <div class="row">
         <div class="col-md-12">
             <h4 id="live-stream-clock"></h4>

@@ -1,17 +1,13 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'scnr/application'
-
-if ENV['PACKAGING_gfGEFgdfGdG'] != '1'
-    SCNR::License.guard! :dev, :trial, :pro, :enterprise
-end
+require 'rkn/application'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module SCNR
+module RKN
 module UI
 module Web
     VERSION = File.read( File.dirname( __FILE__ ) + '/../VERSION' ).strip

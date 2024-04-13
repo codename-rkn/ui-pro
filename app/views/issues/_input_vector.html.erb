@@ -1,6 +1,6 @@
-<% if !@issue.input_vector.source.to_s.empty? %>
+<% if !@entry.input_vector.source.to_s.empty? %>
     <div class="source">
-        <%= code_highlight( @issue.input_vector.source ) %>
+        <%= code_highlight( @entry.input_vector.source ) %>
     </div>
 <% end %>
 
@@ -14,15 +14,15 @@
             <tr>
                 <th>Type</th>
 
-                <% if @issue.active? %>
-                    <% if !@issue.input_vector.http_method.to_s.empty? %>
+                <% if @entry.active? %>
+                    <% if !@entry.input_vector.http_method.to_s.empty? %>
                     <th>
                         Method
                     </th>
                     <% end %>
 
                     <th>
-                        <%= [:xml, :json].include?( @issue.input_vector.kind ) ? 'Location' : 'Name' %>
+                        <%= [:xml, :json].include?( @entry.input_vector.kind ) ? 'Location' : 'Name' %>
                     </th>
                 <% end %>
 
@@ -31,23 +31,23 @@
             </tr>
         </thead>
         <tr>
-            <td><code><%= @issue.input_vector.kind %></code></td>
+            <td><code><%= @entry.input_vector.kind %></code></td>
 
-            <% if @issue.active? %>
-                <% if !@issue.input_vector.http_method.to_s.empty? %>
-                <td><%= @issue.input_vector.http_method %></td>
+            <% if @entry.active? %>
+                <% if !@entry.input_vector.http_method.to_s.empty? %>
+                <td><%= @entry.input_vector.http_method %></td>
                 <% end %>
 
-                <td><code><%= @issue.input_vector.affected_input_name %></code></td>
+                <td><code><%= @entry.input_vector.affected_input_name %></code></td>
             <% end %>
 
             <td>
-                <%= link_to_url_with_external external: @issue.referring_page.dom.url,
+                <%= link_to_url_with_external external: @entry.referring_page.dom.url,
                                               internal: '#',
                                               display_path_only: true %>
             </td>
             <td>
-                <%= link_to_url_with_external external: @issue.input_vector.action,
+                <%= link_to_url_with_external external: @entry.input_vector.action,
                                               internal: '#',
                                               display_path_only: true %>
             </td>
@@ -55,7 +55,7 @@
     </table>
 </div>
 
-<% if @issue.input_vector.default_inputs.any? && @issue.input_vector.inputs.any? %>
+<% if @entry.input_vector.default_inputs.any? && @entry.input_vector.inputs.any? %>
     <div class="input_vector-values">
         <table class="table table-sm">
             <thead>
@@ -67,8 +67,8 @@
                 <tr>
                     <td>
                         <%= render '/shared/hash',
-                                   object: @issue.input_vector.default_inputs,
-                                   highlight: @issue.input_vector.affected_input_name,
+                                   object: @entry.input_vector.default_inputs,
+                                   highlight: @entry.input_vector.affected_input_name,
                                    code: true
                         %>
                     </td>

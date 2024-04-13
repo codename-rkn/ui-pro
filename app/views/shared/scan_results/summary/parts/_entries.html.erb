@@ -1,0 +1,23 @@
+<%
+   entry_count = @summary[:entries].size
+%>
+
+<% if entry_count > 0 %>
+    <div class="live-stream-entry">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-unstyled">
+                  <%
+                    @summary[:entries].each do |entry|
+                  %>
+
+                  <li>
+                      <%= render partial: '/shared/scan_results/summary/parts/entry',
+                                 locals: { entry: entry } %>
+                  </li>
+                    <% end %> %>
+                </ul>
+            </div>
+        </div>
+    </div>
+<% end %>

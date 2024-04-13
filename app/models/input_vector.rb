@@ -28,11 +28,11 @@ class InputVector < ActiveRecord::Base
         h = {}
         [:action, :http_method, :seed, :inputs, :affected_input_name, :source,
          :default_inputs].each do |attr|
-            h[attr] = vector.send(attr) if vector.respond_to?( attr )
+            h[attr] = vector[attr]
         end
 
-        h[:kind]         = vector.class.type
-        h[:engine_class] = vector.class.to_s
+        h[:kind]         = vector[:type]
+        h[:engine_class] = vector[:class]
 
         create h.merge( options )
     end

@@ -1,0 +1,53 @@
+<%
+   sitemap            = data[:sitemap_with_entries]
+   sitemap_data       = data[:sitemap_data]
+
+   total_max_severity = sitemap_data[:max_severity]
+   total_entry_count  = sitemap_data[:entry_count]
+%>
+
+<ul class="sitemap">
+    <li
+        id="sitemap-entry-all"
+        class="bg-severity-<%= total_max_severity %> sitemap-entry <%= 'active' if !filter_pages? %>"
+        title="<%= pluralize total_entry_count, 'entry' %> with a maximum severity of <%= total_max_severity %>."
+    >
+        <%= link_to "All #{pluralize sitemap.size, 'page'}", filter_params_without_page %>
+
+        <%= link_to filter_params_without_page do %>
+            <span class="badge rounded-pill badge-severity-<%= total_max_severity %>">
+                <%= total_entry_count %>
+            </span>
+        <% end %>
+    </li>
+
+    <% sitemap.each do |url, data|
+        active       = page_id_in_filter?( data[:digest] )
+        max_severity = data[:max_severity]
+        entry_count  = data[:entry_count]
+    %>
+
+        <li
+            class="with-list-info sitemap-entry
+                bg-severity-<%= max_severity %>
+                <%= 'active' if active %>
+                sitemap-entry-with<% 'out' if entry_count == 0 %>-entries"
+            id="sitemap-entry-<%= data[:digest] %>"
+            title="<%= pluralize entry_count, 'entry' %> with a <%= 'maximum' if entry_count > 1 %> severity of <%= max_severity %>."
+        >
+
+            <%= link_to_url_with_external(
+                    external: url,
+                    internal: data[:internal],
+                    display_path_only: true
+                )
+            %>
+
+            <%= link_to data[:internal] do %>
+                <span class="badge rounded-pill badge-severity-<%= max_severity %>">
+                    <%= data[:entry_count] %>
+                </span>
+            <% end %>
+        </li>
+    <% end %>
+</ul>

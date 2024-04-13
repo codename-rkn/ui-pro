@@ -1,5 +1,5 @@
 <%
-   title @issue.to_s.html_safe
+   title @entry.to_s.html_safe
    breadcrumb_add 'Sites', sites_path
    breadcrumb_add @site.url, site_path( @site )
    breadcrumb_add 'Scans', site_scans_path( @site )
@@ -11,8 +11,8 @@
     <%= render partial: 'sidebar' %>
 <% end %>
 
-<div id="issues">
+<div id="entries">
     <div class="col-md-12">
-        <%= render @issue %>
+        <%= render @entry %>
     </div>
 </div>

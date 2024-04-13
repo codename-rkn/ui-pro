@@ -45,7 +45,7 @@ Rails.application.routes.draw do
                 put :revert_configuration, on: :member
                 get :report, on: :member
 
-                resources :issues, only: [:show, :update]
+                resources :entries, only: [:show, :update]
             end
         end
     end

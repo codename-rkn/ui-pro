@@ -19,9 +19,9 @@
             </li>
         <% end %>
 
-        <li id="issues-tab" class="nav-item">
-            <%= link_to params_h.merge( action: 'issues' ).merge(filter_params), class: "nav-link #{('active' if sections['issues'])}" do %>
-                Issues
+        <li id="entries-tab" class="nav-item">
+            <%= link_to params_h.merge( action: 'entries' ).merge(filter_params), class: "nav-link #{('active' if sections['entries'])}" do %>
+                Entries
             <% end %>
         </li>
 
@@ -91,10 +91,10 @@
             </div>
         <% end %>
 
-        <% if sections['issues'] %>
-            <div class="tab-pane <%= 'active' if sections['issues'] %>" id="issues">
-                <%= render partial: 'shared/scan_results/issues', locals: {
-                    data: @issues_summary
+        <% if sections['entries'] %>
+            <div class="tab-pane <%= 'active' if sections['entries'] %>" id="entries">
+                <%= render partial: 'shared/scan_results/entries', locals: {
+                    data: @entries_summary
                 }, formats: :html %>
             </div>
         <% end %>

@@ -1,5 +1,5 @@
 class RevisionsController < ApplicationController
-    include IssuesHelper
+    include EntriesHelper
     include ScansHelper
 
     before_action :authenticate_user!
@@ -12,7 +12,7 @@ class RevisionsController < ApplicationController
     # GET /revisions/1
     # GET /revisions/1.json
     def show
-        redirect_to issues_site_scan_revision_path( @site, @scan, @revision, filter_params )
+        redirect_to entries_site_scan_revision_path( @site, @scan, @revision, filter_params )
     end
 
     private
@@ -43,20 +43,20 @@ class RevisionsController < ApplicationController
         @revision
     end
 
-    def scan_results_issues_owner
-        # We can't filter issues at the revision level, that will remove a lot
+    def scan_results_entries_owner
+        # We can't filter entries at the revision level, that will remove a lot
         # of scan context from the rest of the interface, like from the revision
         # sidebar.
         @scan
     end
 
-    def prepare_issue_data
-        issues_summary_data(
+    def prepare_entry_data
+        entries_summary_data(
             site:      @site,
             sitemap:   @revision.sitemap_entries,
             scans:     [@scan],
             revisions: @scan.revisions.order( id: :desc ),
-            issues:    scan_results_issues
+            entries:   scan_results_entries
         )
     end
 

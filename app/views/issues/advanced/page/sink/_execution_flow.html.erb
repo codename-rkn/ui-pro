@@ -44,7 +44,7 @@
         <% if sink.stackframes.any? %>
         <tr id="<%= id %>-execution_flow_sinks-<%= i %>-stacktrace" class="inspection">
             <td colspan="3">
-                <%= render 'issues/advanced/page/sink/trace/table',
+                <%= render 'entries/advanced/page/sink/trace/table',
                         id:    "#{id}-execution_flow_sinks-#{i}-stacktrace",
                         parent_id: id,
                         trace: sink.stackframes,

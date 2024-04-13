@@ -15,12 +15,14 @@ class HttpRequest < ActiveRecord::Base
     end
 
     def self.create_from_engine( request )
+        return if request.nil?
+
         create(
-            url:         request.url,
-            http_method: request.method,
-            body:        request.effective_body,
-            parameters:  request.parameters,
-            headers:     request.headers,
+            url:         request[:url],
+            http_method: request[:method],
+            body:        request[:effective_body],
+            parameters:  request[:parameters],
+            headers:     request[:headers],
             raw:         request.to_s
         )
     end

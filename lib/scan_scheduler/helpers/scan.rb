@@ -101,7 +101,7 @@ module Scan
 
         revision.aborting!
 
-        download_report_and_shutdown( revision, status: 'aborted', mark_missing_issues: false )
+        download_report_and_shutdown( revision, status: 'aborted' )
 
         broadcast_to_the_channels( revision )
     end
@@ -245,25 +245,15 @@ module Scan
 
         log_info_for revision, 'Checking progress.'
 
-        # Don't grab anything but issues marked as fixed, this way we'll be
-        # able to auto-review them ASAP and let the user know of regressions.
-        progress_tracking_for( revision )[:issue_digests] ||=
-            revision.scan.issues.where.not( state: 'fixed' ).digests
+        progress_tracking_for( revision )[:entry_digests] ||= revision.scan.entries.digests
 
         # With errors and summary sitemap.
         instance.scan.progress(
             with:    {
-                issues:  true,
                 sitemap: progress_tracking_for( revision )[:coverage_entries].size,
                 errors:  progress_tracking_for( revision )[:error_lines]
             },
-
-            # We don't care about issues logged by previous revisions at this
-            # point, nor do we want issues that we've already seen.
-            #
-            # We will care when it's time to grab the report in order to mark
-            # missing issues from previous revisions as fixed.
-            without: { issues: progress_tracking_for( revision )[:issue_digests] },
+            without: { entries: progress_tracking_for( revision )[:entry_digests] },
         ) do |progress|
             handle_progress( revision, progress )
         end
@@ -325,15 +315,12 @@ module Scan
             return
         end
 
-        log_debug_for revision, "Issues: #{progress[:issues].size}"
+        log_debug_for revision, "Entries: #{progress[:entries].size}"
 
-        progress_tracking_for( revision )[:issue_digests] ||= []
-        progress[:issues].each do |issue|
-            issue = SCNR::Engine::Issue.from_rpc_data( issue )
-
-            progress_tracking_for( revision )[:issue_digests] << issue.digest
-
-            create_issue( revision, issue )
+        progress_tracking_for( revision )[:entry_digests] ||= []
+        progress[:entries].each do |digest, entry|
+            progress_tracking_for( revision )[:entry_digests] << digest
+            create_entry( revision, entry )
         end
 
         add_coverage_entries( revision, progress[:sitemap] )
@@ -357,6 +344,10 @@ module Scan
         return if update.empty?
 
         revision.update( update )
+
+    rescue => e
+        ap e.to_s
+        ap e.backtrace
     end
 
     def handle_progress_inactive( revision, progress )
@@ -383,7 +374,7 @@ module Scan
                 finish( revision )
             end
         else
-            download_report_and_shutdown( revision, status: 'completed', mark_missing_issues: true )
+            download_report_and_shutdown( revision, status: 'completed' )
         end
     end
 
@@ -428,14 +419,7 @@ module Scan
         true
     end
 
-    # Aborts the scan for the `revision`, downloads and stores the report under
-    # {REPORT_DIR}, updates its issues from the report and marks issues of
-    # previous revisions that are not in this one as fixed.
-    #
-    # It will also shutdown the associated instance.
-    #
-    # @param    [Revision]  revision
-    def download_report_and_shutdown( revision, status: nil, mark_missing_issues: nil )
+    def download_report_and_shutdown( revision, status: nil )
         log_info_for revision, 'Grabbing report'
 
         instance = instance_for( revision )
@@ -444,21 +428,12 @@ module Scan
 
             log_info_for revision, 'Got report'
 
-            report_path = "#{REPORT_DIR}/#{revision.id}.ser"
             begin
-                report.save( report_path )
-
-                log_info_for revision, "Saved report at: #{report_path}"
-
-                import_issues_from_report( revision, report )
+                import_entries_from_report( revision, report )
                 import_coverage_from_report( revision, report )
 
-                # if mark_missing_issues
-                    mark_missing_issues_from_report( revision, report )
-                # end
+                mark_missing_entries_from_report( revision, report )
 
-                revision.report = Report.create( location: report_path )
-                revision.save
             rescue => e
                 log_exception_for( revision, e )
             end
@@ -476,11 +451,11 @@ module Scan
         end
     end
 
-    def mark_missing_issues_from_report( revision, report )
-        revision.scan.issues.reorder('').where.not(
-          digest: report.issues.map(&:digest)
-        ).each do |issue|
-            revision.missing_issues << issue
+    def mark_missing_entries_from_report( revision, report )
+        revision.scan.entries.reorder('').where.not(
+          digest: report.keys
+        ).each do |entry|
+            revision.missing_entries << entry
         end
     end
 
@@ -534,7 +509,7 @@ module Scan
 
     def progress_tracking_for( revision )
         @progress_tracker[revision.id] ||= {
-            issue_digests:    nil,
+            entry_digests:    nil,
             coverage_entries: [],
             sitemap:          ::Set.new,
             error_lines:      0

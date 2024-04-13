@@ -1,14 +1,14 @@
-<ul id="sidebar-issue-siblings" class="nav nav-stacked">
+<ul id="sidebar-entry-siblings" class="nav nav-stacked">
     <li class="nav-header">
         <a>
             Also logged by
         </a>
     </li>
 
-    <% @issue.siblings.each do |sibling| next if @issue.id == sibling.id %>
+    <% @entry.siblings.each do |sibling| next if @entry.id == sibling.id %>
     <li>
         <%= link_to "#{sibling.revision.index.ordinalize} revision of #{sibling.scan} scan",
-                    site_scan_revision_issue_path(
+                    site_scan_revision_entry_path(
                             @site,
                             sibling.revision.scan,
                             sibling.revision,

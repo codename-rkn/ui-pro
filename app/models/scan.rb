@@ -14,8 +14,8 @@ class Scan < ActiveRecord::Base
     accepts_nested_attributes_for :schedule, update_only: true
 
     has_many :revisions, -> { order id: :desc }, dependent: :destroy
-    has_many :issues, dependent: :destroy
-    has_many :reviewed_issues, through: :revisions
+    has_many :entries, dependent: :destroy
+    has_many :reviewed_entries, through: :revisions
     has_many :sitemap_entries, dependent: :destroy
 
     validates_associated    :schedule

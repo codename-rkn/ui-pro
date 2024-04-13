@@ -5,7 +5,7 @@
         col += 1
     end
 
-    if @summary[:issues].any?
+    if @summary[:entries].any?
         col += 1
     end
 
@@ -27,9 +27,9 @@
         </div>
     <% end %>
 
-    <% if @summary[:issues].any? %>
+    <% if @summary[:entries].any? %>
         <div class="col-md-<%= col %>">
-            <%= render partial: '/shared/scan_results/summary/parts/issues' %>
+            <%= render partial: '/shared/scan_results/summary/parts/entries' %>
         </div>
     <% end %>
 

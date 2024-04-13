@@ -4,8 +4,8 @@ class CreateSitemapEntries < ActiveRecord::Migration[5.1]
             t.boolean :coverage
             t.text :url
             t.integer :code
-            t.integer :issues_count, default: 0
-            t.integer :issue_pages_count, default: 0
+            t.integer :entries_count, default: 0
+            t.integer :entry_pages_count, default: 0
             t.integer :input_vectors_count, default: 0
 
             t.bigint :digest, index: true

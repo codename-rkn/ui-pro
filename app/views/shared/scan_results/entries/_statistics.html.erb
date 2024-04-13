@@ -1,0 +1,47 @@
+<%
+   scans        = data[:scans]
+   revisions    = data[:revisions]
+   sitemap      = data[:sitemap]
+   sitemap_with_entries = data[:sitemap_with_entries]
+   entries_count = data[:unique_entries_count]
+%>
+
+<div id="summary-statistics">
+    <div class="row">
+        <% if !@sitemap_entry %>
+            <div class="col-md-4">
+                <h3>
+                    <strong><%= sitemap_with_entries.size %></strong>
+                    <%= 'page'.pluralize sitemap_with_entries.size %>
+                    with entries,
+
+                    <span class="text-muted fs-6">
+                        out of
+                        <strong>
+                            <%= sitemap.size %>
+                        </strong>
+                    </span>
+                </h3>
+            </div>
+        <% end %>
+
+        <div class="col-md-<%= @sitemap_entry ? '6' : '5' %>">
+            <h3>
+                <strong><%= entries_count %></strong>
+                <%= 'entries'.pluralize entries_count %>,
+            </h3>
+        </div>
+
+        <div class="col-md-<%= @sitemap_entry ? '6' : '3' %>">
+            <h3>
+                <strong><%= rc = revisions.size %></strong>
+                <%= 'revision'.pluralize rc %>,
+
+                <span class="text-muted fs-6">
+                    from <strong><%= scans.size %></strong>
+                    <%= 'scan'.pluralize(scans.size) %>
+                </span>
+            </h3>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,9 @@
-<% has_references = @issue.type.references.any? || @issue.type.cwe %>
+<% has_references = @entry.type.references.any? || @entry.type.cwe %>
 
 <div class="row">
     <div class="col-md-<%= has_references ? '10' : '12' %>">
         <div class="description">
-            <%= md issue.type.remedy_guidance %>
+            <%= md entry.type.remedy_guidance %>
         </div>
     </div>
 
@@ -12,13 +12,13 @@
             <strong>References</strong>
 
             <ul class="list-unstyled">
-                <% if @issue.type.cwe_url %>
+                <% if @entry.type.cwe_url %>
                     <li>
-                        <%= link_to 'CWE', @issue.type.cwe_url, target: '_blank' %>
+                        <%= link_to 'CWE', @entry.type.cwe_url, target: '_blank' %>
                     </li>
                 <% end %>
 
-                <% @issue.type.references.each do |reference| %>
+                <% @entry.type.references.each do |reference| %>
                     <li>
                         <%= link_to reference.title, reference.url, target: '_blank' %>
                     </li>
@@ -28,7 +28,7 @@
     <% end %>
 </div>
 
-<% if issue.page.dom.data_flow_sinks.any? %>
+<% if entry.page.dom.data_flow_sinks.any? %>
     <div id="remediation-data-flow-sinks">
         <div class="card bg-info text-white">
             <div class="card-header">
@@ -39,13 +39,13 @@
 
                 <i class="fa fa-info-circle"></i>
 
-                You can gain insights into the issue by inspecting the flow of the
+                You can gain insights into the entry by inspecting the flow of the
                 injected payload:
             </div>
 
             <div class="card">
-                <%= render 'issues/advanced/page/sink/data_flow',
-                           page: issue.page,
+                <%= render 'entries/advanced/page/sink/data_flow',
+                           page: entry.page,
                            id:   'remediation'
                 %>
             </div>

@@ -11,7 +11,7 @@ class CreateInputVectors < ActiveRecord::Migration[5.1]
             t.string :http_method
             t.text :affected_input_name
             t.belongs_to :sitemap_entry
-            t.belongs_to :issue
+            t.belongs_to :entry
 
             t.timestamps
         end

@@ -9,9 +9,9 @@ module ScanResults
 
     REVERT_MODELS = [ :site_profile, :site_role ]
 
-    DEFAULT_ACTION = :issues
+    DEFAULT_ACTION = :entries
 
-    SCAN_RESULT_SITE_ACTIONS     = [ :issues, :coverage, :reviews, :events, :export ]
+    SCAN_RESULT_SITE_ACTIONS     = [ :entries, :coverage, :reviews, :events, :export ]
 
     SCAN_RESULT_SCAN_ACTIONS     =
         SCAN_RESULT_SITE_ACTIONS
@@ -38,15 +38,15 @@ module ScanResults
 
     def prepare_live_stream_data
         {
-            issues:   preload_issue_associations( scan_results_owner.issues ),
+            entries:  preload_entry_associations( scan_results_owner.entries ),
             coverage: scan_results_coverage,
-            reviews:  scan_results_reviewed_issues
+            reviews:  scan_results_reviewed_entries
         }
     end
 
-    def issues
-        @issues_summary = prepare_issue_data
-        process_and_show(:issues)
+    def entries
+        @entries_summary = prepare_entry_data
+        process_and_show(:entries)
     end
 
     def coverage
@@ -89,28 +89,6 @@ module ScanResults
         process_and_show
     end
 
-    def report
-        report        = scan_results_owner.report
-        report_object = SCNR::Engine::Report.load( report.location )
-
-        name = "#{URI( @scan.url ).host} - #{@scan.profile.name} - #{@revision.id}".
-          gsub( '/', '_' ).gsub( '.', '_' ).gsub( "\n", '' ).gsub( "\r", '' )
-
-        format = URI( request.url ).path.split( '.' ).last
-
-        if format == 'ser'
-            report    = report_object.to_ser
-            extension = 'ser'
-        else
-            report    = FrameworkHelper.framework { |f| f.report_as format, report_object }
-            extension = FrameworkHelper.reporters[format][:extension]
-        end
-
-        send_data report,
-                  type: FrameworkHelper.content_type_for_report( format ),
-                  disposition: "attachment; filename=\"#{name}.#{extension}\""
-    end
-
     def revert_configuration
         revert_model = params.permit(:model)[:model].to_sym
 
@@ -147,16 +125,16 @@ module ScanResults
     def set_counters
         @coverage_count = scan_results_coverage.count(:url)
         @reviews_count  = filter_pages(
-            scan_results_reviews_owner.reviewed_issues
+            scan_results_reviews_owner.reviewed_entries
         ).count
     end
 
-    def scan_results_issues
+    def scan_results_entries
         # Can't do filtering here, the rest of the interface relies of full
         # data in order to fill in context, like severities, states etc.
         #
-        # The filtering will take place in #process_issues.
-        scan_results_issues_owner.issues
+        # The filtering will take place in #process_entries.
+        scan_results_entries_owner.entries
     end
 
     def scan_results_coverage
@@ -167,25 +145,25 @@ module ScanResults
         scan_results_events_owner.events
     end
 
-    def scan_results_reviewed_issues
-        # Reviewed issues don't really need further processing not are they
+    def scan_results_reviewed_entries
+        # Reviewed entries don't really need further processing not are they
         # used to provide context for other areas, so we can do the filtering
         # here and get it over with.
         filter_pages(
-            preload_issue_associations(
-                scan_results_reviews_owner.reviewed_issues
+            preload_entry_associations(
+                scan_results_reviews_owner.reviewed_entries
             )
         )
     end
 
-    # Starts the global {#process_issues issue processing} using
-    # {#scan_results_issues}.
-    def perform_issue_processing
-        process_issues( scan_results_issues.includes( :sitemap_entry ) )
+    # Starts the global {#process_entries entry processing} using
+    # {#scan_results_entries}.
+    def perform_entry_processing
+        process_entries( scan_results_entries.includes( :sitemap_entry ) )
     end
 
     def process_and_show(js_partial = :show)
-        perform_issue_processing
+        perform_entry_processing
 
         respond_to do |format|
             format.html {
@@ -205,7 +183,7 @@ module ScanResults
     end
 
     def prepare_reviews_data
-        { issues: scan_results_reviewed_issues }
+        { entries: scan_results_reviewed_entries }
     end
 
     def prepare_configuration_data
@@ -219,7 +197,7 @@ module ScanResults
         scan_results_events
     end
 
-    def prepare_issue_data
+    def prepare_entry_data
         fail 'Not implemented'
     end
 
@@ -231,7 +209,7 @@ module ScanResults
         fail 'Not implemented'
     end
 
-    def scan_results_issues_owner
+    def scan_results_entries_owner
         scan_results_owner
     end
 

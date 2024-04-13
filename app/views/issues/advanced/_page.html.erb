@@ -21,7 +21,7 @@
                         Request
                     </h5>
 
-                    <pre class="highlight-container code-container"><%= highlight_http_request( page.request.to_s, issue, issue.input_vector.seed ) || page.request %></pre>
+                    <pre class="highlight-container code-container"><%= highlight_http_request( page.request.to_s, entry, entry.input_vector.seed ) || page.request %></pre>
                 </div>
             <% end %>
 
@@ -36,7 +36,7 @@
                         Response <span class="text-muted fs-6">&mdash; Binary bodies will not be displayed.</span>
                     </h5>
 
-                    <pre class="highlight-container code-container"><%= highlight_proof( page.response.to_s, issue.proof ) || page.response %></pre>
+                    <pre class="highlight-container code-container"><%= highlight_proof( page.response.to_s, entry.proof ) || page.response %></pre>
                 </div>
             <% end %>
         </div>
@@ -73,7 +73,7 @@
                 the interface of the web application.
             </p>
 
-            <%= render 'issues/advanced/page/transitions',
+            <%= render 'entries/advanced/page/transitions',
                        page: page,
                        id: "#{id}_dom_processing",
                        debug: true %>
@@ -82,7 +82,7 @@
                 (page.dom.body != page.response.body) %>
 
                 <div id="<%= id %>-dom-states">
-                    <%= render 'issues/advanced/page/states',
+                    <%= render 'entries/advanced/page/states',
                                page: page,
                                id: "#{id}_dom_processing" %>
                 </div>
@@ -110,7 +110,7 @@
                 Each sink is a point of payload execution.
             </p>
 
-            <%= render 'issues/advanced/page/sink/execution_flow',
+            <%= render 'entries/advanced/page/sink/execution_flow',
                        page: page,
                        id: id %>
         </div>
@@ -136,7 +136,7 @@
                 Each sink is a function which was passed tainted arguments.
             </p>
 
-            <%= render 'issues/advanced/page/sink/data_flow',
+            <%= render 'entries/advanced/page/sink/data_flow',
                        page: page,
                        id: id %>
         </div>

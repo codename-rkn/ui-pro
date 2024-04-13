@@ -48,8 +48,8 @@ feature 'Site' do
             visit site_path( site )
         end
 
-        feature 'with issues' do
-            let(:issues) { find '#summary-issues' }
+        feature 'with entries' do
+            let(:issues) { find '#summary-entries' }
 
             before do
                 100.times do |i|
@@ -108,38 +108,38 @@ feature 'Site' do
             let(:severities) { @severities.values }
 
             # feature 'when filtering' do
-            #     let(:sitemap_entry) { site.issues.first.input_vector.sitemap_entry}
+            #     let(:sitemap_entry) { site.entries.first.input_vector.sitemap_entry}
             #     let(:path) { URI(sitemap_entry.url).path }
             #
             #     states = ['Trusted', 'untrusted', 'false positive', 'fixed']
             #
             #     feature 'page' do
-            #         feature 'with issues' do
+            #         feature 'with entries' do
             #             before do
             #                 visit "#{site_path( site )}?filter[pages][]=#{sitemap_entry.digest}&filter[states][]=trusted&filter[states][]=untrusted&filter[states][]=false_positive&filter[states][]=fixed&filter[severities][]=high&filter[severities][]=medium&filter[severities][]=low&filter[severities][]=informational&filter[type]=include"
             #             end
             #
-            #             scenario 'only shows issues for that page' do
-            #                 all_digests = site.issues.pluck(:digest)
-            #                 sitemap_digests = sitemap_entry.issues.pluck(:digest)
+            #             scenario 'only shows entries for that page' do
+            #                 all_digests = site.entries.pluck(:digest)
+            #                 sitemap_digests = sitemap_entry.entries.pluck(:digest)
             #
             #                 sitemap_digests.each do |digest|
-            #                     expect(issues).to have_css "#summary-issue-#{digest}"
+            #                     expect(entries).to have_css "#summary-issue-#{digest}"
             #                 end
             #
             #                 expect(all_digests - sitemap_digests).to be_any
             #
             #                 (all_digests - sitemap_digests).each do |digest|
-            #                     expect(issues).to_not have_css "#summary-issue-#{digest}"
+            #                     expect(entries).to_not have_css "#summary-issue-#{digest}"
             #                 end
             #             end
             #
             #             feature 'sidebar' do
             #                 let(:sidebar) { find '#sidebar-scans' }
             #
-            #                 scenario 'only shows scans that have logged issues for that page' do
+            #                 scenario 'only shows scans that have logged entries for that page' do
             #                     all_scans  = site.scans.pluck(:name)
-            #                     page_scans = sitemap_entry.issues.map { |i| i.scan }.map(&:name)
+            #                     page_scans = sitemap_entry.entries.map { |i| i.scan }.map(&:name)
             #
             #                     page_scans.each do |name|
             #                         expect(sidebar).to have_content name
@@ -158,17 +158,17 @@ feature 'Site' do
             #             end
             #         end
             #
-            #         feature 'without issues' do
+            #         feature 'without entries' do
             #             before do
             #                 visit "#{site_path( site )}?filter[pages][]=#{sitemap_entry.digest}&filter[states][]=trusted&filter[states][]=untrusted&filter[states][]=false_positive&filter[states][]=fixed&filter[severities][]=high&filter[severities][]=medium&filter[severities][]=low&filter[severities][]=informational&filter[type]=exclude"
             #             end
             #
             #             let(:message) do
-            #                 find( '#issues-summary div.well' )
+            #                 find( '#entries-summary div.well' )
             #             end
             #
             #             scenario 'shows message' do
-            #                 expect(message).to have_content 'No issues for'
+            #                 expect(message).to have_content 'No entries for'
             #             end
             #
             #             scenario 'message includes internal page URL' do
@@ -190,9 +190,9 @@ feature 'Site' do
             #                 end
             #             end
             #
-            #             feature 'but has issues for other pages' do
+            #             feature 'but has entries for other pages' do
             #                 before do
-            #                     sitemap_entry.issues.reorder('').delete_all
+            #                     sitemap_entry.entries.reorder('').delete_all
             #                     visit "#{site_path( site )}?filter[pages][]=#{sitemap_entry.digest}"
             #                 end
             #
@@ -217,7 +217,7 @@ feature 'Site' do
             #                         normalized_t = t.sub( ' ', '_' ).downcase
             #                         page.execute_script( "document.getElementById( 'issue-state-#{normalized_t}' ).checked = false;" )
             #
-            #                         set_sitemap_entries revision.issues.create(
+            #                         set_sitemap_entries revision.entries.create(
             #                             type:           IssueType.first,
             #                             page:           FactoryGirl.create(:issue_page),
             #                             referring_page: FactoryGirl.create(:issue_page),
@@ -229,7 +229,7 @@ feature 'Site' do
             #                         )
             #                     end
             #
-            #                     expect(revision.reload.issues).to be_any
+            #                     expect(revision.reload.entries).to be_any
             #                     expect(state_issues).to be_any
             #                     expect(other_issues).to be_any
             #
@@ -240,23 +240,23 @@ feature 'Site' do
             #                     end
             #                 end
             #
-            #                 let(:other_issues) { revision.issues.where.not state: state }
-            #                 let(:state_issues) { revision.issues.where state: state }
+            #                 let(:other_issues) { revision.entries.where.not state: state }
+            #                 let(:state_issues) { revision.entries.where state: state }
             #
             #                 feature 'Show' do
             #                     before do
             #                         click_button 'Show'
             #                     end
             #
-            #                     it 'does not show other issues' do
+            #                     it 'does not show other entries' do
             #                         other_issues.each do |issue|
-            #                             expect(issues).to_not have_css "#summary-issue-#{issue.digest}"
+            #                             expect(entries).to_not have_css "#summary-issue-#{issue.digest}"
             #                         end
             #                     end
             #
-            #                     it "shows #{type} issues" do
+            #                     it "shows #{type} entries" do
             #                         state_issues.each do |issue|
-            #                             expect(issues).to have_css "#summary-issue-#{issue.digest}"
+            #                             expect(entries).to have_css "#summary-issue-#{issue.digest}"
             #                         end
             #                     end
             #                 end
@@ -266,15 +266,15 @@ feature 'Site' do
             #                         click_button 'Hide'
             #                     end
             #
-            #                     it 'shows other issues' do
+            #                     it 'shows other entries' do
             #                         other_issues.each do |issue|
-            #                             expect(issues).to have_css "#summary-issue-#{issue.digest}"
+            #                             expect(entries).to have_css "#summary-issue-#{issue.digest}"
             #                         end
             #                     end
             #
-            #                     it "does not show #{type} issues" do
+            #                     it "does not show #{type} entries" do
             #                         state_issues.each do |issue|
-            #                             expect(issues).to_not have_css "#summary-issue-#{issue.digest}"
+            #                             expect(entries).to_not have_css "#summary-issue-#{issue.digest}"
             #                         end
             #                     end
             #                 end
@@ -301,7 +301,7 @@ feature 'Site' do
             #                             check_shortname: type_name
             #                         )
             #
-            #                         set_sitemap_entries revision.issues.create(
+            #                         set_sitemap_entries revision.entries.create(
             #                             type:           @types[s],
             #                             page:           FactoryGirl.create(:issue_page),
             #                             referring_page: FactoryGirl.create(:issue_page),
@@ -313,7 +313,7 @@ feature 'Site' do
             #                         )
             #                     end
             #
-            #                     expect(revision.reload.issues).to be_any
+            #                     expect(revision.reload.entries).to be_any
             #                     expect(severity_issues).to be_any
             #                     expect(other_issues).to be_any
             #
@@ -326,25 +326,25 @@ feature 'Site' do
             #                 end
             #
             #                 let(:other_issues) do
-            #                     revision.issues.joins(:severity).where.
+            #                     revision.entries.joins(:severity).where.
             #                         not( 'issue_type_severities.name = ?', severity )
             #                 end
-            #                 let(:severity_issues) { revision.issues.send( "#{severity}_severity" ) }
+            #                 let(:severity_issues) { revision.entries.send( "#{severity}_severity" ) }
             #
             #                 feature 'Show' do
             #                     before do
             #                         click_button 'Show'
             #                     end
             #
-            #                     it 'does not show other issues' do
+            #                     it 'does not show other entries' do
             #                         other_issues.each do |issue|
-            #                             expect(issues).to_not have_css "#summary-issue-#{issue.digest}"
+            #                             expect(entries).to_not have_css "#summary-issue-#{issue.digest}"
             #                         end
             #                     end
             #
-            #                     it "shows #{severity} severity issues" do
+            #                     it "shows #{severity} severity entries" do
             #                         severity_issues.each do |issue|
-            #                             expect(issues).to have_css "#summary-issue-#{issue.digest}"
+            #                             expect(entries).to have_css "#summary-issue-#{issue.digest}"
             #                         end
             #                     end
             #                 end
@@ -354,15 +354,15 @@ feature 'Site' do
             #                         click_button 'Hide'
             #                     end
             #
-            #                     it "does not show #{severity} severity issues" do
+            #                     it "does not show #{severity} severity entries" do
             #                         severity_issues.each do |issue|
-            #                             expect(issues).to_not have_css "#summary-issue-#{issue.digest}"
+            #                             expect(entries).to_not have_css "#summary-issue-#{issue.digest}"
             #                         end
             #                     end
             #
-            #                     it 'shows all other issues' do
+            #                     it 'shows all other entries' do
             #                         other_issues.each do |issue|
-            #                             expect(issues).to have_css "#summary-issue-#{issue.digest}"
+            #                             expect(entries).to have_css "#summary-issue-#{issue.digest}"
             #                         end
             #                     end
             #                 end
@@ -374,55 +374,55 @@ feature 'Site' do
             # feature 'grouped by severity' do
             #     scenario 'user sees color-coded containers' do
             #         IssueTypeSeverity::SEVERITIES.each do |severity|
-            #             expect(issues.find("div#summary-issue-severity-#{severity}")[:class]).to include "bg-severity-#{severity}"
+            #             expect(entries.find("div#summary-issue-severity-#{severity}")[:class]).to include "bg-severity-#{severity}"
             #         end
             #     end
             #
             #     feature 'and by type' do
             #         scenario 'user sees issue type headings' do
             #             types.each do |type|
-            #                 expect(issues.find("#summary-issue-check-#{type.check_shortname} h4")).to have_content type.name
+            #                 expect(entries.find("#summary-issue-check-#{type.check_shortname} h4")).to have_content type.name
             #             end
             #         end
             #
-            #         scenario 'user sees amount of issues in the heading' do
+            #         scenario 'user sees amount of entries in the heading' do
             #             types.each do |type|
-            #                 expect(issues.find("#summary-issue-check-#{type.check_shortname} h4 span.badge-severity-#{type.severity.name}")).to have_content type.issues.size
+            #                 expect(entries.find("#summary-issue-check-#{type.check_shortname} h4 span.badge-severity-#{type.severity.name}")).to have_content type.entries.size
             #             end
             #         end
             #
             #         feature 'for each issue' do
             #             feature 'scan info' do
             #                 scenario 'user sees scan name' do
-            #                     site.issues.each do |issue|
-            #                         expect(issues.find("#summary-issue-#{issue.digest}")).to have_content issue.revision.scan.name
+            #                     site.entries.each do |issue|
+            #                         expect(entries.find("#summary-issue-#{issue.digest}")).to have_content issue.revision.scan.name
             #                     end
             #                 end
             #
             #                 scenario 'user sees revision link with filtering options' do
-            #                     site.issues.each do |issue|
+            #                     site.entries.each do |issue|
             #                         path = site_scan_revision_path(issue.revision.scan.site, issue.revision.scan, issue.revision)
-            #                         expect(issues.find("#summary-issue-#{issue.digest}")).to have_xpath "//a[starts-with(@href, '#{path}?filter')]"
+            #                         expect(entries.find("#summary-issue-#{issue.digest}")).to have_xpath "//a[starts-with(@href, '#{path}?filter')]"
             #                     end
             #                 end
             #
             #                 scenario 'user sees revision index' do
-            #                     site.issues.each do |issue|
-            #                         expect(issues.find("#summary-issue-#{issue.digest}")).to have_content issue.revision.index
+            #                     site.entries.each do |issue|
+            #                         expect(entries.find("#summary-issue-#{issue.digest}")).to have_content issue.revision.index
             #                     end
             #                 end
             #
             #                 scenario 'user sees revision link with filtering options' do
-            #                     site.issues.each do |issue|
-            #                         expect(issues.find("#summary-issue-#{issue.digest}")).to have_xpath "//a[starts-with(@href, '#{site_scan_revision_path(issue.revision.scan.site, issue.revision.scan, issue.revision)}?filter')]"
+            #                     site.entries.each do |issue|
+            #                         expect(entries.find("#summary-issue-#{issue.digest}")).to have_xpath "//a[starts-with(@href, '#{site_scan_revision_path(issue.revision.scan.site, issue.revision.scan, issue.revision)}?filter')]"
             #                     end
             #                 end
             #
             #                 feature 'when the same issue has been logged by different scans' do
             #                     let(:sibling) do
-            #                         issue  = site.issues.last
+            #                         issue  = site.entries.last
             #
-            #                         set_sitemap_entries other_revision.issues.create(
+            #                         set_sitemap_entries other_revision.entries.create(
             #                             type:           issue.type,
             #                             page:           FactoryGirl.create(:issue_page),
             #                             referring_page: FactoryGirl.create(:issue_page),
@@ -440,34 +440,34 @@ feature 'Site' do
             #                     end
             #
             #                     scenario 'user sees scan name' do
-            #                         expect(issues.find("#summary-issue-#{sibling.digest}")).to have_content sibling.revision.scan.name
+            #                         expect(entries.find("#summary-issue-#{sibling.digest}")).to have_content sibling.revision.scan.name
             #                     end
             #
             #                     scenario 'user sees revision link with filtering options' do
             #                         path = site_scan_revision_path( sibling.revision.scan.site, sibling.revision.scan, sibling.revision )
-            #                         expect(issues.find("#summary-issue-#{sibling.digest}")).to have_xpath "//a[starts-with(@href, '#{path}?filter')]"
+            #                         expect(entries.find("#summary-issue-#{sibling.digest}")).to have_xpath "//a[starts-with(@href, '#{path}?filter')]"
             #                     end
             #
             #                     scenario 'user sees revision index' do
-            #                         expect(issues.find("#summary-issue-#{sibling.digest}")).to have_content sibling.revision.index
+            #                         expect(entries.find("#summary-issue-#{sibling.digest}")).to have_content sibling.revision.index
             #                     end
             #
             #                     scenario 'user sees revision link with filtering options' do
-            #                         expect(issues.find("#summary-issue-#{sibling.digest}")).to have_xpath "//a[starts-with(@href, '#{site_scan_revision_path(sibling.revision.scan.site, sibling.revision.scan, sibling.revision)}?filter')]"
+            #                         expect(entries.find("#summary-issue-#{sibling.digest}")).to have_xpath "//a[starts-with(@href, '#{site_scan_revision_path(sibling.revision.scan.site, sibling.revision.scan, sibling.revision)}?filter')]"
             #                     end
             #                 end
             #             end
             #
             #             scenario 'users sees link to the Issue page' do
-            #                 site.issues.each do |issue|
+            #                 site.entries.each do |issue|
             #                     path = site_scan_revision_issue_path(issue.revision.scan.site, issue.revision.scan, issue.revision, issue)
-            #                     expect(issues.find("#summary-issue-#{issue.digest}")).to have_xpath "//a[@href='#{path}']"
+            #                     expect(entries.find("#summary-issue-#{issue.digest}")).to have_xpath "//a[@href='#{path}']"
             #                 end
             #             end
             #
             #             scenario 'user sees vector type' do
-            #                 site.issues.each do |issue|
-            #                     expect(issues.find("#summary-issue-#{issue.digest}")).to have_content issue.input_vector.kind
+            #                 site.entries.each do |issue|
+            #                     expect(entries.find("#summary-issue-#{issue.digest}")).to have_content issue.input_vector.kind
             #                 end
             #             end
             #
@@ -478,7 +478,7 @@ feature 'Site' do
             #                 end
             #
             #                 let(:issue) do
-            #                     issue = revision.issues.create(
+            #                     issue = revision.entries.create(
             #                         type:           types.first,
             #                         page:           FactoryGirl.create(:issue_page),
             #                         referring_page: FactoryGirl.create(:issue_page),
@@ -495,7 +495,7 @@ feature 'Site' do
             #
             #                 scenario 'user sees vector action URL without scheme, host and port' do
             #                     url = ApplicationHelper.url_without_scheme_host_port( issue.input_vector.action )
-            #                     expect(issues.find("#summary-issue-#{issue.digest}")).to have_content url
+            #                     expect(entries.find("#summary-issue-#{issue.digest}")).to have_content url
             #                 end
             #             end
             #
@@ -506,7 +506,7 @@ feature 'Site' do
             #                 end
             #
             #                 let(:issue) do
-            #                     set_sitemap_entries revision.issues.create(
+            #                     set_sitemap_entries revision.entries.create(
             #                         type:           types.first,
             #                         page:           FactoryGirl.create(:issue_page),
             #                         referring_page: FactoryGirl.create(:issue_page),
@@ -518,7 +518,7 @@ feature 'Site' do
             #                 end
             #
             #                 scenario 'it includes input info' do
-            #                     expect(issues.find("#summary-issue-#{issue.digest}")).to have_content issue.input_vector.affected_input_name
+            #                     expect(entries.find("#summary-issue-#{issue.digest}")).to have_content issue.input_vector.affected_input_name
             #                 end
             #             end
             #
@@ -529,7 +529,7 @@ feature 'Site' do
             #                 end
             #
             #                 let(:issue) do
-            #                     set_sitemap_entries revision.issues.create(
+            #                     set_sitemap_entries revision.entries.create(
             #                         type:           types.first,
             #                         page:           FactoryGirl.create(:issue_page),
             #                         referring_page: FactoryGirl.create(:issue_page),
@@ -541,7 +541,7 @@ feature 'Site' do
             #                 end
             #
             #                 scenario 'it does not include input info' do
-            #                     expect(issues.find("#summary-issue-#{issue.digest}")).to_not have_content 'input'
+            #                     expect(entries.find("#summary-issue-#{issue.digest}")).to_not have_content 'input'
             #                 end
             #             end
             #         end
@@ -551,20 +551,20 @@ feature 'Site' do
             # feature 'statistics' do
             #     let(:statistics) { find '#summary-statistics' }
             #
-            #     scenario 'user sees amount of pages with issues' do
-            #         expect(statistics).to have_text "#{site.sitemap_entries.with_issues.size} pages with issues"
+            #     scenario 'user sees amount of pages with entries' do
+            #         expect(statistics).to have_text "#{site.sitemap_entries.with_issues.size} pages with entries"
             #     end
             #
             #     scenario 'user sees total amount of pages' do
             #         expect(statistics).to have_text "out of #{site.reload.sitemap_entries.size}"
             #     end
             #
-            #     scenario 'user sees amount of issues' do
-            #         expect(statistics).to have_text "#{site.issues.size} issues"
+            #     scenario 'user sees amount of entries' do
+            #         expect(statistics).to have_text "#{site.entries.size} entries"
             #     end
             #
-            #     scenario 'user sees maximum severity of issues' do
-            #         expect(statistics).to have_text "maximum severity of #{site.issues.max_severity.capitalize}"
+            #     scenario 'user sees maximum severity of entries' do
+            #         expect(statistics).to have_text "maximum severity of #{site.entries.max_severity.capitalize}"
             #     end
             #
             #     scenario 'user sees amount of scan revisions' do
@@ -575,12 +575,12 @@ feature 'Site' do
             #         expect(statistics).to have_text "#{site.reload.scans.size} scan"
             #     end
             #
-            #     scenario 'user sees amount of issues by severity' do
+            #     scenario 'user sees amount of entries by severity' do
             #         IssueTypeSeverity::SEVERITIES.each do |severity|
             #             elem = statistics.find(".text-severity-#{severity}")
             #
             #             expectation =
-            #                 "#{site.issues.send("#{severity}_severity").size} #{severity}"
+            #                 "#{site.entries.send("#{severity}_severity").size} #{severity}"
             #
             #             expect(elem).to have_text expectation
             #         end
@@ -590,24 +590,24 @@ feature 'Site' do
             feature 'sitemap' do
                 let(:sitemap) { find '#summary-sitemap' }
 
-                scenario 'entries filter issues'
+                scenario 'entries filter entries'
                 scenario 'entries filter scans'
 
                 scenario 'URLs are color-coded by max severity'
-                scenario 'shows amount of issues per entry'
+                scenario 'shows amount of entries per entry'
 
                 scenario 'user sees amount of pages' do
                     expect(sitemap.find('#sitemap-entry-all')).to have_text site.sitemap_entries.with_issues.size
                 end
 
-                scenario 'includes pages with issues' do
+                scenario 'includes pages with entries' do
                     site.sitemap_entries.with_issues.each do |entry|
                         expect(sitemap).to have_text ApplicationHelper.url_without_scheme_host_port( entry.url )
                     end
                 end
 
-                feature 'when filtering criteria exclude some issues' do
-                    scenario 'the shown info only refers to the included issues'
+                feature 'when filtering criteria exclude some entries' do
+                    scenario 'the shown info only refers to the included entries'
                 end
 
                 feature 'when no entry is selected' do
@@ -622,13 +622,13 @@ feature 'Site' do
             end
         end
 
-        # feature 'without issues' do
+        # feature 'without entries' do
         #     scenario 'shows notice'
         #
         #     feature 'and a filtered page' do
-        #         feature 'which has issues' do
-        #             scenario 'lists revisions which have issues for it'
-        #             scenario 'lists scans which have issues for it'
+        #         feature 'which has entries' do
+        #             scenario 'lists revisions which have entries for it'
+        #             scenario 'lists scans which have entries for it'
         #         end
         #     end
         # end

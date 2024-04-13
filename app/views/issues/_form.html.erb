@@ -1,7 +1,7 @@
-<%= simple_form_for( [@site, @scan, @revision, @issue], remote: true ) do |f| %>
+<%= simple_form_for( [@site, @scan, @revision, @entry], remote: true ) do |f| %>
     <%= f.error_notification %>
 
-    <div class="form-inputs <%= 'without-top-radius'.html_safe if @issue.reviewed_by_revision %>">
+    <div class="form-inputs <%= 'without-top-radius'.html_safe if @entry.reviewed_by_revision %>">
         <%= f.input :state,
                     as:            :select,
                     collection:    Issue::STATES,

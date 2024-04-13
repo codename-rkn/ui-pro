@@ -183,7 +183,7 @@ function setup() {
     window.topOffset = $('#top-nav').height();
 
     // Init all tooltips.
-    // https://github.com/twbs/bootstrap/issues/35710#issuecomment-1030352173
+    // https://github.com/twbs/bootstrap/entries/35710#entrycomment-1030352173
     let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 
     tooltipTriggerList.forEach(function (element) {

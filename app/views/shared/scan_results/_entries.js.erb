@@ -1,0 +1,34 @@
+<% if data[:entries].count > 1 %>
+  function updateChart() {
+    const chart = new window.Charts.entryChart('chart-entries');
+
+    chart.initializeChart();
+
+    const data = {
+      labels: <%= data[:chart_data][:entry_names].keys.to_json.html_safe %>,
+      entryNames: <%= data[:chart_data][:entry_names].values.to_json.html_safe %>
+    };
+
+    chart.updateDataset(data);
+  };
+<% end %>
+
+<% if site.scanned? %>
+  <% if data[:entries].any? %>
+      if ($("#summary-charts-entries-container").length) {
+        $("#sidebar").html("<%= j render(partial: sidebar_partial_path, formats: :html) %>");
+        $("#scan-info-container").html("<%= j render(partial: "shared/scan_heading", formats: :html) %>");
+        $("#summary-sitemap").html("<%= j render(partial: 'shared/scan_results/entries/sitemap', formats: :html, locals: { data: data }) %>");
+        $("#entries-filter-container").html("<%= j render(partial: 'shared/scan_results/entries/filter', formats: :html, locals: { data: data }) %>");
+        $("#summary-statistics").replaceWith("<%= j render(partial: 'shared/scan_results/entries/statistics', formats: :html, locals: { data: data }) %>");
+        $("#summary-entries").html("<%= j render(partial: 'shared/scan_results/entries/list', formats: :html, locals: { id: 'summary', data: data }) %>");
+        updateChart();
+      } else {
+        <%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
+      }
+  <% else %>
+    <%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
+  <% end %>
+<% else %>
+  <%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
+<% end %>

@@ -1,37 +1,37 @@
 <% if !(role = @scan.site_role).guest? %>
     <div class="alert alert-info" id="reproduction-site-role">
-        This issue was identified by logging in as
+        This entry was identified by logging in as
         <a target="_blank" href="<%= site_path @site %>#!/roles/<%= role.id %>"><%= role %></a>,
         it is likely that you will need the same privileges in order to reproduce it.
     </div>
 <% end %>
 
-<% if issue.active? && issue.input_vector.inputs.any? %>
+<% if entry.active? && entry.input_vector.inputs.any? %>
     <div id="reproduction-inputs">
-        In order to reproduce the issue please submit the
+        In order to reproduce the entry please submit the
         <a href="#!/input_vector">input vector</a> with the following values:
 
         <%= render '/shared/hash',
-                   object: issue.input_vector.inputs,
-                   highlight: issue.input_vector.affected_input_name,
+                   object: entry.input_vector.inputs,
+                   highlight: entry.input_vector.affected_input_name,
                    code: true
         %>
     </div>
 <% end %>
 
-<% if issue.page.dom.transitions.any? %>
+<% if entry.page.dom.transitions.any? %>
     <div id="reproduction-transitions">
         <p>
-            This issue requires a series of browser-based interface interactions
+            This entry requires a series of browser-based interface interactions
             in order to bring the page to a vulnerable state:
         </p>
 
-        <%= render 'issues/advanced/page/transitions',
-                   page: issue.page,
+        <%= render 'entries/advanced/page/transitions',
+                   page: entry.page,
                    id:   'reproduction' %>
     </div>
 <% else %>
     <div id="reproduction-request">
-        <pre class="highlight-container code-container"><%= highlight_http_request( issue.page.request.to_s, issue, issue.input_vector.seed.to_s ) || issue.page.request %></pre>
+        <pre class="highlight-container code-container"><%= highlight_http_request( entry.page.request.to_s, entry, entry.input_vector.seed.to_s ) || entry.page.request %></pre>
     </div>
 <% end %>

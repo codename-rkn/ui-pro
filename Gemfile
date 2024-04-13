@@ -79,24 +79,16 @@ group :development, :test do
     gem 'pry-byebug'
 end
 
+if File.exist? '../../scnr/license-client'
+    gem 'scnr-license-client', path: '../../scnr/license-client'
+end
+
+if File.exist? '../../scnr/engine'
+    gem 'scnr-engine', path: '../../scnr/engine'
+end
+
 if File.exist? '../application'
-    gem 'scnr-application', path: '../application'
+    gem 'rkn-application', path: '../application'
 else
-    gem 'scnr-application'
-end
-
-if File.exist? '../license-client'
-    gem 'scnr-license-client', path: '../license-client'
-end
-
-if File.exist? '../scnr'
-    gem 'scnr', path: '../scnr'
-end
-
-if File.exist? '../introspector'
-    gem 'scnr-introspector', path: '../introspector'
-end
-
-if File.exist? '../engine'
-    gem 'scnr-engine', path: '../engine'
+    gem 'rkn-application'
 end

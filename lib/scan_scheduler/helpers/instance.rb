@@ -98,7 +98,7 @@ module Instance
     end
 
     def application
-        SCNR::Application
+        RKN::Application
     end
 
     def instances

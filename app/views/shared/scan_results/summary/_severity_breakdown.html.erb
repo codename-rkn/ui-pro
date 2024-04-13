@@ -1,11 +1,11 @@
 <%
-   issue_count  = severities.values.inject(:+)
+   entry_count  = severities.values.inject(:+)
    severities   = severities.reject { |_, count| count == 0 }
    severities_a = severities.keys
 %>
 
 <h3>
-    <%= issue_count %> <%= 'issue'.pluralize issue_count %>,
+    <%= entry_count %> <%= 'entry'.pluralize entry_count %>,
 
     <span class="text-muted fs-6">
         <% severities_a.each_with_index do |severity, i| %>

@@ -7,7 +7,7 @@ class CreateScans < ActiveRecord::Migration[5.1]
       t.string :status
       t.boolean :timed_out, default: false
       t.integer :revisions_count, default: 0
-      t.integer :issues_count, default: 0
+      t.integer :entries_count, default: 0
       t.integer :sitemap_entries_count, default: 0
 
       t.belongs_to :site, index: true

@@ -572,7 +572,7 @@ describe ScanScheduler::Helpers::Scan do
             subject.update( revision ) {}
         end
 
-        it 'includes issues' do
+        it 'includes entries' do
             expect(instance).to receive(:native_progress) do |options|
                 expect(options[:with]).to include :issues
             end
@@ -580,7 +580,7 @@ describe ScanScheduler::Helpers::Scan do
             subject.update( revision ) {}
         end
 
-        it 'excludes non-fixed scan issues' do
+        it 'excludes non-fixed scan entries' do
             fissue = Issue.create_from_engine( native_issue, revision: other_revision )
             fissue.state = 'fixed'
             fissue.save
@@ -611,7 +611,7 @@ describe ScanScheduler::Helpers::Scan do
             subject.update( revision ) {}
         end
 
-        it 'excludes issues from previous revisions' do
+        it 'excludes entries from previous revisions' do
             Issue.create_from_engine( native_issue, revision: revision )
 
             expect(instance).to receive(:native_progress) do |options|
@@ -676,7 +676,7 @@ describe ScanScheduler::Helpers::Scan do
                 subject.update( revision ) {}
             end
 
-            it 'exclude seen issues' do
+            it 'exclude seen entries' do
                 expect(instance).to receive(:native_progress) do |_, &block|
                     block.call(
                         busy:   true,
@@ -830,7 +830,7 @@ describe ScanScheduler::Helpers::Scan do
             expect(revision.status).to eq 'stuff'
         end
 
-        context 'with :issues' do
+        context 'with :entries' do
             let(:progress) do
                 super().merge( issues: [native_issue] )
             end
@@ -937,7 +937,7 @@ describe ScanScheduler::Helpers::Scan do
             context 'when the revision was a result of a rescope' do
                 let(:args) { [revision.next, mark_issues_fixed: false, status: 'completed'] }
 
-                it 'calls does not mark issues fixed' do
+                it 'calls does not mark entries fixed' do
                     subject.rescope( revision )
 
                     r = revision.next

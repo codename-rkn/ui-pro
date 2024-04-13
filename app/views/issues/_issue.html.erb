@@ -1,28 +1,28 @@
 <div class="page-header">
     <h1>
-        <%= @issue.type.name %>
+        <%= @entry.type.name %>
         <span class="text-muted fs-6">
-            <% if @issue.input_vector.affected_input_name %>
-                in <%= @issue.input_vector %> input
-                <code><%= @issue.input_vector.affected_input_name %></code>
+            <% if @entry.input_vector.affected_input_name %>
+                in <%= @entry.input_vector %> input
+                <code><%= @entry.input_vector.affected_input_name %></code>
             <% end %>
 
             at
             <%= link_to_url_with_external(
-                    external: @issue.referring_page.dom.url,
+                    external: @entry.referring_page.dom.url,
                     internal: site_path(
                         @site,
-                        sitemap_entry_url( issue.referring_page.sitemap_entry )
+                        sitemap_entry_url( entry.referring_page.sitemap_entry )
                     ),
                     display_path_only: true
                 )
             %>
             pointing to
             <%= link_to_url_with_external(
-                    external: @issue.input_vector.action,
+                    external: @entry.input_vector.action,
                     internal: site_path(
                         @site,
-                        sitemap_entry_url( issue.input_vector.sitemap_entry )
+                        sitemap_entry_url( entry.input_vector.sitemap_entry )
                     ),
                     display_path_only: true
                 )
@@ -31,20 +31,20 @@
     </h1>
 
     <h3>
-        <p class="pull-left badge label-severity-<%= @issue.severity.to_s.downcase %>">
-            <%= @issue.severity.to_s.capitalize %> severity
+        <p class="pull-left badge label-severity-<%= @entry.severity.to_s.downcase %>">
+            <%= @entry.severity.to_s.capitalize %> severity
         </p>
     </h3>
 </div>
 
 <%
-   has_references = (@issue.type.references.any? || @issue.type.cwe) ? true : nil
+   has_references = (@entry.type.references.any? || @entry.type.cwe) ? true : nil
 %>
 
 <div class="row" id="info">
     <div class="col-md-<%= has_references ? 10 : 12 %>">
         <div class="description">
-            <%= md @issue.type.description %>
+            <%= md @entry.type.description %>
         </div>
     </div>
 
@@ -53,13 +53,13 @@
         <strong>References</strong>
 
         <ul class="list-unstyled">
-            <% if @issue.type.cwe_url %>
+            <% if @entry.type.cwe_url %>
             <li>
-                <%= link_to 'CWE', @issue.type.cwe_url, target: '_blank' %>
+                <%= link_to 'CWE', @entry.type.cwe_url, target: '_blank' %>
             </li>
             <% end %>
 
-            <% @issue.type.references.each do |reference| %>
+            <% @entry.type.references.each do |reference| %>
                 <li>
                     <%= link_to reference.title, reference.url, target: '_blank' %>
                 </li>
@@ -79,7 +79,7 @@
 
         Input vector
     </h2>
-    <%= render 'issues/input_vector', issue: issue %>
+    <%= render 'entries/input_vector', entry: entry %>
 </div>
 
 <hr/>
@@ -93,12 +93,12 @@
         Reproduction
     </h2>
 
-    <%= render 'issues/reproduction', issue: issue %>
+    <%= render 'entries/reproduction', entry: entry %>
 </div>
 
 <hr/>
 
-<% if @issue.has_proofs? %>
+<% if @entry.has_proofs? %>
 <div class="mt-3" id="identification">
     <h2>
         <a class="anchor" href="#!/identification">
@@ -108,13 +108,13 @@
         Identification
     </h2>
 
-    <%= render 'issues/identification', issue: issue %>
+    <%= render 'entries/identification', entry: entry %>
 </div>
 
 <hr/>
 <% end %>
 
-<% if @issue.type.remedy_guidance %>
+<% if @entry.type.remedy_guidance %>
     <div class="mt-3" id="remediation">
         <h2>
             <a class="anchor" href="#!/remediation">
@@ -124,7 +124,7 @@
             Remediation
         </h2>
 
-        <%= render 'issues/remediation', issue: issue %>
+        <%= render 'entries/remediation', entry: entry %>
     </div>
 
     <hr/>
@@ -144,5 +144,5 @@
         state of the web application and associated traffic.
     </p>
 
-    <%= render 'issues/advanced', issue: issue %>
+    <%= render 'entries/advanced', entry: entry %>
 </div>

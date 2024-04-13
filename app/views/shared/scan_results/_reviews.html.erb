@@ -1,21 +1,21 @@
 <%
    by_state = {}
-   issues   = @reviews[:issues]
+   entries   = @reviews[:entries]
 
-   group_issues = proc do |group, issue|
-       state = issue.auto_review_status
+   group_entries = proc do |group, entry|
+       state = entry.auto_review_status
 
        group[state] ||= []
-       group[state] << issue
+       group[state] << entry
    end
 
-   if issues.is_a? Array
-       issues.each do |issue|
-           group_issues.call by_state, issue
+   if entries.is_a? Array
+       entries.each do |entry|
+           group_entries.call by_state, entry
        end
    else
-       scoped_find_each( issues ) do |issue|
-           group_issues.call by_state, issue
+       scoped_find_each( entries ) do |entry|
+           group_entries.call by_state, entry
        end
    end
 
@@ -30,13 +30,13 @@
 %>
 
 <p class="text-muted">
-    The listed issues have been automatically reviewed based on state changes
+    The listed entries have been automatically reviewed based on state changes
     over time and across scans.
 </p>
 
 <%
    hr = nil
-   by_state.each do |state, issue_group| %>
+   by_state.each do |state, entry_group| %>
     <%= '<hr/>'.html_safe if hr %>
     <% hr = true %>
 
@@ -45,7 +45,7 @@
             <%= state.humanize %>
 
             <span class="badge bg-info">
-                <%= issue_group.size %>
+                <%= entry_group.size %>
             </span>
         </h2>
 
@@ -54,26 +54,26 @@
                 case state
                     when 'fixed'
                         <<-EOHTML
-                            These issues did not appear in subsequent scans.
+                            These entries did not appear in subsequent scans.
                         EOHTML
 
                     when 'regressions'
                         <<-EOHTML
-                            These issues were marked as fixed but re-appeared.
+                            These entries were marked as fixed but re-appeared.
                         EOHTML
 
                     when 'false_positives'
                         <<-EOHTML
-                            These issues were marked as false-positives, as a result
-                            their state was applied to other identical issues.
+                            These entries were marked as false-positives, as a result
+                            their state was applied to other identical entries.
                         EOHTML
                 end
             %>
         </p>
 
-        <%= render partial: 'shared/scan_results/issues/list', locals: {
+        <%= render partial: 'shared/scan_results/entries/list', locals: {
                 data: {
-                        issues: issue_group
+                        entries: entry_group
                 },
                 id:                        "reviews-#{state}",
                 show_reviewed_by_revision: true,

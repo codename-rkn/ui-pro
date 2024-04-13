@@ -101,7 +101,7 @@ describe ScanScheduler::Helpers::Issue do
     end
 
     describe '#mark_other_issues_fixed' do
-        it 'marks issues of other revisions not in the issue list as fixed' do
+        it 'marks entries of other revisions not in the issue list as fixed' do
             issue = subject.create_issue( revision, native_issue )
             issue.digest = rand(9999999)
             issue.save
@@ -117,15 +117,15 @@ describe ScanScheduler::Helpers::Issue do
     describe '#import_issues_from_report' do
         let(:report) { Factory[:report].tap { |r| r.options[:url] = 'http://test.com' } }
 
-        context 'when the report contains new issues' do
+        context 'when the report contains new entries' do
             it 'creates them' do
                 subject.import_issues_from_report( revision, report )
                 expect(revision.issues.digests.sort).to eq report.issues.map(&:digest).sort
             end
         end
 
-        context 'when the report contains some issues from previous revisions' do
-            it 'only creates new issues' do
+        context 'when the report contains some entries from previous revisions' do
+            it 'only creates new entries' do
                 first_issue = report.issues[0]
 
                 rev2 = new_revision
@@ -138,7 +138,7 @@ describe ScanScheduler::Helpers::Issue do
             end
         end
 
-        context 'when the report contains issues from the current revision' do
+        context 'when the report contains entries from the current revision' do
             context 'with new remark data' do
                 it 'updates the remark data' do
                     first_issue = report.issues[0]

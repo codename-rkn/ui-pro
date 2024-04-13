@@ -36,15 +36,15 @@ shared_examples_for 'Site scan tables row fields' do
         expect(scans.find('.scan-sitemap-count')).to have_content scan.sitemap_entries.size
     end
 
-    scenario 'user sees amount of issues for this revision' do
+    scenario 'user sees amount of entries for this revision' do
         expect(scans.find('.revision-issue-count')).to have_content revision.issues.size
     end
 
-    scenario 'user sees amount of issues for this scan' do
+    scenario 'user sees amount of entries for this scan' do
         expect(scans.find('.scan-issue-count')).to have_content scan.issues.size
     end
 
-    feature 'when the scan has no issues' do
+    feature 'when the scan has no entries' do
         let(:max_severity) { scans.find('.scan-max-severity') }
 
         scenario 'user sees max severity of none' do
@@ -52,7 +52,7 @@ shared_examples_for 'Site scan tables row fields' do
         end
     end
 
-    feature 'when the revision has no issues' do
+    feature 'when the revision has no entries' do
         let(:max_severity) { scans.find('.revision-max-severity') }
 
         scenario 'user sees max severity of none' do

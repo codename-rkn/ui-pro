@@ -4,13 +4,13 @@
         reproduction: 'Reproduction'
    }
 
-   if @issue.has_proofs?
+   if @entry.has_proofs?
        sections.merge!(
            identification: 'Identification'
        )
    end
 
-   if !@issue.type.remedy_guidance.to_s.empty?
+   if !@entry.type.remedy_guidance.to_s.empty?
        sections.merge!(
            remediation: 'Remediation'
        )
@@ -22,28 +22,28 @@
        advanced_affected_page: '&ndash; Affected page'
    )
 
-   if !@issue.page.request.to_s.empty? || !@issue.page.response.to_s.empty?
+   if !@entry.page.request.to_s.empty? || !@entry.page.response.to_s.empty?
        sections.merge!(
            advanced_affected_page_http: '&mdash; HTTP traffic',
        )
    end
 
-   if (!@issue.page.dom.body.empty? || !@issue.page.response.body.empty?) &&
-        (@issue.page.dom.body != @issue.page.response.body) &&
-           @issue.page.dom.transitions.any?
+   if (!@entry.page.dom.body.empty? || !@entry.page.response.body.empty?) &&
+        (@entry.page.dom.body != @entry.page.response.body) &&
+           @entry.page.dom.transitions.any?
 
        sections.merge!(
            advanced_affected_page_dom_processing: '&mdash; DOM processing',
        )
    end
 
-   if @issue.page.dom.execution_flow_sinks.any?
+   if @entry.page.dom.execution_flow_sinks.any?
        sections.merge!(
            advanced_affected_page_execution_flow: '&mdash; Execution-flow',
        )
    end
 
-   if @issue.page.dom.data_flow_sinks.any?
+   if @entry.page.dom.data_flow_sinks.any?
        sections.merge!(
            advanced_affected_page_data_flow: '&mdash; Data-flow',
        )
@@ -53,30 +53,30 @@
        advanced_referring_page: '&ndash; Referring page',
    )
 
-   if !@issue.referring_page.request.to_s.empty? ||
-           !@issue.referring_page.response.to_s.empty?
+   if !@entry.referring_page.request.to_s.empty? ||
+           !@entry.referring_page.response.to_s.empty?
 
        sections.merge!(
            advanced_referring_page_http: '&mdash; HTTP traffic',
        )
    end
 
-   if (!@issue.referring_page.dom.body.empty? || !@issue.referring_page.response.body.empty?) &&
-           (@issue.referring_page.dom.body != @issue.referring_page.response.body) &&
-           @issue.referring_page.dom.transitions.any?
+   if (!@entry.referring_page.dom.body.empty? || !@entry.referring_page.response.body.empty?) &&
+           (@entry.referring_page.dom.body != @entry.referring_page.response.body) &&
+           @entry.referring_page.dom.transitions.any?
 
        sections.merge!(
            advanced_referring_page_dom_processing: '&mdash; DOM processing',
        )
    end
 
-   if @issue.referring_page.dom.execution_flow_sinks.any?
+   if @entry.referring_page.dom.execution_flow_sinks.any?
        sections.merge!(
            advanced_referring_page_execution_flow: '&mdash; Execution-flow',
        )
    end
 
-   if @issue.referring_page.dom.data_flow_sinks.any?
+   if @entry.referring_page.dom.data_flow_sinks.any?
        sections.merge!(
            advanced_referring_page_data_flow: '&mdash; Data-flow',
        )
@@ -87,23 +87,23 @@
 
 <hr/>
 
-<% if @issue.reviewed_by_revision? %>
+<% if @entry.reviewed_by_revision? %>
     <div id="reviewed-by-revision">
         <span class="label label-info label-emphasis">
             Reviewed by
-            <%= link_to @issue.reviewed_by_revision,
+            <%= link_to @entry.reviewed_by_revision,
                         reviews_site_scan_revision_path(
-                                @issue.reviewed_by_revision.site,
-                                @issue.reviewed_by_revision.scan,
-                                @issue.reviewed_by_revision
+                                @entry.reviewed_by_revision.site,
+                                @entry.reviewed_by_revision.scan,
+                                @entry.reviewed_by_revision
                         ) %>
 
-            <% if @issue.reviewed_by_revision.scan != @scan %>
+            <% if @entry.reviewed_by_revision.scan != @scan %>
                 of
-                <%= link_to @issue.reviewed_by_revision.scan.name,
+                <%= link_to @entry.reviewed_by_revision.scan.name,
                             site_scan_path(
-                                    @issue.reviewed_by_revision.site,
-                                    @issue.reviewed_by_revision.scan
+                                    @entry.reviewed_by_revision.site,
+                                    @entry.reviewed_by_revision.scan
                             ) %>
             <% end %>
             as:
@@ -114,8 +114,8 @@
 <%= render 'form' %>
 
 
-<% if @issue.siblings.count > 1 %>
-    <%= render 'issues/siblings' %>
+<% if @entry.siblings.count > 1 %>
+    <%= render 'entries/siblings' %>
 <% end %>
 
 <hr/>

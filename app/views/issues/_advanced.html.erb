@@ -8,10 +8,10 @@
 
         <span class="text-muted fs-6">
             <%= link_to_url_with_external(
-                    external: issue.page.dom.url,
+                    external: entry.page.dom.url,
                     internal: site_path(
-                        issue.revision.scan.site,
-                        sitemap_entry_url( issue.page.sitemap_entry )
+                        entry.revision.scan.site,
+                        sitemap_entry_url( entry.page.sitemap_entry )
                     ),
                     display_path_only: true
                 )
@@ -23,9 +23,9 @@
         Information about the page at its vulnerable state.
     </p>
 
-    <%= render 'issues/advanced/page',
-               issue: issue,
-               page: issue.page,
+    <%= render 'entries/advanced/page',
+               entry: entry,
+               page: entry.page,
                id: 'advanced_affected_page' %>
 </div>
 
@@ -41,10 +41,10 @@
 
         <span class="text-muted fs-6">
             <%= link_to_url_with_external(
-                    external: issue.referring_page.dom.url,
+                    external: entry.referring_page.dom.url,
                     internal: site_path(
-                        issue.revision.scan.site,
-                        sitemap_entry_url( issue.referring_page.sitemap_entry )
+                        entry.revision.scan.site,
+                        sitemap_entry_url( entry.referring_page.sitemap_entry )
                     ),
                     display_path_only: true
                 )
@@ -56,8 +56,8 @@
         Information about the page that included the logged input vector.
     </p>
 
-    <%= render 'issues/advanced/page',
-               issue: issue,
-               page: issue.referring_page,
+    <%= render 'entries/advanced/page',
+               entry: entry,
+               page: entry.referring_page,
                id: 'advanced_referring_page' %>
 </div>

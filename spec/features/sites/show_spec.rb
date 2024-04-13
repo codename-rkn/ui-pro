@@ -28,7 +28,7 @@ feature 'Site page' do
     let(:site_info) { find '#site-info' }
 
     let(:site_sidebar_selected_button) do
-        [:xpath, "a[starts-with(@href, '#{site_path( site )}/issues?filter') and not(@data-method)]"]
+        [:xpath, "a[starts-with(@href, '#{site_path( site )}/entries?filter') and not(@data-method)]"]
     end
     it_behaves_like 'Site sidebar'
 

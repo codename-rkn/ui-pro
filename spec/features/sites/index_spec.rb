@@ -107,7 +107,7 @@ feature 'Site index page' do
                 expect(page).to have_xpath "//a[@href='#{site_scan_revision_path( site, site.revisions.last.scan, site.revisions.last )}']"
             end
 
-            feature 'with issues' do
+            feature 'with entries' do
                 before do
                     10.times do
                         type.issues.create(
@@ -133,7 +133,7 @@ feature 'Site index page' do
                             expect(find("span.label-severity-#{s}")).to have_content state
                         end
 
-                        scenario 'user sees number of issues' do
+                        scenario 'user sees number of entries' do
                             expect(find('.state')).to have_content '10'
                         end
                     end

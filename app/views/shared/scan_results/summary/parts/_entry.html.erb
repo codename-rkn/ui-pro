@@ -1,0 +1,25 @@
+<%= link_to site_scan_revision_entry_path( entry.site_id, entry.scan, entry.revision, entry ),
+            title: entry.state.humanize do %>
+    <i class="fa fa-<%= entry_state_to_icon entry.state %>">
+    </i>
+
+&#8212;
+
+    <%= entry.input_vector.affected_input_name %>
+</a>
+<% end %>
+
+<% if entry.input_vector.affected_input_name %>
+    in
+    <code><%= entry.input_vector.kind %></code> input
+    <code><%= entry.input_vector.affected_input_name %></code>
+<% end %>
+
+at
+
+<%= link_to_url_with_external(
+            external: entry.input_vector.action,
+            internal: sitemap_entry_url( entry.sitemap_entry ),
+            display_path_only: true
+    )
+%>

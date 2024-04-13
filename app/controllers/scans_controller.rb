@@ -23,7 +23,7 @@ class ScansController < ApplicationController
     # GET /scans/1
     # GET /scans/1.json
     def show
-        redirect_to issues_site_scan_path( @site, @scan, filter_params )
+        redirect_to entries_site_scan_path( @site, @scan, filter_params )
     end
 
     # GET /scans/new
@@ -172,7 +172,7 @@ class ScansController < ApplicationController
             :device_id,
             :site_id,
             :id,
-            :mark_missing_issues_fixed,
+            :mark_missing_entries_fixed,
             {
                 schedule_attributes: permitted_schedule_attributes
             }
@@ -194,20 +194,20 @@ class ScansController < ApplicationController
 
     def fill_in_site_sidebar
         prepare_site_sidebar_data
-        process_issues( @site.issues )
+        process_entries( @site.entries )
     end
 
     def scan_results_owner
         @scan
     end
 
-    def prepare_issue_data
-        issues_summary_data(
+    def prepare_entry_data
+        entries_summary_data(
             site:      @site,
             sitemap:   @scan.sitemap_entries,
             scans:     [@scan],
             revisions: @scan.revisions.order( id: :desc ),
-            issues:    scan_results_issues
+            entries:    scan_results_entries
         )
     end
 

@@ -1,10 +1,10 @@
-<% if issue.platform %>
+<% if entry.platform %>
     <div id="identification-platform">
         <p class="alert alert-info">
             Affected platform type belongs to the
-            <strong><%= issue.platform.type.name %></strong>
+            <strong><%= entry.platform.type.name %></strong>
             category, identified as
-            <strong><%= issue.platform.name %></strong>.
+            <strong><%= entry.platform.name %></strong>.
         </p>
     </div>
 <% end %>

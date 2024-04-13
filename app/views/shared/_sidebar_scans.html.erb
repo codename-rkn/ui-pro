@@ -21,11 +21,11 @@
            if scans.any?
 
            scans.each do |scan|
-               max_severity   = scan.issues.max_severity
-               issue_count    = scan.issues.size
+               max_severity   = scan.entries.max_severity
+               entry_count    = scan.entries.size
                revision_count = scan.revisions.size
 
-               if revision_count > 0 && issue_count == 0
+               if revision_count > 0 && entry_count == 0
                    max_severity = 'none'
                end
         %>
@@ -33,10 +33,10 @@
             <li class="nav-item" id="sidebar-scans-id-<%= scan.id %>"
 
                 <% if revision_count > 0 %>
-                    <% if issue_count > 0 %>
-                        title="<%= pluralize issue_count, 'issue' %> with a maximum severity of <%= max_severity %>."
+                    <% if entry_count > 0 %>
+                        title="<%= pluralize entry_count, 'entry' %> with a maximum severity of <%= max_severity %>."
                     <% else %>
-                        title="<%= pluralize issue_count, 'issue' %>."
+                        title="<%= pluralize entry_count, 'entry' %>."
                     <% end %>
                 <% else %>
                     title="Has not run yet."
@@ -51,7 +51,7 @@
 
                     <% if revision_count > 0 %>
                         <span class="badge rounded-pill badge-severity-<%= max_severity %>">
-                            <%= issue_count %>
+                            <%= entry_count %>
                         </span>
                     <% end %>
                 <% end %>

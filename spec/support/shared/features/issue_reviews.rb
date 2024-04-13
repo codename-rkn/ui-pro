@@ -54,7 +54,7 @@ shared_examples_for 'Issue reviews' do |options = {}|
             super().tap { |i| i.update_state( 'fixed', revision ) }
         end
 
-        scenario 'lists fixed issues' do
+        scenario 'lists fixed entries' do
             expect(section).to have_content issue.type.name
         end
 
@@ -65,7 +65,7 @@ shared_examples_for 'Issue reviews' do |options = {}|
             expect(reviewer_link).to have_content "#{revision} of #{revision.scan} scan"
         end
 
-        scenario 'links to sibling issues' do
+        scenario 'links to sibling entries' do
             loggers = issue_row.find( "#reviews-fixed-issue-#{issue.digest}-loggers" )
 
             issue.siblings.each do |sibling|
@@ -82,7 +82,7 @@ shared_examples_for 'Issue reviews' do |options = {}|
             super().tap { |i| i.update_state( 'false_positive', revision ) }
         end
 
-        scenario 'lists fixed issues' do
+        scenario 'lists fixed entries' do
             expect(section).to have_content issue.type.name
         end
 
@@ -93,7 +93,7 @@ shared_examples_for 'Issue reviews' do |options = {}|
             expect(reviewer_link).to have_content "#{revision} of #{revision.scan} scan"
         end
 
-        scenario 'links to sibling issues' do
+        scenario 'links to sibling entries' do
             loggers = issue_row.find( "#reviews-false_positives-issue-#{issue.digest}-loggers" )
 
             issue.siblings.each do |sibling|
@@ -110,7 +110,7 @@ shared_examples_for 'Issue reviews' do |options = {}|
             super().tap { |i| i.update_state( 'trusted', revision ) }
         end
 
-        scenario 'lists fixed issues' do
+        scenario 'lists fixed entries' do
             expect(section).to have_content issue.type.name
         end
 
@@ -121,7 +121,7 @@ shared_examples_for 'Issue reviews' do |options = {}|
             expect(reviewer_link).to have_content "#{revision} of #{revision.scan} scan"
         end
 
-        scenario 'links to sibling issues' do
+        scenario 'links to sibling entries' do
             loggers = issue_row.find( "#reviews-regressions-issue-#{issue.digest}-loggers" )
 
             issue.siblings.each do |sibling|

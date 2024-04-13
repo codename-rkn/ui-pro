@@ -12,16 +12,16 @@ feature 'Dashboard index page' do
 
     feature 'user sees number of' do
         feature 'unresolved' do
-            scenario 'high severity issues'
-            scenario 'medium severity issues'
-            scenario 'low severity issues'
-            scenario 'informational severity issues'
+            scenario 'high severity entries'
+            scenario 'medium severity entries'
+            scenario 'low severity entries'
+            scenario 'informational severity entries'
         end
     end
 
     feature 'user sees latest notifications' do
         scenario 'of scans'
-        scenario 'of issues'
+        scenario 'of entries'
     end
 
 end

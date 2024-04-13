@@ -195,7 +195,7 @@ feature 'Issue page' do
                 expect(issue.reload.state).to eq 'fixed'
             end
 
-            scenario 'sets the state for sibling issues too' do
+            scenario 'sets the state for sibling entries too' do
                 select 'Fixed', from: 'issue_state'
                 sleep 1
 

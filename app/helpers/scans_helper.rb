@@ -11,22 +11,22 @@ module ScansHelper
             @scan_sidebar[:revisions] = Set.new
         end
 
-        process_issues_after_page_filter do |issue|
+        process_entries_after_page_filter do |entry|
             if filter_pages?
-                @scan_sidebar[:revisions] << issue.revision
+                @scan_sidebar[:revisions] << entry.revision
             end
 
-            @scan_sidebar[:data][issue.revision_id] ||= {}
-            @scan_sidebar[:data][issue.revision_id][:max_severity] ||= issue.severity.to_s
+            @scan_sidebar[:data][entry.revision_id] ||= {}
+            @scan_sidebar[:data][entry.revision_id][:max_severity] ||= entry.severity.to_s
 
-            @scan_sidebar[:data][issue.revision_id][:issue_count] ||= Set.new
-            @scan_sidebar[:data][issue.revision_id][:issue_count]  << issue.digest
+            @scan_sidebar[:data][entry.revision_id][:entry_count] ||= Set.new
+            @scan_sidebar[:data][entry.revision_id][:entry_count]  << entry.digest
         end
 
-        process_issues_done do
+        process_entries_done do
             @scan_sidebar[:data].each do |revision_id, data|
-                @scan_sidebar[:data][revision_id][:issue_count] =
-                    data[:issue_count].size
+                @scan_sidebar[:data][revision_id][:entry_count] =
+                    data[:entry_count].size
             end
 
             @scan_sidebar[:revisions] =

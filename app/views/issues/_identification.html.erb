@@ -1,35 +1,35 @@
-<%= render 'issues/identification/platform', issue: issue %>
-<%= render 'issues/identification/remarks',  issue: issue %>
+<%= render 'entries/identification/platform', entry: entry %>
+<%= render 'entries/identification/remarks',  entry: entry %>
 
-<% if !@issue.proof.to_s.empty? && !@issue.page.response.to_s.empty? %>
-    <div id="identification-proof" class="issue-proof">
-        <% if @issue.page.dom.transitions.any? &&
-                (hp = highlight_proof( @issue.page.dom.body.to_s, @issue.proof )) %>
+<% if !@entry.proof.to_s.empty? && !@entry.page.response.to_s.empty? %>
+    <div id="identification-proof" class="entry-proof">
+        <% if @entry.page.dom.transitions.any? &&
+                (hp = highlight_proof( @entry.page.dom.body.to_s, @entry.proof )) %>
             <pre class="highlight-container code-container"><%= hp %></pre>
 
             <p class="text-muted">
                 Evaluated browser DOM.
             <p>
-        <% elsif (hp = highlight_proof( @issue.page.response.to_s, @issue.proof )) %>
+        <% elsif (hp = highlight_proof( @entry.page.response.to_s, @entry.proof )) %>
             <pre class="highlight-container code-container"><%= hp %></pre>
 
             <p class="text-muted">
                 Raw HTTP response - binary bodies will not be displayed.
             </p>
         <% else %>
-            <%= code_highlight( issue.proof ) %>
+            <%= code_highlight( entry.proof ) %>
         <% end %>
     </div>
 <% end %>
 
-<% if @issue.page.dom.execution_flow_sinks.any? %>
+<% if @entry.page.dom.execution_flow_sinks.any? %>
     <div id="identification-execution-flow-sinks">
         <p>
-            This issue is accompanied by successful execution of a JavaScript payload:
+            This entry is accompanied by successful execution of a JavaScript payload:
         </p>
 
-        <%= render 'issues/advanced/page/sink/execution_flow',
-                   page: @issue.page,
+        <%= render 'entries/advanced/page/sink/execution_flow',
+                   page: @entry.page,
                    id:   'identification' %>
     </div>
 <% end %>

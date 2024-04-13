@@ -1,5 +1,5 @@
 module SitesHelper
-    include IssuesHelper
+    include EntriesHelper
 
     def prepare_site_sidebar_data
         @site_sidebar = {
@@ -11,22 +11,22 @@ module SitesHelper
             @site_sidebar[:scans] = Set.new
         end
 
-        process_issues_after_page_filter do |issue|
+        process_entries_after_page_filter do |entry|
             if filter_pages?
-                @site_sidebar[:scans] << issue.scan
+                @site_sidebar[:scans] << entry.scan
             end
 
-            @site_sidebar[:data][issue.scan_id] ||= {}
-            @site_sidebar[:data][issue.scan_id][:max_severity] ||= issue.severity.to_s
+            @site_sidebar[:data][entry.scan_id] ||= {}
+            @site_sidebar[:data][entry.scan_id][:max_severity] ||= entry.severity.to_s
 
-            @site_sidebar[:data][issue.scan_id][:issue_count] ||= Set.new
-            @site_sidebar[:data][issue.scan_id][:issue_count]  << issue.digest
+            @site_sidebar[:data][entry.scan_id][:entry_count] ||= Set.new
+            @site_sidebar[:data][entry.scan_id][:entry_count]  << entry.digest
         end
 
-        process_issues_done do
+        process_entries_done do
             @site_sidebar[:data].each do |scan_id, data|
-                @site_sidebar[:data][scan_id][:issue_count] =
-                    data[:issue_count].size
+                @site_sidebar[:data][scan_id][:entry_count] =
+                    data[:entry_count].size
             end
 
             @site_sidebar[:scans] =

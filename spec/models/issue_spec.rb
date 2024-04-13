@@ -50,7 +50,7 @@ describe Issue do
 
     describe 'scopes' do
         describe 'default' do
-            it 'orders issues by severity and type name' do
+            it 'orders entries by severity and type name' do
                 ha = FactoryGirl.create( :issue_type,
                                     name: 'a1',
                                     severity: high_severity
@@ -125,9 +125,9 @@ describe Issue do
 
         Issue::STATES.each do |state|
             describe state do
-                it "returns #{state} issues" do
+                it "returns #{state} entries" do
 
-                    # Create issues of all states
+                    # Create entries of all states
                     Issue::STATES.each do |s|
                         described_class.create( state: s, revision: revision )
                     end
@@ -145,9 +145,9 @@ describe Issue do
 
         IssueTypeSeverity::SEVERITIES.each do |severity|
             describe "#{severity}_severity" do
-                it "returns #{severity} severity issues" do
+                it "returns #{severity} severity entries" do
 
-                    # Create issues of all severities
+                    # Create entries of all severities
                     IssueTypeSeverity::SEVERITIES.each do |s|
                         send( "#{s}_severity_issue" )
                     end
@@ -211,7 +211,7 @@ describe Issue do
             it 'returns informational'
         end
 
-        context 'when there are no issues' do
+        context 'when there are no entries' do
             it 'returns nil'
         end
     end
@@ -315,7 +315,7 @@ describe Issue do
             expect(subject.reload.state).to eq state
         end
 
-        scenario 'sets the #state issues with the same #digest' do
+        scenario 'sets the #state entries with the same #digest' do
             sibling
             subject.update_state  state
 
