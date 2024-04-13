@@ -34,14 +34,6 @@ export default class IssueChart {
             label: 'Entries',
             data: [],
             backgroundColor: '#1f77b4'
-          },
-          {
-            label: 'Severity',
-            data: [],
-            type: 'line',
-            yAxisID: 'y2',
-            borderColor: '#ff7f0e',
-            fill: false
           }
         ]
       },
@@ -82,11 +74,10 @@ export default class IssueChart {
       return;
     }
 
-    const { labels, entryNames, severityIndexForIssue } = data;
+    const { labels, entryNames } = data;
 
     this.chartInstance.data.labels = labels;
     this.chartInstance.data.datasets[0].data = entryNames;
-    this.chartInstance.data.datasets[1].data = severityIndexForIssue;
     this.chartInstance.update();
   }
 };
