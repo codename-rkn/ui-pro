@@ -21,23 +21,14 @@
            if scans.any?
 
            scans.each do |scan|
-               max_severity   = scan.entries.max_severity
                entry_count    = scan.entries.size
                revision_count = scan.revisions.size
-
-               if revision_count > 0 && entry_count == 0
-                   max_severity = 'none'
-               end
         %>
 
             <li class="nav-item" id="sidebar-scans-id-<%= scan.id %>"
 
                 <% if revision_count > 0 %>
-                    <% if entry_count > 0 %>
-                        title="<%= pluralize entry_count, 'entry' %> with a maximum severity of <%= max_severity %>."
-                    <% else %>
-                        title="<%= pluralize entry_count, 'entry' %>."
-                    <% end %>
+                    title="<%= pluralize entry_count, 'entry' %>."
                 <% else %>
                     title="Has not run yet."
                 <% end %>

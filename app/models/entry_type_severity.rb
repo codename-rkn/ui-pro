@@ -4,12 +4,6 @@ class EntryTypeSeverity < ActiveRecord::Base
 
     SEVERITIES = [:high, :medium, :low, :informational]
 
-    SEVERITIES.each do |severity|
-        define_singleton_method severity do
-            where( name: severity.to_s ).first
-        end
-    end
-
     def self.order_sql
         ret = 'CASE'
         SEVERITIES.each_with_index do |p, i|

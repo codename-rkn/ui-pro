@@ -1,6 +1,5 @@
 <%
    revision              = scan.last_revision
-   scan_max_severity     = scan.entries.max_severity || 'none'
    revision_max_severity = revision.entries.max_severity  || 'none'
    with_status           = !!local_assigns[:with_status]
 %>

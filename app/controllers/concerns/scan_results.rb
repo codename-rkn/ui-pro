@@ -131,7 +131,7 @@ module ScanResults
 
     def scan_results_entries
         # Can't do filtering here, the rest of the interface relies of full
-        # data in order to fill in context, like severities, states etc.
+        # data in order to fill in context, like states etc.
         #
         # The filtering will take place in #process_entries.
         scan_results_entries_owner.entries

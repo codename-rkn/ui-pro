@@ -17,8 +17,6 @@ module ScansHelper
             end
 
             @scan_sidebar[:data][entry.revision_id] ||= {}
-            @scan_sidebar[:data][entry.revision_id][:max_severity] ||= entry.severity.to_s
-
             @scan_sidebar[:data][entry.revision_id][:entry_count] ||= Set.new
             @scan_sidebar[:data][entry.revision_id][:entry_count]  << entry.digest
         end

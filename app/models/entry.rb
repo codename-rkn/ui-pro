@@ -25,7 +25,6 @@ class Entry < ActiveRecord::Base
 
     belongs_to :type, class_name: 'EntryType', foreign_key: 'entry_type_id',
                 optional: true
-    has_one :severity, through: :type
 
     belongs_to :sitemap_entry, counter_cache: true, optional: true
 
@@ -50,17 +49,10 @@ class Entry < ActiveRecord::Base
         end
     end
 
-    EntryTypeSeverity::SEVERITIES.each do |severity|
-        scope "#{severity}_severity", -> do
-            joins(:severity).where( 'entry_type_severities.name = ?', severity )
-        end
-    end
-
-    scope :by_severity, -> { includes(:severity).order EntryTypeSeverity.order_sql }
     scope :reviewed,    -> { where.not reviewed_by_revision: nil }
 
     default_scope do
-        includes(:type).includes(:input_vector).by_severity.
+        includes(:type).includes(:input_vector).
             order( Arel.sql( 'entry_types.name asc') ).order( state_order_sql )
     end
 
@@ -131,19 +123,22 @@ class Entry < ActiveRecord::Base
         states
     end
 
-    def self.count_severities
+    def self.count_input_vector_kinds
         # We need to remove the order since we're counting fields that are
         # used for ordering and PG will go ape.
-        counted_severities = reorder('').joins(:severity).
-            group( 'entry_type_severities.name' ).count
+        reorder('').joins(:input_vector).group( 'input_vectors.kind' ).count
+    end
 
-        severities = {}
-        EntryTypeSeverity::SEVERITIES.each do |severity|
-            severities[severity.to_s] = counted_severities[severity.to_s]
-            severities[severity.to_s] ||= 0
-        end
+    def self.count_platforms
+        # We need to remove the order since we're counting fields that are
+        # used for ordering and PG will go ape.
+        reorder('').joins(:platforms).group( 'entry_platforms.name' ).count
+    end
 
-        severities
+    def self.count_sinks
+        # We need to remove the order since we're counting fields that are
+        # used for ordering and PG will go ape.
+        reorder('').joins(:sinks).group( 'entry_sinks.name' ).count
     end
 
     def self.state_order_sql
@@ -160,13 +155,6 @@ class Entry < ActiveRecord::Base
         Revision.where(
             id: select( 'entries.revision_id' ).pluck( 'entries.revision_id' ).uniq
         )
-    end
-
-    def self.max_severity
-        entry = by_severity.first
-        return if !entry
-
-        entry.severity
     end
 
     def self.create_from_engine( entry, options = {} )

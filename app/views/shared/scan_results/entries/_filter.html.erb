@@ -2,6 +2,10 @@
    pages      = active_filters[:pages]
    states     = active_filters[:states]
    type       = active_filters[:type]
+   sinks      = active_filters[:sinks]
+   platforms  = active_filters[:platforms]
+   kinds      = active_filters[:kinds]
+
 %>
 
 <div class="row">
@@ -29,8 +33,71 @@
                             <%= ',' if data[:states].size != i + 1 %>
                             <% i += 1 %>
                         <% end %>
-                        .
                     </div>
+
+                  <div class="flex-row d-flex justify-content-center">
+                    <% i = 0
+                       data[:input_vector_kinds].each do |kind, count| %>
+
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="entry-kind-<%= kind %>"
+                               name="filter[kinds][]" value="<%= kind %>"
+                               <%= "checked=checked" if kinds.include?( kind ) %>
+                          />
+
+                        <label class="form-check-label" for="entry-kind-<%= kind %>">
+                          <%= h = kind.humanize; i == 0 ? h : h.downcase %>
+                          ( <i class="fa fa-<%= entry_state_to_icon kind %>"></i>
+                          <%= count %>)
+                        </label>
+                      </div>
+                      <%= ',' if data[:input_vector_kinds].size != i + 1 %>
+                      <% i += 1 %>
+                    <% end %>
+                  </div>
+
+                  <div class="flex-row d-flex justify-content-center">
+                    <% i = 0
+                       data[:platforms].each do |platform, count| %>
+
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="entry-platform-<%= platform %>"
+                               name="filter[platforms][]" value="<%= platform %>"
+                               <%= "checked=checked" if platforms.include?( platform ) %>
+                          />
+
+                        <label class="form-check-label" for="entry-platform-<%= platform %>">
+                          <%= h = platform.humanize; i == 0 ? h : h.downcase %>
+                          ( <i class="fa fa-<%= entry_state_to_icon platform %>"></i>
+                          <%= count %>)
+                        </label>
+                      </div>
+                      <%= ',' if data[:platforms].size != i + 1 %>
+                      <% i += 1 %>
+                    <% end %>
+                  </div>
+
+                  <div class="flex-row d-flex justify-content-center">
+                    <% i = 0
+                       data[:sinks].each do |sink, count| %>
+
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="entry-sink-<%= sink %>"
+                               name="filter[sinks][]" value="<%= sink %>"
+                               <%= "checked=checked" if sinks.include?( sink ) %>
+                          />
+
+                        <label class="form-check-label" for="entry-sink-<%= sink %>">
+                          <%= h = sink.humanize; i == 0 ? h : h.downcase %>
+                          ( <i class="fa fa-<%= entry_state_to_icon sink %>"></i>
+                          <%= count %>)
+                        </label>
+                      </div>
+                      <%= ',' if data[:sinks].size != i + 1 %>
+                      <% i += 1 %>
+                    <% end %>
+                  </div>
+
                 </div>
             </div>
 

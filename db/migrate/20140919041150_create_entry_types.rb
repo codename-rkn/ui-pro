@@ -6,7 +6,6 @@ class CreateEntryTypes < ActiveRecord::Migration[5.1]
             t.text :description
             t.text :remedy_guidance
             t.integer :cwe
-            t.belongs_to :entry_type_severity, index: true
 
             t.timestamps
         end

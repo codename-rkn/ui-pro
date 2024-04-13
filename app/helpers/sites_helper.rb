@@ -17,8 +17,6 @@ module SitesHelper
             end
 
             @site_sidebar[:data][entry.scan_id] ||= {}
-            @site_sidebar[:data][entry.scan_id][:max_severity] ||= entry.severity.to_s
-
             @site_sidebar[:data][entry.scan_id][:entry_count] ||= Set.new
             @site_sidebar[:data][entry.scan_id][:entry_count]  << entry.digest
         end

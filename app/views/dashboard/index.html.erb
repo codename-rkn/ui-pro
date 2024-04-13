@@ -3,14 +3,6 @@
         <div class="col-md-9">
             <h1>Dashboard</h1>
         </div>
-
-        <div class="col-md-3">
-            <% @entry_count_by_severity.each do |severity, count| %>
-                <a href="#" class="btn-severity btn-lg btn-severity-<%= severity %>">
-                    <%= count %>
-                </a>
-            <% end %>
-        </div>
     </div>
 
     <div class="row">

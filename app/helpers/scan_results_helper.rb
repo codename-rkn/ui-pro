@@ -1,7 +1,7 @@
 module ScanResultsHelper
 
     FILTER_KEY    = :filter
-    VALID_FILTERS = Set.new(%w(type pages states severities))
+    VALID_FILTERS = Set.new(%w(type pages states sinks platforms kinds))
 
     def process_entry_blocks
         @process_entry_blocks ||= []
@@ -71,10 +71,10 @@ module ScanResultsHelper
         entries       = preload_entry_associations( entries )
 
         if filter_pages?
-            @sitemap_entry =
-                @site.sitemap_entries.
-                    where( digest: active_filters[:pages].first ).first
+            @sitemap_entry = @site.sitemap_entries.where( digest: active_filters[:pages].first ).first
         end
+
+        entries = apply_filters( entries )
 
         scoped_find_each( entries, size: entries_count ) do |entry|
             process_entry_blocks_call( entry )
@@ -97,6 +97,26 @@ module ScanResultsHelper
         process_entries_done_blocks_call
     end
 
+    def apply_filters( entries )
+        if filter_states?
+            entries = filter_states( entries )
+        end
+
+        if filter_kinds?
+            entries = filter_kinds( entries )
+        end
+
+        if filter_platforms?
+            entries = filter_platforms( entries )
+        end
+
+        if filter_sinks?
+            entries = filter_sinks( entries )
+        end
+
+        entries
+    end
+
     def entries_summary_data( data )
         store = {}
 
@@ -107,12 +127,16 @@ module ScanResultsHelper
 
         entries = data[:entries]
 
-        # This needs to happen here, we want this for filtering feedback and
-        # thus has to refer to the big, pre-filtering picture.
         if @revision
             states     = entries.where( revision: @revision ).count_states
+            platforms  = entries.where( revision: @revision ).count_platforms
+            sinks      = entries.where( revision: @revision ).count_sinks
+            input_vector_kinds = entries.where( revision: @revision ).count_input_vector_kinds
         else
             states     = entries.count_states
+            platforms  = entries.count_platforms
+            sinks      = entries.count_sinks
+            input_vector_kinds = entries.count_input_vector_kinds
         end
 
         sitemap_with_entries  = {}
@@ -146,9 +170,6 @@ module ScanResultsHelper
             end
 
             unique_entries_count << entry.digest
-
-            #... because we at least want to grab the filtered max severity now...
-            max_severity ||= entry.severity.to_s
 
             revision_data[entry.revision_id] ||= {}
             revision_data[entry.revision_id][:entry_count] ||= 0
@@ -203,6 +224,9 @@ module ScanResultsHelper
                 sitemap:             data[:sitemap],
                 sitemap_with_entries: sitemap_with_entries,
                 states:              states,
+                platforms:           platforms,
+                sinks:               sinks,
+                input_vector_kinds:  input_vector_kinds,
                 sitemap_data:        sitemap_data,
                 entries:             page_filtered_entries,
                 missing_entries:      missing_entries,
@@ -244,9 +268,6 @@ module ScanResultsHelper
     def update_sitemap_data( data, entry )
         data[entry.input_vector.action] ||= {
             internal:     sitemap_entry_url( entry.sitemap_entry.digest ),
-
-            # Entrys are sorted by severity first, the first one will be the max.
-            max_severity: entry.severity.to_s,
             digest:       entry.sitemap_entry.digest,
             entry_count:  0,
             seen:         Set.new
@@ -341,8 +362,54 @@ module ScanResultsHelper
         end
     end
 
+    def filter_kinds( entries )
+        return entries if active_filters[:kinds].empty?
+
+        if active_filters[:type] == 'exclude'
+            entries.where.not( input_vectors: { kind: active_filters[:kinds] } )
+        else
+            entries.where( input_vectors: { kind: active_filters[:kinds] } )
+        end
+    end
+
+    def filter_sinks( entries )
+        return entries if active_filters[:sinks].empty?
+
+        if active_filters[:type] == 'exclude'
+            entries.where.not( sinks: { name: active_filters[:sinks] } )
+        else
+            entries.where( sinks: { name: active_filters[:sinks] } )
+        end
+    end
+
+    def filter_platforms( entries )
+        return entries if active_filters[:platforms].empty?
+
+        if active_filters[:type] == 'exclude'
+            entries.where.not( platforms: { name: active_filters[:platforms] } )
+        else
+            entries.where( platforms: { name: active_filters[:platforms] } )
+        end
+    end
+
     def filter_pages?
         active_filters[:pages].any?
+    end
+
+    def filter_states?
+        active_filters[:states].any?
+    end
+
+    def filter_kinds?
+        active_filters[:kinds].any?
+    end
+
+    def filter_platforms?
+        active_filters[:platforms].any?
+    end
+
+    def filter_sinks?
+        active_filters[:sinks].any?
     end
 
     def page_id_in_filter?( page_id )
@@ -361,8 +428,9 @@ module ScanResultsHelper
             includes( :scan ).
             includes( :type ).
             includes( :input_vector ).
-            includes( :severity ).
             includes( :sitemap_entry ).
+            includes( :sinks ).
+            includes( :platforms ).
             includes( revision: { scan: [:profile] } ).
             includes( :reviewed_by_revision ).
             includes( page: :sitemap_entry ).
@@ -383,14 +451,14 @@ module ScanResultsHelper
 
         @active_filters[:type]  ||= 'include'
         @active_filters[:pages] ||= []
+        @active_filters[:sinks] ||= []
+        @active_filters[:platforms] ||= []
+        @active_filters[:kinds] ||= []
 
         if @active_filters[:type] == 'include'
-            @active_filters[:states]     ||= %w(trusted)
-            @active_filters[:severities] ||=
-                EntryTypeSeverity::SEVERITIES.map(&:to_s) - ['informational']
+            @active_filters[:states] ||= %w(pending)
         else
-            @active_filters[:states]     ||= []
-            @active_filters[:severities] ||= []
+            @active_filters[:states] ||= []
         end
 
         @active_filters
