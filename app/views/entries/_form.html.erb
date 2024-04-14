@@ -1,4 +1,4 @@
-<%= simple_form_for( [@site, @scan, @revision, @entry], remote: true ) do |f| %>
+<%= simple_form_for( [@site, @scan, @revision, @entry], remote: true, html: { id: 'state-form' } ) do |f| %>
     <%= f.error_notification %>
 
     <div class="form-inputs <%= 'without-top-radius'.html_safe if @entry.reviewed_by_revision %>">

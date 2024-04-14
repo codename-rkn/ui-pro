@@ -35,6 +35,9 @@ class Entry < ActiveRecord::Base
     has_and_belongs_to_many :platforms, class_name: 'EntryPlatform'
     has_and_belongs_to_many :sinks, class_name: 'EntrySink'
 
+    has_one :note
+    accepts_nested_attributes_for :note, update_only: true
+
     validates :state, presence: true, inclusion: { in: STATES }
 
     before_save :set_owners
@@ -193,6 +196,8 @@ class Entry < ActiveRecord::Base
         entry.input_vector.save
 
         entry.sitemap_entry = entry.input_vector.sitemap_entry
+
+        entry.note = Note.create
         entry.save
 
         entry

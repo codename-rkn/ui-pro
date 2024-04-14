@@ -202,3 +202,16 @@ ul.sitemap > li.active {
     }
     text-align: center;
 }
+
+#edit-notes {
+    form {
+        textarea {
+            width: 100%;
+            height: 300px;
+        }
+
+        input.btn {
+            float: left;
+        }
+    }
+}

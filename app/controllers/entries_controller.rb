@@ -16,8 +16,9 @@ class EntriesController < ApplicationController
     # PATCH/PUT /entries/1.json
     def update
         respond_to do |format|
-            if @entry.update_state( entry_params[:state] )
-                format.html { redirect_back fallback_location: root_path, notice: 'Issue was successfully updated.' }
+            ap entry_params
+            if @entry.update( entry_params )
+                format.html { redirect_back fallback_location: root_path, notice: 'Entry was successfully updated.' }
                 format.json { render :show, status: :ok, location: @entry }
                 format.js { head :ok }
             else
@@ -87,6 +88,6 @@ class EntriesController < ApplicationController
     end
 
     def permitted_attributes
-        [ :state ]
+        [ :state, note_attributes: [:id, :text] ]
     end
 end

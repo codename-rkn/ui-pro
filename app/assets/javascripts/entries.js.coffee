@@ -1,8 +1,8 @@
 setup = ->
     scrollToChild( '.highlight-container', '.highlight' )
 
-    $('select#entry_state').on 'change', ->
-        $('.edit_entry').submit()
+    $('form#state-form select#entry_state').on 'change', ->
+        $('form#state-form').submit()
 
     $('input.entry-state').on 'change', ->
         $(this).closest('form').submit()
