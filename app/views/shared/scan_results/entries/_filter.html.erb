@@ -47,8 +47,7 @@
 
                         <label class="form-check-label" for="entry-kind-<%= kind %>">
                           <%= h = kind.humanize; i == 0 ? h : h.downcase %>
-                          ( <i class="fa fa-<%= entry_state_to_icon kind %>"></i>
-                          <%= count %>)
+                          (<%= count %>)
                         </label>
                       </div>
                       <%= ',' if data[:input_vector_kinds].size != i + 1 %>
@@ -68,8 +67,7 @@
 
                         <label class="form-check-label" for="entry-platform-<%= platform %>">
                           <%= h = platform.humanize; i == 0 ? h : h.downcase %>
-                          ( <i class="fa fa-<%= entry_state_to_icon platform %>"></i>
-                          <%= count %>)
+                          (<%= count %>)
                         </label>
                       </div>
                       <%= ',' if data[:platforms].size != i + 1 %>
@@ -89,8 +87,7 @@
 
                         <label class="form-check-label" for="entry-sink-<%= sink %>">
                           <%= h = sink.humanize; i == 0 ? h : h.downcase %>
-                          ( <i class="fa fa-<%= entry_state_to_icon sink %>"></i>
-                          <%= count %>)
+                          (<%= count %>)
                         </label>
                       </div>
                       <%= ',' if data[:sinks].size != i + 1 %>
