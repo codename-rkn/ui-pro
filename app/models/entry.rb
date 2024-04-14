@@ -57,9 +57,7 @@ class Entry < ActiveRecord::Base
     end
 
     def has_proofs?
-        remarks.any? || !proof.blank? ||
-            (page && page.dom && page.dom.execution_flow_sinks &&
-                page.dom.execution_flow_sinks.any?)
+        !proof.blank? || page&.dom&.execution_flow_sinks&.any?
     end
 
     def reviewed_by_revision?
@@ -184,7 +182,8 @@ class Entry < ActiveRecord::Base
             remarks:        entry_remarks,
             platforms:      platforms,
             sinks:          sinks,
-            state:          DEFAULT_STATE
+            state:          DEFAULT_STATE,
+            proof:          entry[:seed]
        }.merge(options))
 
         entry.input_vector.sitemap_entry = entry.get_sitemap_entry(
@@ -194,7 +193,6 @@ class Entry < ActiveRecord::Base
         entry.input_vector.save
 
         entry.sitemap_entry = entry.input_vector.sitemap_entry
-        entry.proof = entry.input_vector.inputs[entry.input_vector.affected_input_name]
         entry.save
 
         entry
