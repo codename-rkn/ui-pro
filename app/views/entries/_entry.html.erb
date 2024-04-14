@@ -67,7 +67,7 @@
     <%= simple_form_for [@entry.site, @entry.scan, @entry.revision, @entry], remote: true do |form| %>
       <div class="form-group">
         <%= form.simple_fields_for :note do |f| %>
-          <%= f.text_area :text, class: 'form-control', placeholder: 'You can use Markdown for your notes.  ' %>
+          <%= f.text_area :text, class: 'form-control', placeholder: 'You can use Markdown for your notes.' %>
         <% end %>
       </div>
 
