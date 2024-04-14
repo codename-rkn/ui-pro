@@ -4,10 +4,11 @@ class EntryPageDomStackFrame < ActiveRecord::Base
                class_name: 'EntryPageDomFunction', dependent: :destroy
 
     def self.create_from_engine( frame )
+        frame = frame.symbolize_keys
         create(
             url:      frame[:url],
             line:     frame[:line],
-            function: EntryPageDomFunction.create_from_engine( frame.function )
+            function: EntryPageDomFunction.create_from_engine( frame[:function] )
         )
     end
 end

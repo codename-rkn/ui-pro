@@ -84,12 +84,8 @@ class Entry < ActiveRecord::Base
     def to_s
         s = ''
 
-        if type
-            s << type.name
-        end
-
         if input_vector
-            s << " in #{input_vector}"
+            s << "#{input_vector}"
 
             if input_vector.affected_input_name
                 s << " input '#{input_vector.affected_input_name}'"
@@ -198,6 +194,7 @@ class Entry < ActiveRecord::Base
         entry.input_vector.save
 
         entry.sitemap_entry = entry.input_vector.sitemap_entry
+        entry.proof = entry.input_vector.inputs[entry.input_vector.affected_input_name]
         entry.save
 
         entry

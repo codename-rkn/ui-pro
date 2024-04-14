@@ -10,76 +10,81 @@
        )
    end
 
-   if !@entry.type.remedy_guidance.to_s.empty?
-       sections.merge!(
-           remediation: 'Remediation'
-       )
-   end
-
    sections.merge!(
-       _:                       nil,
-       advanced:               'Advanced info',
+       _:        nil,
+       advanced: 'Advanced info'
+   )
+
+   if @entry.page
+     sections.merge!(
        advanced_affected_page: '&ndash; Affected page'
-   )
+     )
 
-   if !@entry.page.request.to_s.empty? || !@entry.page.response.to_s.empty?
-       sections.merge!(
-           advanced_affected_page_http: '&mdash; HTTP traffic',
-       )
+     if !@entry.page.request.to_s.empty? || !@entry.page.response.to_s.empty?
+         sections.merge!(
+             advanced_affected_page_http: '&mdash; HTTP traffic',
+         )
+     end
+
+     if @entry.page.dom
+       if (!@entry.page.dom.body.to_s.empty? || !@entry.page.response.body.to_s.empty?) &&
+            (@entry.page.dom.body != @entry.page.response.body) &&
+               @entry.page.dom.transitions.any?
+
+           sections.merge!(
+               advanced_affected_page_dom_processing: '&mdash; DOM processing',
+           )
+       end
+
+       if @entry.page.dom.execution_flow_sinks.any?
+           sections.merge!(
+               advanced_affected_page_execution_flow: '&mdash; Execution-flow',
+           )
+       end
+
+       if @entry.page.dom.data_flow_sinks.any?
+           sections.merge!(
+               advanced_affected_page_data_flow: '&mdash; Data-flow',
+           )
+       end
+     end
    end
 
-   if (!@entry.page.dom.body.empty? || !@entry.page.response.body.empty?) &&
-        (@entry.page.dom.body != @entry.page.response.body) &&
-           @entry.page.dom.transitions.any?
+   if @entry.referring_page
+     sections.merge!(
+         advanced_referring_page: '&ndash; Referring page',
+     )
 
-       sections.merge!(
-           advanced_affected_page_dom_processing: '&mdash; DOM processing',
-       )
-   end
+     if !@entry.referring_page.request.to_s.empty? ||
+             !@entry.referring_page.response.to_s.empty?
 
-   if @entry.page.dom.execution_flow_sinks.any?
-       sections.merge!(
-           advanced_affected_page_execution_flow: '&mdash; Execution-flow',
-       )
-   end
+         sections.merge!(
+             advanced_referring_page_http: '&mdash; HTTP traffic',
+         )
+     end
 
-   if @entry.page.dom.data_flow_sinks.any?
-       sections.merge!(
-           advanced_affected_page_data_flow: '&mdash; Data-flow',
-       )
-   end
+     if @entry.referring_page.dom
+       if (!@entry.referring_page.dom.body.to_s.empty? || !@entry.referring_page.response.body.to_s.empty?) &&
+               (@entry.referring_page.dom.body != @entry.referring_page.response.body) &&
+               @entry.referring_page.dom.transitions.any?
 
-   sections.merge!(
-       advanced_referring_page: '&ndash; Referring page',
-   )
+           sections.merge!(
+               advanced_referring_page_dom_processing: '&mdash; DOM processing',
+           )
+       end
 
-   if !@entry.referring_page.request.to_s.empty? ||
-           !@entry.referring_page.response.to_s.empty?
+       if @entry.referring_page.dom.execution_flow_sinks.any?
+           sections.merge!(
+               advanced_referring_page_execution_flow: '&mdash; Execution-flow',
+           )
+       end
+     end
 
-       sections.merge!(
-           advanced_referring_page_http: '&mdash; HTTP traffic',
-       )
-   end
-
-   if (!@entry.referring_page.dom.body.empty? || !@entry.referring_page.response.body.empty?) &&
-           (@entry.referring_page.dom.body != @entry.referring_page.response.body) &&
-           @entry.referring_page.dom.transitions.any?
-
-       sections.merge!(
-           advanced_referring_page_dom_processing: '&mdash; DOM processing',
-       )
-   end
-
-   if @entry.referring_page.dom.execution_flow_sinks.any?
-       sections.merge!(
-           advanced_referring_page_execution_flow: '&mdash; Execution-flow',
-       )
-   end
-
-   if @entry.referring_page.dom.data_flow_sinks.any?
-       sections.merge!(
-           advanced_referring_page_data_flow: '&mdash; Data-flow',
-       )
+     if @entry.referring_page.dom.data_flow_sinks.any?
+         sections.merge!(
+             advanced_referring_page_data_flow: '&mdash; Data-flow',
+         )
+     end
    end
 %>
 

@@ -58,17 +58,11 @@ module EntriesHelper
 
     def entry_state_to_icon( state )
         case state
-            when 'trusted'
+            when 'reviewed'
                 'check'
 
-            when 'untrusted'
-                'question-circle'
-
-            when 'false_positive'
-                'exclamation-circle'
-
-            when 'fixed'
-                'times-circle'
+            when 'pending'
+                'clock'
         end
     end
 

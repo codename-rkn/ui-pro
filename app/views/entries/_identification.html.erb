@@ -1,7 +1,6 @@
-<%= render 'entries/identification/platform', entry: entry %>
 <%= render 'entries/identification/remarks',  entry: entry %>
 
-<% if !@entry.proof.to_s.empty? && !@entry.page.response.to_s.empty? %>
+<% if @entry.page && !@entry.proof.to_s.empty? && !@entry.page.response.to_s.empty? %>
     <div id="identification-proof" class="entry-proof">
         <% if @entry.page.dom.transitions.any? &&
                 (hp = highlight_proof( @entry.page.dom.body.to_s, @entry.proof )) %>
@@ -22,7 +21,7 @@
     </div>
 <% end %>
 
-<% if @entry.page.dom.execution_flow_sinks.any? %>
+<% if @entry&.page&.dom&.execution_flow_sinks&.any? %>
     <div id="identification-execution-flow-sinks">
         <p>
             This entry is accompanied by successful execution of a JavaScript payload:

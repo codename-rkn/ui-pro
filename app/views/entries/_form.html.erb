@@ -4,8 +4,8 @@
     <div class="form-inputs <%= 'without-top-radius'.html_safe if @entry.reviewed_by_revision %>">
         <%= f.input :state,
                     as:            :select,
-                    collection:    Issue::STATES,
-                    default:       Issue::DEFAULT_STATES,
+                    collection:    Entry::STATES,
+                    default:       Entry::DEFAULT_STATE,
                     label_method:  proc { |v| v.humanize.html_safe },
                     include_blank: false,
                     label:         false,

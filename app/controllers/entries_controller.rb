@@ -75,10 +75,9 @@ class EntriesController < ApplicationController
         @entry = @revision.entries.includes(:sitemap_entry).
             includes( reviewed_by_revision: :scan ).
             includes( input_vector: :sitemap_entry ).
-            includes(:platform).includes(:remarks).
+            includes(:platforms).includes(:remarks).
             includes( page: page_preloads ).
             includes( referring_page: page_preloads ).
-            includes(:severity).includes(type: :references).
             includes(:siblings).includes( siblings: { revision: :scan } ).
             find( params[:id] )
     end

@@ -1,9 +1,8 @@
 <div class="page-header">
     <h1>
-        <%= @entry.type.name %>
-        <span class="text-muted fs-6">
+        <span class="text-muted fs-4">
             <% if @entry.input_vector.affected_input_name %>
-                in <%= @entry.input_vector %> input
+                <%= @entry.input_vector %> input
                 <code><%= @entry.input_vector.affected_input_name %></code>
             <% end %>
 
@@ -26,41 +25,24 @@
                     ),
                     display_path_only: true
                 )
-            %>.
+            %>
         </span>
     </h1>
-</div>
 
-<%
-   has_references = (@entry.type.references.any? || @entry.type.cwe) ? true : nil
-%>
+  <h3>
+    <span class="text-muted fs-5">
+      with sinks
+      <span class="pull-left badge label-severity-none">
+        <%= @entry.sinks.map(&:name).join( ", " ) %>
+      </span>
 
-<div class="row" id="info">
-    <div class="col-md-<%= has_references ? 10 : 12 %>">
-        <div class="description">
-            <%= md @entry.type.description %>
-        </div>
-    </div>
+      and platforms
+      <span class="pull-left badge label-severity-none">
+        <%= @entry.platforms.map(&:name).join( ", " ) %>
+      </span>
+    </span>
+  </h3>
 
-    <% if has_references %>
-    <div class="col-md-2 references">
-        <strong>References</strong>
-
-        <ul class="list-unstyled">
-            <% if @entry.type.cwe_url %>
-            <li>
-                <%= link_to 'CWE', @entry.type.cwe_url, target: '_blank' %>
-            </li>
-            <% end %>
-
-            <% @entry.type.references.each do |reference| %>
-                <li>
-                    <%= link_to reference.title, reference.url, target: '_blank' %>
-                </li>
-            <% end %>
-        </ul>
-    </div>
-    <% end %>
 </div>
 
 <hr/>
@@ -106,22 +88,6 @@
 </div>
 
 <hr/>
-<% end %>
-
-<% if @entry.type.remedy_guidance %>
-    <div class="mt-3" id="remediation">
-        <h2>
-            <a class="anchor" href="#!/remediation">
-                <span class="fa fa-link"></span>
-            </a>
-
-            Remediation
-        </h2>
-
-        <%= render 'entries/remediation', entry: entry %>
-    </div>
-
-    <hr/>
 <% end %>
 
 <div class="mt-3" id="advanced">

@@ -12,6 +12,7 @@ class EntryPageDom < ActiveRecord::Base
              dependent: :destroy
 
     def self.create_from_engine( dom )
+        dom = dom.symbolize_keys
         create(
             url:                  dom[:url],
             transitions:          dom[:transitions].map do |transition|

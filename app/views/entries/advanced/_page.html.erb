@@ -78,7 +78,7 @@
                        id: "#{id}_dom_processing",
                        debug: true %>
 
-            <% if (!page.dom.body.empty? || !page.response.body.empty?) &&
+            <% if (!page.dom.body.to_s.empty? || !page.response.body.to_s.empty?) &&
                 (page.dom.body != page.response.body) %>
 
                 <div id="<%= id %>-dom-states">

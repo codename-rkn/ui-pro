@@ -11,6 +11,7 @@ class EntryPageDomExecutionFlowSink < ActiveRecord::Base
     custom_serialize :data, Array
 
     def self.create_from_engine( sink )
+        sink = sink.symbolize_keys
         create(
             data:        sink[:data],
             stackframes: sink[:trace].map do |frame|

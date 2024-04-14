@@ -19,7 +19,7 @@
     </div>
 <% end %>
 
-<% if entry.page.dom.transitions.any? %>
+<% if entry&.page&.dom&.transitions&.any? %>
     <div id="reproduction-transitions">
         <p>
             This entry requires a series of browser-based interface interactions
@@ -30,7 +30,7 @@
                    page: entry.page,
                    id:   'reproduction' %>
     </div>
-<% else %>
+<% elsif entry&.page&.request %>
     <div id="reproduction-request">
         <pre class="highlight-container code-container"><%= highlight_http_request( entry.page.request.to_s, entry, entry.input_vector.seed.to_s ) || entry.page.request %></pre>
     </div>

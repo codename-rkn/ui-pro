@@ -25,6 +25,7 @@ class EntryPageDomDataFlowSink < ActiveRecord::Base
     def self.create_from_engine( sink )
         return if sink.nil?
 
+        sink = sink.symbolize_keys
         create(
             object:                 sink[:object],
             taint_value:            sink[:taint],

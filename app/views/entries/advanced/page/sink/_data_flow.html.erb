@@ -50,23 +50,23 @@
             <td colspan="4">
 
                 <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a data-turbo="false" href="<%= id_to_location id %>/data_flow_sinks/<%= i %>/inspect/arguments">
+                    <li class="nav-item">
+                        <a class="nav-link" data-turbo="false" href="<%= id_to_location id %>/data_flow_sinks/<%= i %>/inspect/arguments">
                             Arguments
                         </a>
                     </li>
 
                     <% if !sink.function.source.to_s.empty? %>
-                        <li>
-                            <a data-turbo="false" href="<%= id_to_location id %>/data_flow_sinks/<%= i %>/inspect/source">
+                        <li class="nav-item">
+                            <a class="nav-link" data-turbo="false" href="<%= id_to_location id %>/data_flow_sinks/<%= i %>/inspect/source">
                                 Source
                             </a>
                         </li>
                     <% end %>
 
                     <% if sink.stackframes.any? %>
-                        <li>
-                            <a data-turbo="false" href="<%= id_to_location id %>/data_flow_sinks/<%= i %>/inspect/stacktrace">
+                        <li class="nav-item">
+                          <a class="nav-link"data-turbo="false" href="<%= id_to_location id %>/data_flow_sinks/<%= i %>/inspect/stacktrace">
                                 Stacktrace
                             </a>
                         </li>

@@ -18,6 +18,7 @@ class EntryPageDomFunction < ActiveRecord::Base
     def self.create_from_engine( function )
         return if function.nil?
 
+        function = function.symbolize_keys
         create(
             name:      function[:name],
             source:    function[:source],

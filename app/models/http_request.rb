@@ -23,7 +23,7 @@ class HttpRequest < ActiveRecord::Base
             body:        request[:effective_body],
             parameters:  request[:parameters],
             headers:     request[:headers],
-            raw:         request.to_s
+            raw:         request[:raw]
         )
     end
 

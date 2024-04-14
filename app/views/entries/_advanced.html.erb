@@ -1,3 +1,4 @@
+<% if entry.page %>
 <div id="advanced_affected_page">
     <h3>
         <a class="anchor" href="#!/advanced_affected_page">
@@ -8,10 +9,10 @@
 
         <span class="text-muted fs-6">
             <%= link_to_url_with_external(
-                    external: entry.page.dom.url,
+                    external: entry&.page&.dom&.url || entry.input_vector.action,
                     internal: site_path(
                         entry.revision.scan.site,
-                        sitemap_entry_url( entry.page.sitemap_entry )
+                        sitemap_entry_url( entry.sitemap_entry )
                     ),
                     display_path_only: true
                 )
@@ -30,7 +31,9 @@
 </div>
 
 <hr/>
+<% end %>
 
+<% if entry.referring_page %>
 <div class="mt-3" id="advanced_referring_page">
     <h3>
         <a class="anchor" href="#!/advanced_referring_page">
@@ -61,3 +64,4 @@
                page: entry.referring_page,
                id: 'advanced_referring_page' %>
 </div>
+<% end %>
