@@ -11,6 +11,7 @@
       <table class="table table-sm table-borderless table-hover table-striped table-entry-summary">
         <thead>
         <% if !hide_state_icon %>
+          <th>Reviewed</th>
           <th></th>
         <% end %>
 
@@ -41,6 +42,20 @@
             <tr id="<%= id %>-entry-<%= entry.digest %>">
 
                 <% if !hide_state_icon %>
+                    <td class="entry-list-review-form edit_entry">
+                      <form action="<%= site_scan_revision_entry_path( entry.site, entry.scan, entry.revision, entry ) %>"
+                            data-remote="true"
+                            method="post"
+                      >
+                        <input type="hidden" name="_method" value="patch" autocomplete="off" />
+                        <input type="hidden" name="entry[state]"
+                               value="<%= entry.state == 'reviewed' ? 'pending' : 'reviewed' %>"
+                               autocomplete="off" />
+                        <input class="entry-state" type="checkbox" <%= 'checked' if entry.state == 'reviewed' %> />
+
+                      </form>
+                    </td>
+
                     <td id="<%= id %>-entry-<%= entry.digest %>-state-icon">
                         <%= link_to site_scan_revision_entry_path( entry.site_id, entry.scan, entry.revision, entry ),
                                     title: entry.state.humanize do %>
