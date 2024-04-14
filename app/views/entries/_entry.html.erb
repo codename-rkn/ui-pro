@@ -62,22 +62,57 @@
         No notes attached to this entry.
       </p>
     <% end %>
+
+    <% if @entry.note.attachments.any? %>
+      <ul>
+        <% @entry.note.attachments.each do |attachment| %>
+          <li>
+            <%= link_to attachment do %>
+              <%= attachment.name %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
   <div class="tab-pane fade" id="edit-notes" role="tabpanel" aria-labelledby="edit-notes-tab">
     <%= simple_form_for [@entry.site, @entry.scan, @entry.revision, @entry], remote: true do |form| %>
-      <div class="form-group">
         <%= form.simple_fields_for :note do |f| %>
-          <%= f.text_area :text, class: 'form-control', placeholder: 'You can use Markdown for your notes.' %>
+          <div class="form-group">
+            <%= f.text_area :text, class: 'form-control', placeholder: 'You can use Markdown for your notes.' %>
+          </div>
+          <div class="form-group">
+            <ul>
+              <% @entry.note.attachments.each do |attachment| %>
+                <li>
+                  <%= link_to attachment, remote: true, method: :delete, data: { "turbo-method": :delete } do %>
+                    <i class="fa fa-trash-can"></i>
+                  <% end %>
+
+                  <%= link_to attachment do %>
+                    <%= attachment.name %>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+          <div class="form-group">
+            <%= f.input :attachment, as: 'file', class: 'form-control' %>
+          </div>
         <% end %>
-      </div>
 
       <div class="form-group">
         <%= form.button :submit, value: 'Save' %>
-        <br/>
-        <br/>
-        <br/>
       </div>
     <% end %>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
   </div>
 </div>
 

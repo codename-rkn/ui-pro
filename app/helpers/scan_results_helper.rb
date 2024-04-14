@@ -264,9 +264,6 @@ module ScanResultsHelper
                 missing_entries = filter_pages( @revision.missing_entries )
             end
 
-            ap '-' * 88
-            ap page_filtered_entries.size
-
             store.merge!(
                 site:                data[:site],
                 scans:               data[:scans],

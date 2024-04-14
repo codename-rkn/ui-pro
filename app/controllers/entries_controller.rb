@@ -15,9 +15,17 @@ class EntriesController < ApplicationController
     # PATCH/PUT /entries/1
     # PATCH/PUT /entries/1.json
     def update
+        parameters = entry_params
+        if parameters[:note_attributes] && (attachment = parameters[:note_attributes].delete(:attachment))
+            @entry.note.attachments << Attachment.create(
+              name:         attachment.original_filename,
+              contents:     IO.binread( attachment.tempfile.path ),
+              content_type: attachment.content_type
+            )
+        end
+
         respond_to do |format|
-            ap entry_params
-            if @entry.update( entry_params )
+            if @entry.update( parameters )
                 format.html { redirect_back fallback_location: root_path, notice: 'Entry was successfully updated.' }
                 format.json { render :show, status: :ok, location: @entry }
                 format.js { head :ok }
@@ -88,6 +96,6 @@ class EntriesController < ApplicationController
     end
 
     def permitted_attributes
-        [ :state, note_attributes: [:id, :text] ]
+        [ :state, note_attributes: [:id, :text, :attachment ] ]
     end
 end

@@ -50,6 +50,8 @@ Rails.application.routes.draw do
         end
     end
 
+    resources :attachments, only: [:show, :destroy]
+
     devise_for :users, controllers: { registrations: 'registrations' }
 
     resources :profiles do
