@@ -1,6 +1,5 @@
 <%
    revision              = scan.last_revision
-   revision_max_severity = revision.entries.max_severity  || 'none'
    with_status           = !!local_assigns[:with_status]
 %>
 
@@ -57,18 +56,6 @@
 
         <span class="scan-entry-count">
             <%= scan.entries.size %>
-        </span>
-    </td>
-
-    <td>
-        <span class="revision-max-severity badge label-severity-<%= revision_max_severity %>">
-            <%= revision_max_severity.capitalize %>
-        </span>
-
-        /
-
-        <span class="scan-max-severity badge label-severity-<%= scan_max_severity %>">
-            <%= scan_max_severity.capitalize %>
         </span>
     </td>
 
