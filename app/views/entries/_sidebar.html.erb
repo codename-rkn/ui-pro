@@ -4,7 +4,8 @@
         reproduction: 'Reproduction'
    }
 
-   if @entry.has_proofs?
+   if @entry.has_proofs? && @entry.page && (!@entry.page.response.to_s.empty? ||
+     @entry&.page&.dom&.execution_flow_sinks&.any?)
        sections.merge!(
            identification: 'Identification'
        )
