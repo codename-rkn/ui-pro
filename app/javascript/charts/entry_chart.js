@@ -33,7 +33,7 @@ export default class IssueChart {
           {
             label: 'Entries',
             data: [],
-            backgroundColor: '#1f77b4'
+            backgroundColor: '#FF7F50'
           }
         ]
       },
