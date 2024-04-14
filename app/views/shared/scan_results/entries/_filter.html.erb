@@ -9,7 +9,7 @@
 %>
 
 <div class="row">
-    <div class="col-md-12" id="entry-summary-filter-actions">
+    <div class="col-md-12" id="entry-filter-actions">
         <form class="simple_form" id="scan-results-filter">
 
             <div class="row">
@@ -21,7 +21,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="entry-state-<%= state %>"
                                        name="filter[states][]" value="<%= state %>"
-                                       <%= "checked=checked" if states.include?( state ) %>
+                                       <%= "checked=checked" if states.empty? || states.include?( state ) %>
                                 />
 
                                 <label class="form-check-label" for="entry-state-<%= state %>">
@@ -42,7 +42,7 @@
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="entry-kind-<%= kind %>"
                                name="filter[kinds][]" value="<%= kind %>"
-                               <%= "checked=checked" if kinds.include?( kind ) %>
+                               <%= "checked=checked" if kinds.empty? || kinds.include?( kind ) %>
                           />
 
                         <label class="form-check-label" for="entry-kind-<%= kind %>">
@@ -63,7 +63,7 @@
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="entry-platform-<%= platform %>"
                                name="filter[platforms][]" value="<%= platform %>"
-                               <%= "checked=checked" if platforms.include?( platform ) %>
+                               <%= "checked=checked" if platforms.empty? ||platforms.include?( platform ) %>
                           />
 
                         <label class="form-check-label" for="entry-platform-<%= platform %>">
@@ -84,7 +84,7 @@
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="entry-sink-<%= sink %>"
                                name="filter[sinks][]" value="<%= sink %>"
-                               <%= "checked=checked" if sinks.include?( sink ) %>
+                               <%= "checked=checked" if sinks.empty? || sinks.include?( sink ) %>
                           />
 
                         <label class="form-check-label" for="entry-sink-<%= sink %>">

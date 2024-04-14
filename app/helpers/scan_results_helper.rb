@@ -74,8 +74,6 @@ module ScanResultsHelper
             @sitemap_entry = @site.sitemap_entries.where( digest: active_filters[:pages].first ).first
         end
 
-        entries = apply_filters( entries )
-
         scoped_find_each( entries, size: entries_count ) do |entry|
             process_entry_blocks_call( entry )
 
@@ -91,10 +89,48 @@ module ScanResultsHelper
             next if filter_by_revision && @revision &&
                 @revision.id != entry.revision.id
 
+            next if !matches_filters?( entry )
+
             process_entries_selected_blocks_call( entry )
         end
 
         process_entries_done_blocks_call
+    end
+
+    def matches_filters?( entry )
+        if filter_states?
+            return false if !matches_states_filters?( entry )
+        end
+
+        if filter_kinds?
+            return false if !matches_kinds_filters?( entry )
+        end
+
+        if filter_platforms?
+            return false if !matches_kinds_filters?( entry )
+        end
+
+        if filter_sinks?
+            return false if !matches_sinks_filters?( entry )
+        end
+
+        true
+    end
+
+    def matches_states_filters?( entry )
+        ([entry.state] & active_filters[:states]).any?
+    end
+
+    def matches_kinds_filters?( entry )
+        active_filters[:kinds].include? entry.input_vector.kind.to_s
+    end
+
+    def matches_platforms_filters?( entry )
+        (active_filters[:platforms] & entry.platforms.map(&:shortname)).any?
+    end
+
+    def matches_sinks_filters?( entry )
+        (active_filters[:sinks] & entry.sinks.map(&:name)).any?
     end
 
     def apply_filters( entries )
@@ -127,18 +163,6 @@ module ScanResultsHelper
 
         entries = data[:entries]
 
-        if @revision
-            states     = entries.where( revision: @revision ).count_states
-            platforms  = entries.where( revision: @revision ).count_platforms
-            sinks      = entries.where( revision: @revision ).count_sinks
-            input_vector_kinds = entries.where( revision: @revision ).count_input_vector_kinds
-        else
-            states     = entries.count_states
-            platforms  = entries.count_platforms
-            sinks      = entries.count_sinks
-            input_vector_kinds = entries.count_input_vector_kinds
-        end
-
         sitemap_with_entries  = {}
         chart_data           = {}
         pre_page_filter_data = {}
@@ -163,6 +187,13 @@ module ScanResultsHelper
             data[:revisions] = Set.new
         end
 
+        counted_attributes = {
+          states: {},
+          sinks: {},
+          platforms: {},
+          input_vectors: {},
+        }
+
         process_entries_after_page_filter do |entry|
             if filter_pages?
                 data[:scans]     << entry.scan
@@ -174,6 +205,22 @@ module ScanResultsHelper
             revision_data[entry.revision_id] ||= {}
             revision_data[entry.revision_id][:entry_count] ||= 0
             revision_data[entry.revision_id][:entry_count]  += 1
+
+            counted_attributes[:states][entry.state] ||= 0
+            counted_attributes[:states][entry.state] += 1
+
+            entry.sinks.each do |sink|
+                counted_attributes[:sinks][sink.name] ||= 0
+                counted_attributes[:sinks][sink.name] += 1
+            end
+
+            entry.platforms.each do |platform|
+                counted_attributes[:platforms][platform.shortname] ||= 0
+                counted_attributes[:platforms][platform.shortname] += 1
+            end
+
+            counted_attributes[:input_vectors][entry.input_vector.kind.to_s] ||= 0
+            counted_attributes[:input_vectors][entry.input_vector.kind.to_s] += 1
         end
 
         process_entries_selected do |entry|
@@ -201,7 +248,7 @@ module ScanResultsHelper
 
             if sitemap_with_entries.any?
                 sitemap_data[:entry_count]  =
-                    sitemap_with_entries.values.map{ |v| v[:entry_count] }.inject(:+)
+                    sitemap_with_entries.values.map { |v| v[:entry_count] }.inject(:+)
             end
 
             if data[:revisions].is_a? Set
@@ -217,16 +264,19 @@ module ScanResultsHelper
                 missing_entries = filter_pages( @revision.missing_entries )
             end
 
+            ap '-' * 88
+            ap page_filtered_entries.size
+
             store.merge!(
                 site:                data[:site],
                 scans:               data[:scans],
                 revisions:           data[:revisions],
                 sitemap:             data[:sitemap],
                 sitemap_with_entries: sitemap_with_entries,
-                states:              states,
-                platforms:           platforms,
-                sinks:               sinks,
-                input_vector_kinds:  input_vector_kinds,
+                states:              counted_attributes[:states],
+                platforms:           counted_attributes[:platforms],
+                sinks:               counted_attributes[:sinks],
+                input_vector_kinds:  counted_attributes[:input_vectors],
                 sitemap_data:        sitemap_data,
                 entries:             page_filtered_entries,
                 missing_entries:      missing_entries,

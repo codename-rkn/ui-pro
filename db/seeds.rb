@@ -74,11 +74,13 @@ puts 'Creating platforms'
 SCNR::Engine::Platform::Manager::TYPES.each do |shortname, name|
     EntryPlatformType.create( shortname: shortname, name: name )
 end
+EntryPlatformType.create( shortname: 'unidentified', name: 'Unidentified' )
 
 SCNR::Engine::Platform::Manager::PLATFORM_NAMES.each do |shortname, name|
     type = FrameworkHelper.platform_manager.find_type( shortname )
     EntryPlatformType.find_by_shortname( type ).platforms.create( shortname: shortname, name: name )
 end
+EntryPlatformType.find_by_shortname( 'unidentified' ).platforms.create( shortname: 'unidentified', name: 'Unidentified' )
 
 puts 'Creating sinks'
 SCNR::Engine::Element::Capabilities::WithSinks::Sinks.enable_all

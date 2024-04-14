@@ -1,5 +1,6 @@
 <div id="entries-summary">
     <% if @site.scanned? %>
+    <%= data[:entries].size %>
         <% if data[:entries].any? %>
             <div class="row">
               <% if data[:entries].count > 1 %>
@@ -75,8 +76,7 @@
                     </p>
 
                     <%
-                       revisions_with_entries =
-                               filter_entries_by_severity_and_state( @sitemap_entry.entries ).unique_revisions
+                       revisions_with_entries = filter_states( @sitemap_entry.entries ).unique_revisions
                        if revisions_with_entries.any?
                     %>
                         <div>

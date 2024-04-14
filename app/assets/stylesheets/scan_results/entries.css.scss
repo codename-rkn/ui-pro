@@ -130,7 +130,7 @@
 #summary-data {
 }
 
-#entry-summary-filter-actions {
+#entry-filter-actions {
     text-align: center;
 
     label {
@@ -164,7 +164,9 @@ ul.sitemap > li {
 }
 
 ul.sitemap > li .badge {
-    float: right
+    float: right;
+    color: white;
+    background-color: #1f77b4;
 }
 
 ul.sitemap > li:hover,

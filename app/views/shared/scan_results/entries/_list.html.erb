@@ -63,7 +63,7 @@
               </td>
 
               <td id="<%= id %>-entry-<%= entry.digest %>-platforms">
-                <code><%= entry.platforms.join( ", " ) %></code>
+                <code><%= entry.platforms.map(&:name).join( ", " ) %></code>
               </td>
 
                 <% if !@sitemap_entry %>

@@ -11,28 +11,6 @@
         <% end %>
     </td>
 
-    <td class="state">
-        <% if site.scanned_or_being_scanned? %>
-            <% if (max_severity = site.entries.max_severity) %>
-                <span class="badge label-severity-<%= max_severity %>">
-                    <%= entry_severity_to_site_status( max_severity ).capitalize %>
-                </span>
-
-                <% count = site.entries.send( "#{max_severity}_severity" ).size %>
-
-                &mdash; <%= count %>
-                <a href="<%= site_path site %>#entry-summary-severity-<%= max_severity %>"><%= max_severity %></a>
-                severity <%= 'entry'.pluralize count %>
-            <% else %>
-                <span class="badge label-severity-none">Good</span>
-
-                &mdash; no entries
-            <% end %>
-        <% else %>
-            <span class="badge label-severity-undetermined">Undetermined</span>
-        <% end %>
-    </td>
-
     <td>
         <%= site.entries.size %>
     </td>

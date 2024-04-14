@@ -171,6 +171,9 @@ class Entry < ActiveRecord::Base
         entry[:platforms].each do |platform|
             platforms << EntryPlatform.find_by_shortname( platform.to_s )
         end
+        if platforms.empty?
+            platforms << EntryPlatform.find_by_shortname( 'unidentified' )
+        end
 
         sinks = []
         entry[:sinks].stringify_keys[entry[:mutation][:affected_input_name]].each do |sink|
