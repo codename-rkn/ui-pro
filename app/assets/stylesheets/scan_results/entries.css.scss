@@ -215,3 +215,10 @@ ul.sitemap > li.active {
         }
     }
 }
+
+tr.entry-notes {
+    display: none;
+}
+tr.entry-with_notes {
+    cursor: pointer;
+}

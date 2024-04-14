@@ -35,11 +35,17 @@
         <tbody>
 
 <%
+    index = 0
     scoped_find_each( data[:entries] ) do |entry|
         next if siblings[entry.digest]
+
+        index += 1
         siblings[entry.digest] = true
 %>
-            <tr id="<%= id %>-entry-<%= entry.digest %>">
+            <tr id="<%= id %>-entry-<%= entry.digest %>"
+                onclick="$('#entry-notes-<%= index %>').toggle()"
+                class="<%= 'entry-with_notes' if !entry.note.text.blank? || entry.note.attachments.any? %>"
+            >
 
                 <% if !hide_state_icon %>
                     <td class="entry-list-review-form edit_entry">
@@ -174,7 +180,33 @@
                 <% end %>
             </tr>
 
-<% end %>
+
+          <% if !entry.note.text.blank? || entry.note.attachments.any? %>
+            <tr
+              class="entry-notes info"
+              id="entry-notes-<%= index %>">
+              <td></td>
+              <td colspan="7">
+                <% if !entry.note.text.blank? %>
+                  <%= md entry.note.text %>
+                <% end %>
+
+                <% if entry.note.attachments.any? %>
+                  <ul>
+                    <% entry.note.attachments.each do |attachment| %>
+                      <li>
+                        <%= link_to attachment do %>
+                          <%= attachment.name %>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+
+        <% end %>
 </tbody>
 </table>
 </div>
