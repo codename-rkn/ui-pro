@@ -175,18 +175,6 @@ module ScanResultsHelper
             pre_page_filter_data[:count] += 1
         end
 
-        process_entries_after_revision_before_page_filter do |entry|
-            update_chart_data( chart_data, entry )
-            update_sitemap_data( sitemap_with_entries, entry )
-        end
-
-        # If we're filtering by page, also filter out scans and revisions which
-        # haven't logged entries for it.
-        if filter_pages?
-            data[:scans]     = Set.new
-            data[:revisions] = Set.new
-        end
-
         counted_attributes = {
           states: {},
           sinks: {},
@@ -194,19 +182,9 @@ module ScanResultsHelper
           input_vectors: {},
         }
 
-        process_entries_after_page_filter do |entry|
-            if filter_pages?
-                data[:scans]     << entry.scan
-                data[:revisions] << entry.revision
-            end
-
-            unique_entries_count << entry.digest
-
-            revision_data[entry.revision_id] ||= {}
-            revision_data[entry.revision_id][:entry_count] ||= 0
-            revision_data[entry.revision_id][:entry_count]  += 1
-
-            next if @revision && entry.revision_id != @revision.id
+        process_entries_after_revision_before_page_filter do |entry|
+            update_chart_data( chart_data, entry )
+            update_sitemap_data( sitemap_with_entries, entry )
 
             counted_attributes[:states][entry.state] ||= 0
             counted_attributes[:states][entry.state] += 1
@@ -223,6 +201,26 @@ module ScanResultsHelper
 
             counted_attributes[:input_vectors][entry.input_vector.kind.to_s] ||= 0
             counted_attributes[:input_vectors][entry.input_vector.kind.to_s] += 1
+        end
+
+        # If we're filtering by page, also filter out scans and revisions which
+        # haven't logged entries for it.
+        if filter_pages?
+            data[:scans]     = Set.new
+            data[:revisions] = Set.new
+        end
+
+        process_entries_after_page_filter do |entry|
+            if filter_pages?
+                data[:scans]     << entry.scan
+                data[:revisions] << entry.revision
+            end
+
+            unique_entries_count << entry.digest
+
+            revision_data[entry.revision_id] ||= {}
+            revision_data[entry.revision_id][:entry_count] ||= 0
+            revision_data[entry.revision_id][:entry_count]  += 1
         end
 
         process_entries_selected do |entry|
