@@ -481,6 +481,7 @@ module ScanResultsHelper
             includes( :input_vector ).
             includes( :sitemap_entry ).
             includes( :sinks ).
+            includes( note: [ :attachments ] ).
             includes( :platforms ).
             includes( revision: { scan: [:profile] } ).
             includes( :reviewed_by_revision ).
