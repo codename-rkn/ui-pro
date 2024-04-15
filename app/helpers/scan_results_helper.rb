@@ -264,6 +264,10 @@ module ScanResultsHelper
                 missing_entries = filter_pages( @revision.missing_entries )
             end
 
+            counted_attributes.dup.each do |attr, counts|
+                counted_attributes[attr] = counts.sort_by { |k, c| k.to_s }
+            end
+
             store.merge!(
                 site:                data[:site],
                 scans:               data[:scans],
