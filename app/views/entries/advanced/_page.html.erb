@@ -91,32 +91,6 @@
     </div>
 <% end %>
 
-<% if page.dom.execution_flow_sinks.any? %>
-    <div class="row" id="<%= id %>_execution_flow" >
-        <div class="col-md-12">
-            <h4>
-                <a class="anchor"
-                   href="<%= id_to_location "#{id}_execution_flow" %>">
-                    <span class="fa fa-link"></span>
-                </a>
-
-                Execution-flow sinks
-            </h4>
-
-            <p class="text-muted">
-                Execution-flow sinks log the successful execution of an injected
-                JavaScript payload within the page's environment.
-                <br/>
-                Each sink is a point of payload execution.
-            </p>
-
-            <%= render 'entries/advanced/page/sink/execution_flow',
-                       page: page,
-                       id: id %>
-        </div>
-    </div>
-<% end %>
-
 <% if page.dom.data_flow_sinks.any? %>
     <div class="row" id="<%= id %>_data_flow" >
         <div class="col-md-12">
