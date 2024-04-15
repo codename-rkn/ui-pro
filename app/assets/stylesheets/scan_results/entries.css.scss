@@ -225,9 +225,9 @@ tr.entry-with_notes {
 
 #scan-results-filter {
     .form-check {
-        label {
+        label.form-check-label {
             float: none;
-            display: inline;
+            font-weight: normal;
         }
 
         justify-content: center;
