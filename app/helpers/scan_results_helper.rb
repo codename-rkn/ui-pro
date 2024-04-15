@@ -352,6 +352,9 @@ module ScanResultsHelper
 
         data[:entry_names][name] ||= 0
         data[:entry_names][name]  += 1
+
+        data[:entry_names] = Hash[data[:entry_names].sort_by { |name, _| name }]
+        data
     end
 
     def link_to_with_filters( *args, &block )
