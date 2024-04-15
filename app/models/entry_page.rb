@@ -16,7 +16,7 @@ class EntryPage < ActiveRecord::Base
 
         create({
             dom:      EntryPageDom.create_from_engine( page[:dom] ),
-            request:  HttpRequest.create_from_engine(page[:request] ),
+            request:  HttpRequest.create_from_engine( page[:request] ),
             response: HttpResponse.create_from_engine( page[:response] )
         }.merge(options))
     end
