@@ -21,7 +21,7 @@
         <% end %>
     </li>
 
-    <% sitemap.each do |url, data|
+    <% sitemap.sort_by { |url, _| url }.each do |url, data|
         active       = page_id_in_filter?( data[:digest] )
         max_severity = data[:max_severity]
         entry_count  = data[:entry_count]
