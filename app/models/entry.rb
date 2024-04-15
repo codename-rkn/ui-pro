@@ -172,11 +172,6 @@ class Entry < ActiveRecord::Base
             platforms << EntryPlatform.find_by_shortname( 'unidentified' )
         end
 
-        sinks = []
-        entry[:sinks].stringify_keys[entry[:mutation][:affected_input_name]].each do |sink|
-            sinks << EntrySink.find_by_name( sink.to_s )
-        end
-
         entry = create({
             digest:         entry[:digest],
             page:           EntryPage.create_from_engine( entry[:page] ),
@@ -184,7 +179,7 @@ class Entry < ActiveRecord::Base
             input_vector:   InputVector.create_from_engine( entry[:mutation] ),
             remarks:        entry_remarks,
             platforms:      platforms,
-            sinks:          sinks,
+            sinks:          [EntrySink.find_by_name( entry[:sink].to_s )],
             state:          DEFAULT_STATE,
             proof:          entry[:seed]
        }.merge(options))
