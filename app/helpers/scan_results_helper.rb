@@ -268,6 +268,8 @@ module ScanResultsHelper
                 counted_attributes[attr] = counts.sort_by { |k, c| k.to_s }
             end
 
+            page_filtered_entries = page_filtered_entries.sort_by { |entry| entry.input_vector.affected_input_name }
+
             store.merge!(
                 site:                data[:site],
                 scans:               data[:scans],
