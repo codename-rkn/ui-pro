@@ -476,6 +476,7 @@ module ScanResultsHelper
 
     def preload_entry_associations( entries )
         entries.
+            includes( :site ).
             includes( :scan ).
             includes( :type ).
             includes( :input_vector ).
