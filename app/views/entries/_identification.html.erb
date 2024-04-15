@@ -20,15 +20,3 @@
         <% end %>
     </div>
 <% end %>
-
-<% if @entry&.page&.dom&.execution_flow_sinks&.any? %>
-    <div id="identification-execution-flow-sinks">
-        <p>
-            This entry is accompanied by successful execution of a JavaScript payload:
-        </p>
-
-        <%= render 'entries/advanced/page/sink/execution_flow',
-                   page: @entry.page,
-                   id:   'identification' %>
-    </div>
-<% end %>

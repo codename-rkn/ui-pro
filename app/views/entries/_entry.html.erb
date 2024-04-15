@@ -145,8 +145,7 @@
 
 <hr/>
 
-<% if @entry.has_proofs? && @entry.page && (!@entry.page.response.to_s.empty? ||
-  @entry&.page&.dom&.execution_flow_sinks&.any?) %>
+<% if @entry.has_proofs? && @entry.page && !@entry.page.response.to_s.empty? %>
 <div class="mt-3" id="identification">
     <h2>
         <a class="anchor" href="#!/identification">
