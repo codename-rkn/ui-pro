@@ -1,112 +1,151 @@
 <%
    pages      = active_filters[:pages]
    states     = active_filters[:states]
-   type       = active_filters[:type]
    sinks      = active_filters[:sinks]
    platforms  = active_filters[:platforms]
    kinds      = active_filters[:kinds]
-
 %>
 
 <div class="row">
     <div class="col-md-12" id="entry-filter-actions">
         <form class="simple_form" id="scan-results-filter">
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="flex-row d-flex justify-content-center">
-                        <% i = 0
-                           data[:states].each do |state, count| %>
 
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="entry-state-<%= state %>"
-                                       name="filter[states][]" value="<%= state %>"
-                                       <%= "checked=checked" if states.empty? || states.include?( state ) %>
-                                />
+                      <table class="table table-dark">
+                        <thead>
+                          <tr>
+                            <td colspan="<%= data[:states].size %>">
+                              Status
+                            </td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                              <% i = 0
+                                 data[:states].each do |state, count| %>
+                              <td>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" id="entry-state-<%= state %>"
+                                         name="filter[states][]" value="<%= state %>"
+                                         <%= "checked=checked" if states.empty? || states.include?( state ) %>
+                                    />
 
-                                <label class="form-check-label" for="entry-state-<%= state %>">
+                                  <label class="form-check-label" for="entry-state-<%= state %>">
                                     <%= h = state.humanize; i == 0 ? h : h.downcase %>
                                     ( <i class="fa fa-<%= entry_state_to_icon state %>"></i>
                                     <%= count %>)
-                                </label>
-                            </div>
-                            <%= ',' if data[:states].size != i + 1 %>
-                            <% i += 1 %>
-                        <% end %>
+                                  </label>
+                                </div>
+                                <% i += 1 %>
+                              </td>
+                              <% end %>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
 
                   <div class="flex-row d-flex justify-content-center">
-                    <% i = 0
-                       data[:input_vector_kinds].each do |kind, count| %>
+                    <table class="table table-dark">
+                      <thead>
+                      <tr>
+                        <td colspan="<%= data[:input_vector_kinds].size %>">
+                          Input types
+                        </td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                          <% i = 0
+                             data[:input_vector_kinds].each do |kind, count| %>
+                          <td>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="entry-kind-<%= kind %>"
+                                     name="filter[kinds][]" value="<%= kind %>"
+                                     <%= "checked=checked" if kinds.empty? || kinds.include?( kind ) %>
+                                />
 
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="entry-kind-<%= kind %>"
-                               name="filter[kinds][]" value="<%= kind %>"
-                               <%= "checked=checked" if kinds.empty? || kinds.include?( kind ) %>
-                          />
+                              <label class="form-check-label" for="entry-kind-<%= kind %>">
+                                <%= h = kind.humanize; i == 0 ? h : h.downcase %>
+                                (<%= count %>)
+                              </label>
+                            </div>
+                            <% i += 1 %>
+                          </td>
+                          <% end %>
+                      </tr>
+                      </tbody>
+                    </table>
 
-                        <label class="form-check-label" for="entry-kind-<%= kind %>">
-                          <%= h = kind.humanize; i == 0 ? h : h.downcase %>
-                          (<%= count %>)
-                        </label>
-                      </div>
-                      <%= ',' if data[:input_vector_kinds].size != i + 1 %>
-                      <% i += 1 %>
-                    <% end %>
                   </div>
 
                   <div class="flex-row d-flex justify-content-center">
-                    <% i = 0
-                       data[:platforms].each do |platform, count| %>
+                    <table class="table table-dark">
+                      <thead>
+                      <tr>
+                        <td colspan="<%= data[:platforms].size %>">
+                          Platforms
+                        </td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <% i = 0
+                           data[:platforms].each do |platform, count| %>
+                              <td>
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="entry-platform-<%= platform %>"
+                                   name="filter[platforms][]" value="<%= platform %>"
+                                   <%= "checked=checked" if platforms.empty? ||platforms.include?( platform ) %>
+                              />
 
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="entry-platform-<%= platform %>"
-                               name="filter[platforms][]" value="<%= platform %>"
-                               <%= "checked=checked" if platforms.empty? ||platforms.include?( platform ) %>
-                          />
-
-                        <label class="form-check-label" for="entry-platform-<%= platform %>">
-                          <%= h = platform.humanize; i == 0 ? h : h.downcase %>
-                          (<%= count %>)
-                        </label>
-                      </div>
-                      <%= ',' if data[:platforms].size != i + 1 %>
-                      <% i += 1 %>
-                    <% end %>
+                            <label class="form-check-label" for="entry-platform-<%= platform %>">
+                              <%= h = platform.humanize; i == 0 ? h : h.downcase %>
+                              (<%= count %>)
+                            </label>
+                          </div>
+                          <% i += 1 %>
+                              </td>
+                        <% end %>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
 
                   <div class="flex-row d-flex justify-content-center">
+                    <table class="table table-dark">
+                      <thead>
+                      <tr>
+                        <td colspan="<%= data[:sinks].size %>">
+                          Sinks
+                        </td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
                     <% i = 0
                        data[:sinks].each do |sink, count| %>
+                        <td>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="entry-sink-<%= sink %>"
+                                 name="filter[sinks][]" value="<%= sink %>"
+                                 <%= "checked=checked" if sinks.empty? || sinks.include?( sink ) %>
+                            />
 
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="entry-sink-<%= sink %>"
-                               name="filter[sinks][]" value="<%= sink %>"
-                               <%= "checked=checked" if sinks.empty? || sinks.include?( sink ) %>
-                          />
-
-                        <label class="form-check-label" for="entry-sink-<%= sink %>">
-                          <%= h = sink.humanize; i == 0 ? h : h.downcase %>
-                          (<%= count %>)
-                        </label>
-                      </div>
-                      <%= ',' if data[:sinks].size != i + 1 %>
-                      <% i += 1 %>
+                          <label class="form-check-label" for="entry-sink-<%= sink %>">
+                            <%= h = sink.humanize; i == 0 ? h : h.downcase %>
+                            (<%= count %>)
+                          </label>
+                        </div>
+                        <% i += 1 %>
+                        </td>
                     <% end %>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
 
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-actions btn-group">
-                        <button class="btn btn-<%= type == 'include' ? 'primary' : 'default' %>" type="submit"
-                                name="filter[type]" value="include">Show</button>
-
-                        <button class="btn btn-<%= type == 'exclude' ? 'primary' : 'default' %>" type="submit"
-                                name="filter[type]" value="exclude">Hide</button>
-                    </div>
                 </div>
             </div>
 

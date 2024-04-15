@@ -222,3 +222,15 @@ tr.entry-notes {
 tr.entry-with_notes {
     cursor: pointer;
 }
+
+#scan-results-filter {
+    .form-check {
+        label {
+            float: none;
+            display: inline;
+        }
+
+        justify-content: center;
+
+    }
+}
