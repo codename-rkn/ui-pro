@@ -4,8 +4,7 @@
         reproduction: 'Reproduction'
    }
 
-   if @entry.has_proofs? && @entry.page && (!@entry.page.response.to_s.empty? ||
-     @entry&.page&.dom&.execution_flow_sinks&.any?)
+   if @entry.has_proofs? && @entry.page && !@entry.page.response.to_s.empty?
        sections.merge!(
            identification: 'Identification'
        )
@@ -37,12 +36,6 @@
            )
        end
 
-       if @entry.page.dom.execution_flow_sinks.any?
-           sections.merge!(
-               advanced_affected_page_execution_flow: '&mdash; Execution-flow',
-           )
-       end
-
        if @entry.page.dom.data_flow_sinks.any?
            sections.merge!(
                advanced_affected_page_data_flow: '&mdash; Data-flow',
@@ -71,12 +64,6 @@
 
            sections.merge!(
                advanced_referring_page_dom_processing: '&mdash; DOM processing',
-           )
-       end
-
-       if @entry.referring_page.dom.execution_flow_sinks.any?
-           sections.merge!(
-               advanced_referring_page_execution_flow: '&mdash; Execution-flow',
            )
        end
      end

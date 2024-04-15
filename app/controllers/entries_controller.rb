@@ -63,11 +63,6 @@ class EntriesController < ApplicationController
             {
                 dom: [
                          {
-                             execution_flow_sinks: {
-                                 stackframes: :function
-                             }
-                         },
-                         {
                              data_flow_sinks: [
                                  :function,
                                  stackframes: :function
