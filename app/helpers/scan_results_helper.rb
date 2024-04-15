@@ -206,6 +206,8 @@ module ScanResultsHelper
             revision_data[entry.revision_id][:entry_count] ||= 0
             revision_data[entry.revision_id][:entry_count]  += 1
 
+            next if @revision && entry.revision_id != @revision.id
+
             counted_attributes[:states][entry.state] ||= 0
             counted_attributes[:states][entry.state] += 1
 
