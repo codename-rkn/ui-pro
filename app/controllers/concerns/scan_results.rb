@@ -35,7 +35,7 @@ module ScanResults
           site:      @site,
           sitemap:   (@revision || @scan || @site).sitemap_entries,
           scans:     @scan ? [@scan] : @site.scans,
-          revisions: @scan.revisions.order( id: :desc ),
+          revisions: (@scan || @site).revisions.order( id: :desc ),
           entries:   scan_results_entries
         )
         process_and_show( :summary )
