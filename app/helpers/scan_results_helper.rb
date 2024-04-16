@@ -107,7 +107,7 @@ module ScanResultsHelper
         end
 
         if filter_platforms?
-            return false if !matches_kinds_filters?( entry )
+            return false if !matches_platforms_filters?( entry )
         end
 
         if filter_sinks?
@@ -442,9 +442,9 @@ module ScanResultsHelper
         return entries if active_filters[:platforms].empty?
 
         if active_filters[:type] == 'exclude'
-            entries.where.not( platforms: { name: active_filters[:platforms] } )
+            entries.where.not( platforms: { shortname: active_filters[:platforms] } )
         else
-            entries.where( platforms: { name: active_filters[:platforms] } )
+            entries.where( platforms: { shortname: active_filters[:platforms] } )
         end
     end
 
