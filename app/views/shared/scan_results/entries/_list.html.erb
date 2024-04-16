@@ -36,7 +36,7 @@
 
 <%
     index = 0
-    scoped_find_each( data[:entries] ) do |entry|
+    data[:entries].each do |entry|
         next if siblings[entry.digest]
 
         index += 1
