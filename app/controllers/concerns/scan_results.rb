@@ -131,7 +131,7 @@ module ScanResults
         # data in order to fill in context, like states etc.
         #
         # The filtering will take place in #process_entries.
-        scan_results_entries_owner.entries
+        preload_entry_associations scan_results_entries_owner.entries
     end
 
     def scan_results_coverage
