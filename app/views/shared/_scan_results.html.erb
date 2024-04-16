@@ -70,14 +70,6 @@
             Events
         <% end %>
       </li>
-
-        <% if @revision&.report %>
-            <li id="export-tab" class="nav-item">
-                <%= link_to params_h.merge( action: 'export' ).merge(filter_params), class: "nav-link #{'active' if sections['export']}" do %>
-                    Export
-                <% end %>
-            </li>
-        <% end %>
     </ul>
 
     <div class="tab-content">
