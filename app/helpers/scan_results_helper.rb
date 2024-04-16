@@ -335,9 +335,12 @@ module ScanResultsHelper
     def update_chart_data( data, entry )
         if data.empty?
             data.merge!(
-                entry_names:   {},
-                seen:          Set.new,
-                total_entries: 0
+                input_vector_types: {},
+                platforms:          {},
+                sinks:              {},
+                states:             {},
+                seen:               Set.new,
+                total_entries:      0
             )
         end
 
@@ -352,10 +355,28 @@ module ScanResultsHelper
 
         name = entry.input_vector.kind
 
-        data[:entry_names][name] ||= 0
-        data[:entry_names][name]  += 1
+        data[:input_vector_types][name] ||= 0
+        data[:input_vector_types][name]  += 1
+        data[:input_vector_types] = Hash[data[:input_vector_types].sort_by { |name, _| name }]
 
-        data[:entry_names] = Hash[data[:entry_names].sort_by { |name, _| name }]
+        state = entry.state
+
+        data[:states][state] ||= 0
+        data[:states][state]  += 1
+        data[:states] = Hash[data[:states].sort_by { |name, _| name }]
+
+        entry.platforms.map(&:name).each do |pname|
+            data[:platforms][pname] ||= 0
+            data[:platforms][pname]  += 1
+        end
+        data[:platforms] = Hash[data[:platforms].sort_by { |pn, _| pn }]
+
+        entry.sinks.map(&:name).each do |pname|
+            data[:sinks][pname] ||= 0
+            data[:sinks][pname]  += 1
+        end
+        data[:sinks] = Hash[data[:sinks].sort_by { |pn, _| pn }]
+
         data
     end
 

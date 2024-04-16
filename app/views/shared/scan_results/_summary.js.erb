@@ -1,0 +1,63 @@
+<% if site.scanned? %>
+    <% if data[:entries].any? %>
+        function updateChart() {
+            const input_types_chart = new window.Charts.pieChart('chart-entries-input-types');
+
+            input_types_chart.initializeChart();
+
+            const input_types_data = {
+                labels: <%= data[:chart_data][:input_vector_types].keys.to_json.html_safe %>,
+                entryNames: <%= data[:chart_data][:input_vector_types].values.to_json.html_safe %>
+            };
+
+            input_types_chart.updateDataset(input_types_data);
+
+            const platforms_chart = new window.Charts.pieChart('chart-entries-platforms');
+
+            platforms_chart.initializeChart();
+
+            const platforms_data = {
+                labels: <%= data[:chart_data][:platforms].keys.to_json.html_safe %>,
+                entryNames: <%= data[:chart_data][:platforms].values.to_json.html_safe %>
+            };
+
+            platforms_chart.updateDataset(platforms_data);
+
+            const sinks_chart = new window.Charts.pieChart('chart-entries-sinks');
+
+            sinks_chart.initializeChart();
+
+            const sinks_data = {
+                labels: <%= data[:chart_data][:sinks].keys.to_json.html_safe %>,
+                entryNames: <%= data[:chart_data][:sinks].values.to_json.html_safe %>
+            };
+
+            sinks_chart.updateDataset(sinks_data);
+
+            const states_chart = new window.Charts.pieChart('chart-entries-states');
+
+            states_chart.initializeChart();
+
+            const states_data = {
+                labels: <%= data[:chart_data][:states].keys.to_json.html_safe %>,
+                entryNames: <%= data[:chart_data][:states].values.to_json.html_safe %>
+            };
+
+            states_chart.updateDataset(states_data);
+        }
+
+        if( $(".summary-charts-entries-container").length ) {
+            updateChart();
+        }
+
+        $("#summary-statistics").html("<%= j render(
+            partial: 'shared/scan_results/summary/statistics', locals: { data: { scan_results_owner: @revision || @scan || @site } },
+            formats: :html
+        ) %>");
+        $("#sidebar").html("<%= j render(partial: sidebar_partial_path, formats: :html) %>");
+    <% else %>
+        <%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
+    <% end %>
+<% else %>
+    <%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
+<% end %>

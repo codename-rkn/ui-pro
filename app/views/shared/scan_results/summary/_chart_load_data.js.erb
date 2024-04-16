@@ -1,0 +1,47 @@
+var chart_loader = function(){
+    const input_types_chart = new window.Charts.pieChart('chart-entries-input-types');
+
+    input_types_chart.initializeChart();
+
+    const input_types_data = {
+        labels: <%= data[:input_vector_types].keys.to_json.html_safe %>,
+        entryNames: <%= data[:input_vector_types].values.to_json.html_safe %>
+    };
+
+    input_types_chart.updateDataset(input_types_data);
+
+    const platforms_chart = new window.Charts.pieChart('chart-entries-platforms');
+
+    platforms_chart.initializeChart();
+
+    const platforms_data = {
+        labels: <%= data[:platforms].keys.to_json.html_safe %>,
+        entryNames: <%= data[:platforms].values.to_json.html_safe %>
+    };
+
+    platforms_chart.updateDataset(platforms_data);
+
+    const sinks_chart = new window.Charts.pieChart('chart-entries-sinks');
+
+    sinks_chart.initializeChart();
+
+    const sinks_data = {
+        labels: <%= data[:sinks].keys.to_json.html_safe %>,
+        entryNames: <%= data[:sinks].values.to_json.html_safe %>
+    };
+
+    sinks_chart.updateDataset(sinks_data);
+
+    const states_chart = new window.Charts.pieChart('chart-entries-states');
+
+    states_chart.initializeChart();
+
+    const states_data = {
+        labels: <%= data[:states].keys.to_json.html_safe %>,
+        entryNames: <%= data[:states].values.to_json.html_safe %>
+    };
+
+    states_chart.updateDataset(states_data);
+};
+
+$(document).ready(chart_loader);

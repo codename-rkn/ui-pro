@@ -1,0 +1,9 @@
+<%= render(
+  partial: 'shared/scan_results/summary',
+  formats: :js,
+  locals: {
+    data: @summary,
+    site: @site,
+    sidebar_partial_path: 'scans/sidebar'
+  }
+) %>

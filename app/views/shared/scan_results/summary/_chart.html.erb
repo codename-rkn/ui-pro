@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="summary-charts-entries-container col-3">
+    <h3>Review status</h3>
+    <canvas id='chart-entries-states'>
+    </canvas>
+  </div>
+
+  <div class="summary-charts-entries-container col-3">
+    <h3>Input vector types</h3>
+      <canvas id='chart-entries-input-types'>
+      </canvas>
+  </div>
+
+  <div class="summary-charts-entries-container col-3">
+    <h3>Sinks</h3>
+    <canvas id='chart-entries-sinks'>
+    </canvas>
+  </div>
+
+  <div class="summary-charts-entries-container col-3">
+    <h3>Platforms</h3>
+    <canvas id='chart-entries-platforms'>
+    </canvas>
+  </div>
+</div>
+
+<% if data[:total_entries].to_i > 0 %>
+<script>
+    <%= render partial: 'shared/scan_results/summary/chart_load_data',
+        formats: :js,
+        locals: {
+            data: data
+        } %>
+</script>
+<% end %>

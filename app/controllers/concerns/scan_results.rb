@@ -11,7 +11,7 @@ module ScanResults
 
     DEFAULT_ACTION = :entries
 
-    SCAN_RESULT_SITE_ACTIONS     = [ :entries, :coverage, :reviews, :events, :export ]
+    SCAN_RESULT_SITE_ACTIONS     = [ :entries, :coverage, :reviews, :events, :export, :summary ]
 
     SCAN_RESULT_SCAN_ACTIONS     =
         SCAN_RESULT_SITE_ACTIONS
@@ -19,7 +19,7 @@ module ScanResults
     SCAN_RESULT_REVISION_ACTIONS =
         SCAN_RESULT_SITE_ACTIONS +
         SCAN_RESULT_SCAN_ACTIONS +
-            [ :revert_configuration, :configuration, :summary, :health, :errors ]
+            [ :revert_configuration, :configuration, :health, :errors ]
 
     SCAN_RESULT_ACTIONS          = SCAN_RESULT_REVISION_ACTIONS
 
@@ -30,23 +30,20 @@ module ScanResults
     }
 
     def summary
-        @summary = prepare_live_stream_data
-        process_and_show
-
-        session[:live_last_update] = Time.now
-    end
-
-    def prepare_live_stream_data
-        {
-            entries:  preload_entry_associations( scan_results_owner.entries ),
-            coverage: scan_results_coverage,
-            reviews:  scan_results_reviewed_entries
-        }
+        # @summary = prepare_live_stream_data
+        @summary = entries_summary_data(
+          site:      @site,
+          sitemap:   (@revision || @scan || @site).sitemap_entries,
+          scans:     @scan ? [@scan] : @site.scans,
+          revisions: @scan.revisions.order( id: :desc ),
+          entries:   scan_results_entries
+        )
+        process_and_show( :summary )
     end
 
     def entries
         @entries_summary = prepare_entry_data
-        process_and_show(:entries)
+        process_and_show( :entries )
     end
 
     def coverage
@@ -62,7 +59,7 @@ module ScanResults
 
     def health
         @health = prepare_health_data
-        process_and_show(:health)
+        process_and_show( :health )
     end
 
     def errors

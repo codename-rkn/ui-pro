@@ -1,6 +1,6 @@
 import Chart from 'chart.js/auto';
 
-export default class IssueChart {
+export default class EntryChart {
   constructor(chartElementId) {
     this.chartElementId = chartElementId;
     this.chartInstance = null;
@@ -26,45 +26,28 @@ export default class IssueChart {
 
   createChart(ctx) {
     return new Chart(ctx, {
-      type: 'bar',
+      type: 'pie',
       data: {
         labels: [],
         datasets: [
           {
-            label: 'Entries',
             data: [],
-            backgroundColor: '#FF7F50'
+            backgroundColor: [
+              '#4dc9f6',
+              '#f67019',
+              '#f53794',
+              '#537bc4',
+              '#acc236',
+              '#166a8f',
+              '#00a950',
+              '#58595b',
+              '#8549ba'
+            ]
           }
         ]
       },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        scales: {
-          x: {
-            type: 'category',
-            ticks: {
-              autoSkip: false,
-              maxRotation: 15,
-              minRotation: 15
-            }
-          },
-          y: {
-            position: 'outer',
-            title: {
-              display: true,
-              text: ''
-            }
-          }
-        },
-        plugins: {
-            legend: {
-              display: false
-            }
-        }
+        responsive: true
       }
     });
   }

@@ -1,105 +1,17 @@
-<%
-    coverage_entry_count = @revision.sitemap_entries.coverage.size
-    entry_count          = @revision.entries.size
-    performance_snapshot = @revision.performance_snapshot
-
-    reviewed_entries_count = @revision.reviewed_entries.size
-
-    reliabilities_t = {
-      excellent: 0,
-      good:      1,
-      fair:      2,
-      poor:      3
-    }
-
-    reliability = reliabilities_t.find do |k, v|
-        v == [
-          reliabilities_t[performance_snapshot.http_failed_count_state],
-          reliabilities_t[performance_snapshot.browser_failed_job_count_state]
-        ].max
-    end.first
-
-%>
-
-<% if @revision.in_progress? %>
-<script>
-    window.scan_duration_seconds = <%= @revision.duration %>;
-</script>
-<% end %>
-
 <div id="summary-statistics">
-    <div class="row">
-        <div class="col-md-2">
-            <h3>
-                <strong class="text text-state-<%= reliability %> health-state">
-                    <%= reliability.capitalize %>
-                </strong>
-
-                reliability
-            </h3>
-        </div>
-
-        <div class="col-md-2">
-            <h3>
-                <strong><%= coverage_entry_count %></strong>
-                <%= 'page'.pluralize coverage_entry_count %>
-            </h3>
-        </div>
-
-        <div class="col-md-5">
-            <h3>
-                <strong><%= entry_count %></strong>
-                <%= 'entry'.pluralize entry_count %>
-            </h3>
-        </div>
-
-        <div class="col-md-3">
-            <h3>
-                <strong>
-                    <%= reviewed_entries_count %>
-                </strong>
-
-                reviewed <%= 'entry'.pluralize reviewed_entries_count %>
-            </h3>
-        </div>
-    </div>
+  <%= render partial: 'shared/scan_results/summary/statistics',
+             locals: {
+               data: { scan_results_owner: @revision || @scan || @site }
+             } %>
 </div>
 
-<div id="live-stream-container">
-    <div class="row">
-        <div class="col-md-12">
-            <h4 id="live-stream-clock"></h4>
+<hr/>
 
-            <% if @revision.in_progress? %>
-                <div class="loading-bullets">
-                    <div class="bounce1"></div>
-                    <div class="bounce2"></div>
-                    <div class="bounce3"></div>
-                </div>
-            <% end %>
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div id="live-stream" class="col-md-12">
-
-          <h4>
-          <% if @revision.in_progress? %>
-
-                <small class="scan-duration-clock-hms">
-                  <%= seconds_to_hms @revision.duration %>
-                </small>
-
-            <% else %>
-                <span class="text-muted fs-6">
-                  <%= seconds_to_hms @revision.duration %>
-                </span>
-          <% end %>
-          </h4>
-
-            <%=  render( partial: 'shared/scan_results/summary/stream', formats: :html ) %>
-        </div>
-    </div>
-
+<div class="row">
+  <div class="col-md-12">
+    <%= render partial: 'shared/scan_results/summary/chart',
+               locals: {
+                 data: data[:chart_data]
+               } %>
+  </div>
 </div>

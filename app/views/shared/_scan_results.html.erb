@@ -11,13 +11,11 @@
 <div class="col-md-12">
     <ul class="nav nav-tabs">
 
-        <% if @revision %>
-            <li id="live-tab" class="nav-item">
-                <%= link_to params_h.merge( action: 'summary' ).merge(filter_params), class: "nav-link #{'active' if sections['summary']}" do %>
-                    Summary
-                <% end %>
-            </li>
-        <% end %>
+        <li id="live-tab" class="nav-item">
+            <%= link_to params_h.merge( action: 'summary' ).merge(filter_params), class: "nav-link #{'active' if sections['summary']}" do %>
+                Summary
+            <% end %>
+        </li>
 
         <li id="entries-tab" class="nav-item">
             <%= link_to params_h.merge( action: 'entries' ).merge(filter_params), class: "nav-link #{('active' if sections['entries'])}" do %>
