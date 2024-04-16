@@ -32,4 +32,14 @@
             data: data
         } %>
 </script>
+  <% else %>
+  <script>
+      var arr = ['chart-entries-states', 'chart-entries-input-types', 'chart-entries-sinks', 'chart-entries-platforms'];
+
+      for( let i = 0; i < arr.length; i++ ) {
+          var c = document.getElementById( arr[i] );
+          var ctx = c.getContext("2d");
+          ctx.fillText("Pending scan results.", 50, 50);
+      }
+  </script>
 <% end %>
