@@ -510,7 +510,7 @@ module ScanResultsHelper
             includes( :sinks ).
             includes( note: [ :attachments ] ).
             includes( :platforms ).
-            includes( revision: { scan: [:profile] } ).
+            includes( revision: { scan: [:profile, :schedule] } ).
             includes( :reviewed_by_revision ).
             includes( page: :sitemap_entry ).
             includes( siblings: :revision ).
