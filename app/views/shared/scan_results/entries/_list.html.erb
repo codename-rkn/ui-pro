@@ -44,7 +44,7 @@
 %>
             <tr id="<%= id %>-entry-<%= entry.digest %>"
                 onclick="<%= "$('#entry-notes-#{entry.note.id}').toggle()" if !entry.note.text.blank? || entry.note.attachments.any? %>"
-                class="<%= 'table-info entry-with_notes' if !entry.note.text.blank? || entry.note.attachments.any? %>"
+                class="entry-row <%= 'table-info entry-with_notes' if !entry.note.text.blank? || entry.note.attachments.any? %>"
             >
 
                 <% if !hide_state_icon %>
@@ -71,7 +71,7 @@
                     </td>
                 <% end %>
 
-                <td id="<%= id %>-entry-<%= entry.digest %>-affected_input_name">
+                <td class="entry-affected_input_name" id="<%= id %>-entry-<%= entry.digest %>-affected_input_name">
                   <code><%= entry.input_vector.affected_input_name %></code>
                 </td>
 
