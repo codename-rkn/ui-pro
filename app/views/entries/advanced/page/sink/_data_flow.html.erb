@@ -39,11 +39,11 @@
                 <code><%= sink.function.signature || sink.function.name %></code>
             </td>
             <td>
-                <a href="javascript:void(0);"
+                <button
                    onclick="$('#<%= id %>-data_flow_sinks-<%= i %>-inspect').toggle()"
                    class="btn btn-info btn-sm">
                     Inspect
-                </a>
+                </button>
             </td>
         </tr>
         <tr id="<%= id %>-data_flow_sinks-<%= i %>-inspect" class="inspection">
