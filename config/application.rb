@@ -7,6 +7,10 @@ require 'rkn/application'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+if ENV['PACKAGING_gfGEFgdfGdG'] != '1'
+    RKN::License.guard! :dev, :trial, :pro
+end
+
 module RKN
 module UI
 module Web
