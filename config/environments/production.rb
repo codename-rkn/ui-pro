@@ -88,8 +88,8 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  if ENV['SCNR_PRO_LOG_DIR'].present?
-    config.logger = ActiveSupport::Logger.new( ENV['SCNR_PRO_LOG_DIR'] + '/webui.log' )
+  if ENV['RKN_PRO_LOG_DIR'].present?
+    config.logger = ActiveSupport::Logger.new( ENV['RKN_PRO_LOG_DIR'] + '/webui.log' )
   end
 
 
