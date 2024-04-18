@@ -79,6 +79,12 @@ group :development, :test do
     gem 'pry-byebug'
 end
 
+if File.exist? '../../ecsypno/license-client'
+    gem 'ecsypno-license-client', path: '../../ecsypno/license-client'
+else
+    gem 'ecsypno-license-client'
+end
+
 if File.exist? '../../scnr/scnr'
     gem 'scnr', path: '../../scnr/scnr'
 end

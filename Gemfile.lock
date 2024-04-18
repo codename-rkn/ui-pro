@@ -1,4 +1,10 @@
 PATH
+  remote: ../../ecsypno/license-client
+  specs:
+    ecsypno-license-client (0.1.0)
+      typhoeus (~> 1.4.0)
+
+PATH
   remote: ../../scnr/engine
   specs:
     scnr-engine (0.1.2)
@@ -31,7 +37,7 @@ PATH
   remote: ../../scnr/license-client
   specs:
     scnr-license-client (0.1.0)
-      typhoeus (~> 1.4.0)
+      ecsypno-license-client (~> 0.1.0)
 
 PATH
   remote: ../../scnr/scnr
@@ -49,7 +55,7 @@ PATH
   remote: ../license-client
   specs:
     rkn-license-client (0.1.0)
-      typhoeus (~> 1.4.0)
+      ecsypno-license-client (~> 0.1.0)
 
 PATH
   remote: ../rkn
@@ -483,6 +489,7 @@ DEPENDENCIES
   devise
   diffy
   dotiw
+  ecsypno-license-client!
   factory_girl_rails
   faker
   font-awesome-sass
