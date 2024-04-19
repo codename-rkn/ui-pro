@@ -11,7 +11,6 @@ class SiteProfilesController < ApplicationController
         pre = @site_profile.to_scanner_options
 
         pp = parsed_params
-        pp[:platforms].reject!(&:empty?)
 
         respond_to do |format|
             if @site_profile.update( pp )
