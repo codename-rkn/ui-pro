@@ -194,7 +194,7 @@ class ScansController < ApplicationController
 
     def fill_in_site_sidebar
         prepare_site_sidebar_data
-        process_entries( @site.entries )
+        process_entries( @site.entries.include(scan: [:schedule]) )
     end
 
     def scan_results_owner

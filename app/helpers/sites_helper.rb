@@ -28,7 +28,7 @@ module SitesHelper
             end
 
             @site_sidebar[:scans] =
-                @site_sidebar[:scans].sort_by { |r| r.id }.reverse
+                @site_sidebar[:scans].to_a.sort_by { |r| r.id }.reverse
         end
     end
 
