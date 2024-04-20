@@ -156,7 +156,7 @@ module ScanResults
     # Starts the global {#process_entries entry processing} using
     # {#scan_results_entries}.
     def perform_entry_processing
-        process_entries( scan_results_entries.includes( :sitemap_entry ) )
+        process_entries( preload_entry_associations( scan_results_entries ) )
     end
 
     def process_and_show(js_partial = :show)

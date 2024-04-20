@@ -68,7 +68,6 @@ module ScanResultsHelper
             filters[:by_revision] : true
 
         entries_count = entries.count
-        entries       = preload_entry_associations( entries )
 
         if filter_pages?
             @sitemap_entry = @site.sitemap_entries.where( digest: active_filters[:pages].first ).first
