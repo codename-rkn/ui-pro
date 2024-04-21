@@ -55,8 +55,7 @@ class RevisionsController < ApplicationController
             site:      @site,
             sitemap:   @revision.sitemap_entries,
             scans:     [@scan],
-            revisions: @scan.revisions.order( id: :desc ),
-            entries:   scan_results_entries
+            revisions: @scan.revisions.order( id: :desc )
         )
     end
 

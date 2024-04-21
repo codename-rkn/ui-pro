@@ -206,8 +206,7 @@ class ScansController < ApplicationController
             site:      @site,
             sitemap:   @scan.sitemap_entries,
             scans:     [@scan],
-            revisions: @scan.revisions.order( id: :desc ),
-            entries:    scan_results_entries
+            revisions: @scan.revisions.order( id: :desc )
         )
     end
 

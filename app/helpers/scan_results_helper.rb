@@ -129,7 +129,7 @@ module ScanResultsHelper
     end
 
     def matches_sinks_filters?( entry )
-        (active_filters[:sinks] & entry.sinks.map(&:name)).any?
+        active_filters[:sinks].include? entry.sinks.first.name
     end
 
     def apply_filters( entries )
@@ -159,8 +159,6 @@ module ScanResultsHelper
             data[:scans] = data[:scans].includes(:revisions).
                 includes(:schedule).includes(:profile)
         end
-
-        entries = data[:entries]
 
         sitemap_with_entries  = {}
         chart_data           = {}
@@ -234,7 +232,6 @@ module ScanResultsHelper
             # If the total entries are above the batch size, apply any page filtering
             # via a scope.
             if pre_page_filter_data[:count] > ApplicationHelper::SCOPED_FIND_EACH_BATCH_SIZE
-                page_filtered_entries = filter_pages( entries )
 
                 if @revision
                     page_filtered_entries = page_filtered_entries.where( revision: @revision )

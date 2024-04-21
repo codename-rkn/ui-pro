@@ -99,8 +99,7 @@ class SitesController < ApplicationController
             site:      @site,
             sitemap:   @site.sitemap_entries,
             scans:     @scans.order( id: :desc ),
-            revisions: @site.revisions.order( id: :desc ),
-            entries:   scan_results_entries
+            revisions: @site.revisions.order( id: :desc )
         )
     end
 
