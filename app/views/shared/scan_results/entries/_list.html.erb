@@ -79,12 +79,19 @@
                     <code><%= entry.input_vector.kind %></code>
                 </td>
 
+              <% sink_name = entry.sinks.first.name %>
               <td id="<%= id %>-entry-<%= entry.digest %>-characteristics">
-                <code><%= entry.sinks.map(&:name).join( ", " ) %></code>
+                <span class="pull-left badge label-severity-none" data-toggle="tooltip" data-placement="top" title="<%= sink_to_description( sink_name ) %>">
+                  <%= sink_name %>
+                </span>
               </td>
 
               <td id="<%= id %>-entry-<%= entry.digest %>-platforms">
-                <code><%= entry.platforms.map(&:name).join( ", " ) %></code>
+                <% entry.platforms.map(&:name).each do |platform| %>
+                  <span class="pull-left badge label-severity-none">
+                    <%= platform %>
+                  </span>
+                <% end %>
               </td>
 
                 <% if !@sitemap_entry %>

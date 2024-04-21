@@ -6,6 +6,28 @@ module EntriesHelper
         doc.to_html
     end
 
+    def sink_to_description( sink )
+        case sink.to_sym
+            when :blind
+                'This input does not appear to affect the behavior of the web application.'
+
+            when :active
+                'This input affects the behavior of the web application.'
+
+            when :body
+                'Data for this input is included in the page body.'
+
+            when :header_name
+                'Data for this input is included in an HTTP response header name.'
+
+            when :header_value
+                'Data for this input is included in an HTTP response header value.'
+
+            else
+                nil
+        end
+    end
+
     def data_dump( data )
         ap = AwesomePrint::Inspector.new( plain: true, html: true )
         "<pre class='data-dump'>#{ap.awesome( data )}</pre>".html_safe
