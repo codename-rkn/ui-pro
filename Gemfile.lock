@@ -60,7 +60,7 @@ PATH
 PATH
   remote: ../rkn
   specs:
-    rkn (1.1.0)
+    rkn (1.1.1)
       rkn-license-client (~> 0.1)
 
 GEM
