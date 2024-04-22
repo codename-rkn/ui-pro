@@ -30,7 +30,7 @@
                 <%= 'active' if active %>
                 sitemap-entry-with<% 'out' if entry_count == 0 %>-entries"
             id="sitemap-entry-<%= data[:digest] %>"
-            title="<%= pluralize entry_count, 'entry' %> with a <%= 'maximum' if entry_count > 1 %>."
+            title="<%= pluralize entry_count, 'entry' %>"
         >
 
             <%= link_to_url_with_external(
