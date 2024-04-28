@@ -2,7 +2,7 @@
   counter = 0
 %>
 
-<table class="table table-hover table-sm table-dependencies">
+<table class="table table-hover table-sm table-requests">
   <thead>
   <tr>
     <th>#</th>
@@ -10,10 +10,10 @@
   </tr>
   </thead>
   <tbody>
-  <% page.dom.dependencies.each do |url| %>
-    <tr id="<%= id %>-dependencies-<%= counter %>" >
+  <% page.dom.requests.each do |url| %>
+    <tr id="<%= id %>-requests-<%= counter %>" >
       <th>
-        <a href="<%= id_to_location id %>/dependencies/<%= counter %>">
+        <a href="<%= id_to_location id %>/requests/<%= counter %>">
           <%= counter %>
         </a>
       </th>
