@@ -32,7 +32,6 @@ class InputVector < ActiveRecord::Base
         end
 
         h[:kind]         = vector[:type]
-        h[:value_type] ||= 'undetermined'
         h[:engine_class] = vector[:class]
 
         create h.merge( options )
