@@ -1,9 +1,10 @@
 <%
-   pages      = active_filters[:pages]
-   states     = active_filters[:states]
-   sinks      = active_filters[:sinks]
-   platforms  = active_filters[:platforms]
-   kinds      = active_filters[:kinds]
+   pages       = active_filters[:pages]
+   states      = active_filters[:states]
+   sinks       = active_filters[:sinks]
+   platforms   = active_filters[:platforms]
+   kinds       = active_filters[:kinds]
+   value_types = active_filters[:value_types]
 %>
 
 <div class="row">
@@ -77,7 +78,39 @@
                       </tr>
                       </tbody>
                     </table>
+                  </div>
 
+                  <div class="flex-row d-flex justify-content-center">
+                    <table class="table table-sm table-dark">
+                      <thead>
+                      <tr>
+                        <th colspan="<%= data[:value_types].size %>">
+                          Value types
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <% i = 0
+                           data[:value_types].each do |type, count| %>
+                          <td>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="entry-sink-<%= type %>"
+                                     name="filter[value_types][]" value="<%= type %>"
+                                     <%= "checked=checked" if value_types.empty? || value_types.include?( type ) %>
+                                />
+
+                              <label class="form-check-label" for="entry-sink-<%= type %>">
+                                <%= h = type.humanize; i == 0 ? h : h.downcase %>
+                                (<%= count %>)
+                              </label>
+                            </div>
+                            <% i += 1 %>
+                          </td>
+                        <% end %>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
 
                   <div class="flex-row d-flex justify-content-center">
@@ -145,7 +178,6 @@
                       </tbody>
                     </table>
                   </div>
-
                 </div>
             </div>
 

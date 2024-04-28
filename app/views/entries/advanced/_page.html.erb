@@ -56,6 +56,24 @@
             </h4>
 
             <h5>
+              <a id="<%= id %>_dependencies" class="anchor"
+                 href="<%= id_to_location "#{id}_dependencies" %>">
+                <span class="fa fa-link"></span>
+              </a>
+
+              Dependencies
+            </h5>
+
+            <p class="text-muted">
+              Resources requested by the page.
+            </p>
+
+            <%= render 'entries/advanced/page/dependencies',
+                       page: page,
+                       id: "#{id}_dom_processing"
+            %>
+
+            <h5>
                 <a id="<%= id %>_transitions" class="anchor"
                    href="<%= id_to_location "#{id}_transitions" %>">
                     <span class="fa fa-link"></span>

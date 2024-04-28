@@ -26,12 +26,13 @@ class InputVector < ActiveRecord::Base
 
     def self.create_from_engine( vector, options = {}  )
         h = {}
-        [:action, :http_method, :seed, :inputs, :affected_input_name, :source,
+        [:action, :value_type, :http_method, :seed, :inputs, :affected_input_name, :source,
          :default_inputs].each do |attr|
             h[attr] = vector[attr]
         end
 
         h[:kind]         = vector[:type]
+        h[:value_type] ||= 'undetermined'
         h[:engine_class] = vector[:class]
 
         create h.merge( options )

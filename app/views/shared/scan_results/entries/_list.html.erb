@@ -17,6 +17,7 @@
 
         <th>Name</th>
         <th>Type</th>
+        <th>Value type</th>
         <th>Sink</th>
         <th>Platforms</th>
 
@@ -78,6 +79,10 @@
                 <td id="<%= id %>-entry-<%= entry.digest %>-vector-kind">
                     <code><%= entry.input_vector.kind %></code>
                 </td>
+
+              <td class="entry-value_type" id="<%= id %>-entry-<%= entry.digest %>-value_type">
+                <code><%= entry.input_vector.value_type %></code>
+              </td>
 
               <% sink_name = entry.sinks.first.name %>
               <td id="<%= id %>-entry-<%= entry.digest %>-characteristics">

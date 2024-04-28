@@ -42,6 +42,17 @@ var chart_loader = function(){
     };
 
     states_chart.updateDataset(states_data);
+
+    const value_types_chart = new window.Charts.pieChart('chart-entries-value_types');
+
+    value_types_chart.initializeChart();
+
+    const value_types_data = {
+        labels: <%= data[:value_types].keys.to_json.html_safe %>,
+        entryNames: <%= data[:value_types].values.to_json.html_safe %>
+    };
+
+    value_types_chart.updateDataset(value_types_data);
 };
 
 $(document).ready(chart_loader);

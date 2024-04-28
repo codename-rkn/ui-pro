@@ -1,4 +1,8 @@
 class EntryPageDom < ActiveRecord::Base
+    include WithCustomSerializer
+
+    custom_serialize :dependencies, Array
+
     belongs_to :page, class_name: 'EntryPage', foreign_key: 'entry_page_id',
                optional: true
 
@@ -13,6 +17,7 @@ class EntryPageDom < ActiveRecord::Base
         create(
             url:                  dom[:url],
             body:                 dom[:body],
+            dependencies:         dom[:dependencies],
             transitions:          dom[:transitions].map do |transition|
                 EntryPageDomTransition.create_from_engine( transition )
             end,

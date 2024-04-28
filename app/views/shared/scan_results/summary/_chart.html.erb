@@ -12,11 +12,21 @@
   </div>
 
   <div class="summary-charts-entries-container col-3">
+    <h3>Input value types</h3>
+    <canvas id='chart-entries-value_types'>
+    </canvas>
+  </div>
+
+  <div class="summary-charts-entries-container col-3">
     <h3>Sinks</h3>
     <canvas id='chart-entries-sinks'>
     </canvas>
   </div>
 
+
+</div>
+
+<div class="row">
   <div class="summary-charts-entries-container col-3">
     <h3>Platforms</h3>
     <canvas id='chart-entries-platforms'>
@@ -34,7 +44,8 @@
 </script>
   <% else %>
   <script>
-      var arr = ['chart-entries-states', 'chart-entries-input-types', 'chart-entries-sinks', 'chart-entries-platforms'];
+      var arr = ['chart-entries-states', 'chart-entries-input-types', 'chart-entries-sinks', 'chart-entries-platforms',
+          'chart-entries-value_types'];
 
       for( let i = 0; i < arr.length; i++ ) {
           var c = document.getElementById( arr[i] );

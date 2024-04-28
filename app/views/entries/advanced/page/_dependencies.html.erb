@@ -1,0 +1,32 @@
+<%
+  counter = 0
+%>
+
+<table class="table table-hover table-sm table-dependencies">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>URL</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% page.dom.dependencies.each do |url| %>
+    <tr id="<%= id %>-dependencies-<%= counter %>" >
+      <th>
+        <a href="<%= id_to_location id %>/dependencies/<%= counter %>">
+          <%= counter %>
+        </a>
+      </th>
+
+      <td>
+        <a href="<%= url %>">
+          <%= url %>
+        </a>
+      </td>
+    </tr>
+  <%
+    counter += 1
+    end %>
+
+  </tbody>
+</table>

@@ -1,7 +1,7 @@
 module ScanResultsHelper
 
     FILTER_KEY    = :filter
-    VALID_FILTERS = Set.new(%w(type pages states sinks platforms kinds))
+    VALID_FILTERS = Set.new(%w(type pages states sinks platforms kinds value_types))
 
     def process_entry_blocks
         @process_entry_blocks ||= []
@@ -105,6 +105,10 @@ module ScanResultsHelper
             return false if !matches_kinds_filters?( entry )
         end
 
+        if filter_value_types?
+            return false if !matches_value_types_filters?( entry )
+        end
+
         if filter_platforms?
             return false if !matches_platforms_filters?( entry )
         end
@@ -124,6 +128,10 @@ module ScanResultsHelper
         active_filters[:kinds].include? entry.input_vector.kind.to_s
     end
 
+    def matches_value_types_filters?( entry )
+        active_filters[:value_types].include? entry.input_vector.value_type.to_s
+    end
+
     def matches_platforms_filters?( entry )
         (active_filters[:platforms] & entry.platforms.map(&:shortname)).any?
     end
@@ -139,6 +147,10 @@ module ScanResultsHelper
 
         if filter_kinds?
             entries = filter_kinds( entries )
+        end
+
+        if filter_value_types?
+            entries = filter_value_types( entries )
         end
 
         if filter_platforms?
@@ -176,6 +188,7 @@ module ScanResultsHelper
           states: {},
           sinks: {},
           platforms: {},
+          value_types: {},
           input_vectors: {},
         }
 
@@ -198,6 +211,9 @@ module ScanResultsHelper
 
             counted_attributes[:input_vectors][entry.input_vector.kind.to_s] ||= 0
             counted_attributes[:input_vectors][entry.input_vector.kind.to_s] += 1
+
+            counted_attributes[:value_types][entry.input_vector.value_type] ||= 0
+            counted_attributes[:value_types][entry.input_vector.value_type] += 1
         end
 
         # If we're filtering by page, also filter out scans and revisions which
@@ -276,6 +292,7 @@ module ScanResultsHelper
                 platforms:           counted_attributes[:platforms],
                 sinks:               counted_attributes[:sinks],
                 input_vector_kinds:  counted_attributes[:input_vectors],
+                value_types:         counted_attributes[:value_types],
                 sitemap_data:        sitemap_data,
                 entries:             page_filtered_entries,
                 missing_entries:      missing_entries,
@@ -335,6 +352,7 @@ module ScanResultsHelper
                 platforms:          {},
                 sinks:              {},
                 states:             {},
+                value_types:        {},
                 seen:               Set.new,
                 total_entries:      0
             )
@@ -354,6 +372,11 @@ module ScanResultsHelper
         data[:input_vector_types][name] ||= 0
         data[:input_vector_types][name]  += 1
         data[:input_vector_types] = Hash[data[:input_vector_types].sort_by { |name, _| name }]
+
+        value_type = entry.input_vector.value_type
+        data[:value_types][value_type] ||= 0
+        data[:value_types][value_type]  += 1
+        data[:value_types] = Hash[data[:value_types].sort_by { |n, _| n }]
 
         state = entry.state
 
@@ -445,6 +468,16 @@ module ScanResultsHelper
         end
     end
 
+    def filter_value_types( entries )
+        return entries if active_filters[:value_types].empty?
+
+        if active_filters[:type] == 'exclude'
+            entries.where.not( input_vectors: { value_type: active_filters[:value_types] } )
+        else
+            entries.where( input_vectors: { value_type: active_filters[:value_types] } )
+        end
+    end
+
     def filter_sinks( entries )
         return entries if active_filters[:sinks].empty?
 
@@ -479,6 +512,10 @@ module ScanResultsHelper
 
     def filter_platforms?
         active_filters[:platforms].any?
+    end
+
+    def filter_value_types?
+        active_filters[:value_types].any?
     end
 
     def filter_sinks?
@@ -529,6 +566,7 @@ module ScanResultsHelper
         @active_filters[:sinks] ||= []
         @active_filters[:platforms] ||= []
         @active_filters[:kinds] ||= []
+        @active_filters[:value_types] ||= []
 
         if @active_filters[:type] == 'include'
             @active_filters[:states] ||= %w(pending)

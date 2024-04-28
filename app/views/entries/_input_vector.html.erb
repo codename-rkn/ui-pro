@@ -13,6 +13,7 @@
         <thead>
             <tr>
                 <th>Type</th>
+                <th>Value type</th>
 
                 <% if @entry.active? %>
                     <% if !@entry.input_vector.http_method.to_s.empty? %>
@@ -32,6 +33,7 @@
         </thead>
         <tr>
             <td><code><%= @entry.input_vector.kind %></code></td>
+            <td><code><%= @entry.input_vector.value_type %></code></td>
 
             <% if @entry.active? %>
                 <% if !@entry.input_vector.http_method.to_s.empty? %>
