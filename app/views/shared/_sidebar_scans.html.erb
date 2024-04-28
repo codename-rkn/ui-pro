@@ -56,7 +56,8 @@
                     <% if lr = scan.last_revision %>
                         <%= render partial: '/shared/revision_info', locals: {
                                 revision:       lr,
-                                hide_scan_name: true
+                                hide_scan_name: true,
+                                scan:           scan
                         } %>
                     <% end %>
                 </small>
