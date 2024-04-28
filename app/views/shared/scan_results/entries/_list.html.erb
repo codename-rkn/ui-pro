@@ -81,7 +81,9 @@
                 </td>
 
               <td class="entry-value_type" id="<%= id %>-entry-<%= entry.digest %>-value_type">
-                <code><%= entry.input_vector.value_type %></code>
+                <span class="pull-left badge label-severity-none">
+                  <%= entry.input_vector.value_type %>
+                </span>
               </td>
 
               <% sink_name = entry.sinks.first.name %>
