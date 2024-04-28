@@ -16,6 +16,7 @@ class HttpRequest < ActiveRecord::Base
 
     def self.create_from_engine( request )
         return if request.nil?
+        request = request.symbolize_keys
 
         create(
             url:         request[:url],

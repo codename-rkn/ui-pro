@@ -1,23 +1,25 @@
 class EntryPageDom < ActiveRecord::Base
     include WithCustomSerializer
 
-    custom_serialize :requests, Array
-
     belongs_to :page, class_name: 'EntryPage', foreign_key: 'entry_page_id',
                optional: true
 
     has_many :transitions,          class_name: 'EntryPageDomTransition',
              dependent: :destroy
 
+    has_many :requests,  as: :requestable, class_name: 'HttpRequest',
+            dependent: :destroy
+
     has_many :data_flow_sinks,      class_name: 'EntryPageDomDataFlowSink',
              dependent: :destroy
 
     def self.create_from_engine( dom )
         dom = dom.symbolize_keys
+
         create(
             url:                  dom[:url],
             body:                 dom[:body],
-            requests:         dom[:requests],
+            requests:             dom[:requests].map { |r| HttpRequest.create_from_engine( r ) },
             transitions:          dom[:transitions].map do |transition|
                 EntryPageDomTransition.create_from_engine( transition )
             end,

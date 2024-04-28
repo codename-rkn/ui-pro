@@ -1,5 +1,0 @@
-class AddRequestsToEntryPageDoms < ActiveRecord::Migration[7.0]
-  def change
-    add_column :entry_page_doms, :requests, :binary
-  end
-end
