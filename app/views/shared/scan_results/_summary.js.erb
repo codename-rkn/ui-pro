@@ -62,7 +62,7 @@
         }
 
         $("#summary-statistics").html("<%= j render(
-            partial: 'shared/scan_results/summary/statistics', locals: { data: { scan_results_owner: @revision || @scan || @site } },
+            partial: 'shared/scan_results/entries/statistics', locals: { data: data },
             formats: :html
         ) %>");
         $("#sidebar").html("<%= j render(partial: sidebar_partial_path, formats: :html) %>");
