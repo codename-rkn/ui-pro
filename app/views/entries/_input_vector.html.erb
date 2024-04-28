@@ -33,7 +33,11 @@
         </thead>
         <tr>
             <td><code><%= @entry.input_vector.kind %></code></td>
-            <td><code><%= @entry.input_vector.value_type %></code></td>
+            <td>
+                <span class="badge label-severity-none">
+                  <%= @entry.input_vector.value_type %>
+                </span>
+            </td>
 
             <% if @entry.active? %>
                 <% if !@entry.input_vector.http_method.to_s.empty? %>
