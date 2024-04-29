@@ -37,6 +37,7 @@ scope_exclude_file_extensions: >
 scope_auto_redundant_paths:
     description: 'Limits the amount of times URLs with identical query parameter names will be followed.'
     notice: 'Helps avoid auditing pages like calendars and catalogs over and over.'
+scope_depth_limit: 'Limits how deep the crawler can go into the structure of the web application.'
 scope_directory_depth_limit: 'Limits how deep the crawler can go into the directory structure of the web application.'
 scope_exclude_path_patterns: 'Excludes crawling and auditing URLs which match the given patterns.'
 scope_exclude_binaries:

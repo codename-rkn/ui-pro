@@ -27,6 +27,7 @@ class Profile < ActiveRecord::Base
         audit_exclude_vector_patterns:  { type: Array, validate: :patterns, format: :lsv },
         audit_include_vector_patterns:  { type: Array, validate: :patterns, format: :lsv },
 
+        scope_depth_limit:              Integer,
         scope_dom_depth_limit:          Integer,
         scope_directory_depth_limit:    Integer,
         scope_page_limit:               Integer,

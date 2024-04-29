@@ -91,6 +91,17 @@
             </div>
 
             <div class="row">
+              <div class="col-md-6">
+                <%= f.input :scope_depth_limit,
+                            label: 'Depth limit',
+                            placeholder: 'Infinite' %>
+              </div>
+              <div class="col-md-6 input-help">
+                <%= messages_for( :scope_depth_limit ) %>
+              </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-6">
                     <%= f.input :scope_directory_depth_limit,
                                 label: 'Directory depth limit',

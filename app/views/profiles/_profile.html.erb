@@ -22,6 +22,16 @@
         </div>
     </div>
 
+    <div id="scope_depth_limit" class="row">
+      <div class="col-md-6">
+        <strong>Depth limit:</strong>
+        <%= profile.scope_depth_limit || 'Infinite' %>
+      </div>
+      <div class="col-md-6">
+        <%= messages_for :scope_depth_limit %>
+      </div>
+    </div>
+
     <div id="scope_directory_depth_limit" class="row">
         <div class="col-md-6">
             <strong>Directory depth limit:</strong>
