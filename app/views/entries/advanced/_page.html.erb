@@ -55,6 +55,7 @@
                 DOM processing
             </h4>
 
+          <% if page.dom.requests.any? %>
             <h5>
               <a id="<%= id %>_requests" class="anchor"
                  href="<%= id_to_location "#{id}_requests" %>">
@@ -72,6 +73,7 @@
                        page: page,
                        id: "#{id}_dom_processing"
             %>
+            <% end %>
 
             <h5>
                 <a id="<%= id %>_transitions" class="anchor"
