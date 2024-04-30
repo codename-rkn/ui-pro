@@ -42,7 +42,7 @@ PATH
 PATH
   remote: ../../scnr/scnr
   specs:
-    scnr (1.4.7)
+    scnr (1.4.9)
       scnr-license-client (~> 0.1)
 
 PATH
@@ -60,7 +60,7 @@ PATH
 PATH
   remote: ../rkn
   specs:
-    rkn (1.1.7)
+    rkn (1.1.8)
       rkn-license-client (~> 0.1)
 
 GEM
