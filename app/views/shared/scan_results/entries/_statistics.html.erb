@@ -3,7 +3,16 @@
    revisions    = data[:revisions]
    sitemap      = data[:sitemap]
    sitemap_with_entries = data[:sitemap_with_entries]
-   entries_count = @revision ? data[:revision_data][@revision.id][:entry_count] : data[:unique_entries_count]
+
+   if @revision
+       if data[:revision_data].include? @revision.id
+           entries_count = data[:revision_data][@revision.id][:entry_count]
+       else
+           entries_count = 0
+       end
+   else
+       entries_count = data[:unique_entries_count]
+   end
 %>
 
 <div id="summary-statistics">
