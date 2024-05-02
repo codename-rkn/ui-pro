@@ -1,7 +1,8 @@
 entryNameSearch = ( string ) ->
   $('.entry-affected_input_name code').each ->
-    if string == ""
+    if string == "" || string == undefined
       $(this).closest('tr.entry-row').show()
+      return
 
     if $(this).html().includes( string )
       $(this).closest('tr.entry-row').show()
