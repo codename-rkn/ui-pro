@@ -1,18 +1,1 @@
-<% if site.scanned? %>
-  <% if data[:entries].any? %>
-      if( $("#summary-entries").length ) {
-        $("#sidebar").html("<%= j render(partial: sidebar_partial_path, formats: :html) %>");
-        $("#scan-info-container").html("<%= j render(partial: "shared/scan_heading", formats: :html) %>");
-        $("#summary-sitemap").html("<%= j render(partial: 'shared/scan_results/entries/sitemap', formats: :html, locals: { data: data }) %>");
-        $("#entries-filter-container").html("<%= j render(partial: 'shared/scan_results/entries/filter', formats: :html, locals: { data: data }) %>");
-        $("#summary-statistics").replaceWith("<%= j render(partial: 'shared/scan_results/entries/statistics', formats: :html, locals: { data: data }) %>");
-        $("#summary-entries").html("<%= j render(partial: 'shared/scan_results/entries/list', formats: :html, locals: { id: 'summary', data: data }) %>");
-      } else {
-        <%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
-      }
-  <% else %>
-    <%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
-  <% end %>
-<% else %>
-  <%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
-<% end %>
+<%= render(partial: 'shared/scan_results', formats: :js, locals: { sidebar_partial_path: sidebar_partial_path }) %>
