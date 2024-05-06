@@ -43,7 +43,6 @@ PATH
   remote: ../../scnr/scnr
   specs:
     scnr (1.4.11)
-      scnr-license-client (~> 0.1)
 
 PATH
   remote: ../application
@@ -62,7 +61,6 @@ PATH
   remote: ../rkn
   specs:
     rkn (1.2.0)
-      rkn-license-client (~> 0.1)
 
 GEM
   remote: https://rubygems.org/
