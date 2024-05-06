@@ -430,9 +430,10 @@ module Scan
 
             begin
                 import_entries_from_report( revision, report )
-                import_coverage_from_report( revision, report )
-
                 mark_missing_entries_from_report( revision, report )
+
+                revision.report = Report.create( data: report.to_json )
+                revision.save
 
             rescue => e
                 log_exception_for( revision, e )
@@ -453,14 +454,10 @@ module Scan
 
     def mark_missing_entries_from_report( revision, report )
         revision.scan.entries.reorder('').where.not(
-          digest: report.keys
+          digest: report.map { |entry| entry['digest'] }
         ).each do |entry|
             revision.missing_entries << entry
         end
-    end
-
-    def import_coverage_from_report( revision, report )
-        add_coverage_entries( revision, report.sitemap )
     end
 
     def add_coverage_entries( revision, sitemap )

@@ -42,7 +42,7 @@ PATH
 PATH
   remote: ../../scnr/scnr
   specs:
-    scnr (1.4.10)
+    scnr (1.4.11)
       scnr-license-client (~> 0.1)
 
 PATH

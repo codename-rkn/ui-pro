@@ -5,36 +5,6 @@
 
         <ul class="list-without-style">
 
-          <li>
-            <%= link_to report_site_scan_revision_url( @scan.site, @scan, @revision, format: :pdf ),
-                        data: {
-                          turbo: false
-                        },
-                        class: 'btn btn-primary' do %>
-              PDF
-            <% end %>
-          </li>
-
-            <li>
-                <%= link_to report_site_scan_revision_url( @scan.site, @scan, @revision, format: :html ),
-                            data: {
-                              turbo: false
-                            },
-                            class: 'btn btn-primary' do %>
-                    HTML
-                <% end %>
-            </li>
-
-            <li>
-                <%= link_to report_site_scan_revision_url( @scan.site, @scan, @revision, format: :xml ),
-                            data: {
-                              turbo: false
-                            },
-                            class: 'btn btn-primary' do %>
-                    XML
-                <% end %>
-            </li>
-
             <li>
                 <%= link_to report_site_scan_revision_url( @scan.site, @scan, @revision, format: :json ),
                             data: {
@@ -42,37 +12,6 @@
                             },
                             class: 'btn btn-primary' do %>
                 JSON
-                <% end %>
-            </li>
-
-            <li>
-                <%= link_to report_site_scan_revision_url( @scan.site, @scan, @revision, format: :marshal ),
-                            data: {
-                              turbo: false
-                            },
-                            class: 'btn btn-primary' do %>
-                    Marshal
-                <% end %>
-            </li>
-
-            <li>
-                <%= link_to report_site_scan_revision_url( @scan.site, @scan, @revision, format: :yaml ),
-                            data: {
-                              turbo: false
-                            },
-                            class: 'btn btn-primary' do %>
-                    YAML
-                <% end %>
-            </li>
-
-            <li>
-                <%= link_to report_site_scan_revision_url( @scan.site, @scan, @revision, format: :ser ),
-                            title: 'SNR::Engine report file',
-                            data: {
-                              turbo: false
-                            },
-                            class: 'btn btn-primary' do %>
-                SER
                 <% end %>
             </li>
 

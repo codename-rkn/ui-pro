@@ -9,19 +9,18 @@ module Entry
     end
 
     def create_entry( revision, native )
-        log_debug_for revision, "Creating entry: #{native[:digest]}"
+        log_debug_for revision, "Creating entry: #{native['digest']}"
         update_updatable_data_for( revision, native )
         ::Entry.create_from_engine( native, revision: revision )
     end
 
     def import_entries_from_report( revision, report )
-        scan_entries = Set.new( revision.scan.entries.where.not( revision: revision ).digests )
+        scan_entries = Set.new( revision.scan.entries.digests )
 
-        report.each do |digest, entry|
-            # Already logged by a previous revision, don't bother with it.
-            if scan_entries.include?( digest )
+        report.each do |entry|
+            if scan_entries.include?( entry['digest'] )
                 log_info_for revision, 'Entry already logged by previous' +
-                    " revision: #{entry[:digest]}"
+                    " revision: #{entry['digest']}"
                 next
             end
 
@@ -37,7 +36,7 @@ module Entry
     private
 
     def updatable_data_for( entry )
-        @updatable_entry_data_per_digest[entry[:digest]] ||= ::Set.new
+        @updatable_entry_data_per_digest[entry['digest']] ||= ::Set.new
     end
 
     def update_updatable_data_for( revision, entry )

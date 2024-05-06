@@ -86,6 +86,11 @@ module ScanResults
         process_and_show
     end
 
+    def report
+        report = scan_results_owner.report
+        send_data report.data, type: 'application/json'
+    end
+
     def revert_configuration
         revert_model = params.permit(:model)[:model].to_sym
 

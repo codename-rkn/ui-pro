@@ -67,13 +67,11 @@ module ScanResultsHelper
         filter_by_revision = filters.include?(:by_revision) ?
             filters[:by_revision] : true
 
-        entries_count = entries.count
-
         if filter_pages?
             @sitemap_entry = @site.sitemap_entries.where( digest: active_filters[:pages].first ).first
         end
 
-        scoped_find_each( entries, size: entries_count ) do |entry|
+        entries.each do |entry|
             process_entry_blocks_call( entry )
 
             if !(filter_by_revision && @revision && @revision.id != entry.revision.id)
@@ -237,23 +235,10 @@ module ScanResultsHelper
         end
 
         process_entries_selected do |entry|
-            if pre_page_filter_data[:count] > ApplicationHelper::SCOPED_FIND_EACH_BATCH_SIZE
-                next
-            end
-
             page_filtered_entries << entry
         end
 
         process_entries_done do
-            # If the total entries are above the batch size, apply any page filtering
-            # via a scope.
-            if pre_page_filter_data[:count] > ApplicationHelper::SCOPED_FIND_EACH_BATCH_SIZE
-
-                if @revision
-                    page_filtered_entries = page_filtered_entries.where( revision: @revision )
-                end
-            end
-
             sitemap_data = {
                 entry_count: 0
             }

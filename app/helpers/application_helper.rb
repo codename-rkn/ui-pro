@@ -1,7 +1,5 @@
 module ApplicationHelper
 
-    SCOPED_FIND_EACH_BATCH_SIZE = 1000
-
     def select_button_class( path, include_actions: [], include_children: true )
         default  = 'btn btn-sm btn-light'
         selected = 'btn btn-sm btn-primary'
@@ -106,22 +104,6 @@ module ApplicationHelper
         render partial: 'shared/link_to_external', locals: {
             url: url
         }
-    end
-
-    def scoped_find_each( scope, size: nil, batch: SCOPED_FIND_EACH_BATCH_SIZE, &block )
-        if scope.is_a? Array
-            scope.each(&block)
-        else
-            size ||= scope.size
-
-            if size <= batch
-                scope.each(&block)
-            else
-                (0..size).step( batch ) do |i|
-                    scope.offset(i).limit(batch).each(&block)
-                end
-            end
-        end
     end
 
     def md( markdown )
