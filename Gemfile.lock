@@ -34,12 +34,6 @@ PATH
       webrick (= 1.7.0)
 
 PATH
-  remote: ../../scnr/license-client
-  specs:
-    scnr-license-client (0.1.0)
-      ecsypno-license-client (~> 0.1.0)
-
-PATH
   remote: ../../scnr/scnr
   specs:
     scnr (1.4.11)
@@ -515,7 +509,6 @@ DEPENDENCIES
   sass-rails
   scnr!
   scnr-engine!
-  scnr-license-client!
   sdoc (~> 0.4.0)
   selenium-webdriver
   shoulda

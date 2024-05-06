@@ -89,10 +89,6 @@ if File.exist? '../../scnr/scnr'
     gem 'scnr', path: '../../scnr/scnr'
 end
 
-if File.exist? '../../scnr/license-client'
-    gem 'scnr-license-client', path: '../../scnr/license-client'
-end
-
 if File.exist? '../../scnr/engine'
     gem 'scnr-engine', path: '../../scnr/engine'
 end
