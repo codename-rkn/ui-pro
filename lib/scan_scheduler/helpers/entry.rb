@@ -17,7 +17,7 @@ module Entry
     def import_entries_from_report( revision, report )
         scan_entries = Set.new( revision.scan.entries.digests )
 
-        report.each do |entry|
+        report['entries'].each do |entry|
             if scan_entries.include?( entry['digest'] )
                 log_info_for revision, 'Entry already logged by previous' +
                     " revision: #{entry['digest']}"

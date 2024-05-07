@@ -454,7 +454,7 @@ module Scan
 
     def mark_missing_entries_from_report( revision, report )
         revision.scan.entries.reorder('').where.not(
-          digest: report.map { |entry| entry['digest'] }
+          digest: report['entries'].map { |entry| entry['digest'] }
         ).each do |entry|
             revision.missing_entries << entry
         end
