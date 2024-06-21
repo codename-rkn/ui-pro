@@ -12,15 +12,6 @@
     Save
 </button>
 
-<% if @site.revisions.active.any? %>
-    <span data-bs-toggle="tooltip" title="Save and apply to active scans.">
-        <button class="btn btn-light btn-warning" data-bs-toggle="modal"
-                data-bs-target="#site_profile-submit-and-apply-confirm">
-            Save and apply
-        </button>
-    </span>
-<% end %>
-
 <hr/>
 
 <div id="scrollspy-container">

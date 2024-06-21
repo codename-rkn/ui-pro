@@ -8,24 +8,10 @@ class SiteProfilesController < ApplicationController
     # PATCH/PUT /sites/1
     # PATCH/PUT /sites/1.json
     def update
-        pre = @site_profile.to_scanner_options
-
         pp = parsed_params
 
         respond_to do |format|
             if @site_profile.update( pp )
-
-                if pre != @site_profile.to_scanner_options && params[:apply] == '1'
-                    @site.revisions.active.each do |revision|
-                        if revision.site_profile.to_scanner_options ==
-                            @site_profile.to_scanner_options
-                            next
-                        end
-
-                        ScanScheduler.rescope( revision )
-                    end
-                end
-
                 format.html do
                     redirect_to edit_site_url( @site ),
                                 notice: 'Site settings were successfully updated.'
