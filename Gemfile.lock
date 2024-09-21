@@ -63,7 +63,7 @@ PATH
 PATH
   remote: ../../scnr/scnr
   specs:
-    scnr (1.5.3)
+    scnr (1.5.4)
 
 PATH
   remote: ../application
