@@ -1,0 +1,8 @@
+production:
+  host: codename-rkn-db-1
+  adapter: postgresql
+  encoding: unicode
+  pool: 100
+  username: rkn-pro
+  password: secret
+  database: rkn_pro_production
