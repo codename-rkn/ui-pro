@@ -2,16 +2,11 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-require "rkn/license"
 require 'rkn/application'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-
-if ENV['PACKAGING_gfGEFgdfGdG'] != '1'
-    RKN::License.guard! :dev, :trial, :pro
-end
 
 module RKN
 module UI

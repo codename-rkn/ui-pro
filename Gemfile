@@ -83,12 +83,6 @@ if File.exist? '../../qadron/cuboid'
     gem 'cuboid', path: '../../qadron/cuboid'
 end
 
-if File.exist? '../../ecsypno/license-client'
-    gem 'ecsypno-license-client', path: '../../ecsypno/license-client'
-else
-    gem 'ecsypno-license-client'
-end
-
 if File.exist? '../../scnr/scnr'
     gem 'scnr', path: '../../scnr/scnr'
 end
@@ -101,11 +95,6 @@ if File.exist? '../../scnr/application'
     gem 'scnr-application', path: '../../scnr/application'
 end
 
-if File.exist? '../../rkn/license-client'
-    gem 'rkn-license-client', path: '../../rkn/license-client'
-else
-    gem 'rkn-license-client'
-end
 
 if File.exist? '../rkn'
     gem 'rkn', path: '../rkn'
