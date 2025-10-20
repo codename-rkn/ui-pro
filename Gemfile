@@ -79,6 +79,8 @@ group :development, :test do
     gem 'pry-byebug'
 end
 
+gem 'mutex_m'
+
 if File.exist? '../../qadron/cuboid'
     gem 'cuboid', path: '../../qadron/cuboid'
 end
@@ -94,7 +96,6 @@ end
 if File.exist? '../../scnr/application'
     gem 'scnr-application', path: '../../scnr/application'
 end
-
 
 if File.exist? '../rkn'
     gem 'rkn', path: '../rkn'
