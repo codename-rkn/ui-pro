@@ -44,6 +44,9 @@ gem 'paper_trail'#, '~> 4.0.0'
 
 gem 'turbo-rails'
 
+gem 'concurrent-ruby', '1.3.4'
+gem 'mutex_m'
+
 group :doc do
     gem 'sdoc', '~> 0.4.0'
 end
@@ -78,9 +81,6 @@ group :development, :test do
     gem 'awesome_print'
     gem 'pry-byebug'
 end
-
-gem 'concurrent-ruby', '1.3.4'
-gem 'mutex_m'
 
 if File.exist? '../../qadron/cuboid'
     gem 'cuboid', path: '../../qadron/cuboid'
