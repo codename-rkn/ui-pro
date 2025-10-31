@@ -79,6 +79,7 @@ group :development, :test do
     gem 'pry-byebug'
 end
 
+gem 'concurrent-ruby', '1.3.4'
 gem 'mutex_m'
 
 if File.exist? '../../qadron/cuboid'
