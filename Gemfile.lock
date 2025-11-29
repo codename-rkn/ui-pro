@@ -54,7 +54,7 @@ PATH
 PATH
   remote: ../../scnr/scnr
   specs:
-    scnr (1.8.1)
+    scnr (1.9)
 
 PATH
   remote: ../application

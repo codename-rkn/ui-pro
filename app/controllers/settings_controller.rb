@@ -57,6 +57,7 @@ class SettingsController < ApplicationController
 
     def permitted_attributes
         attributes = super
+        attributes << :timezone
         attributes << :max_parallel_scans
         attributes << :max_parallel_scans_auto
         attributes

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
     include ApplicationHelper
+    around_action :set_time_zone
 
     # Prevent CSRF attacks by raising an exception.
     # For APIs, you may want to use :null_session instead.
@@ -9,4 +10,10 @@ class ApplicationController < ActionController::Base
         sign_in( User.first )
         super( *args )
     end
+
+    private
+    def set_time_zone
+        Time.use_zone( Settings.timezone ) { yield }
+    end
+
 end
