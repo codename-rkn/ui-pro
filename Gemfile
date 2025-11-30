@@ -44,6 +44,8 @@ gem 'paper_trail'#, '~> 4.0.0'
 
 gem 'turbo-rails'
 
+gem 'tzinfo-data'
+
 # Lock to avoid weird error about Logger.
 gem 'concurrent-ruby', '1.3.4'
 gem 'mutex_m'

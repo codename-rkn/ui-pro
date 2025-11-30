@@ -458,6 +458,8 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2025.2)
+      tzinfo (>= 1.0.0)
     uniform_notifier (1.18.0)
     vmstat (2.3.1)
     warden (1.2.9)
@@ -538,6 +540,7 @@ DEPENDENCIES
   sqlite3
   sys-proctable
   turbo-rails
+  tzinfo-data
   vmstat
   webpacker
 
