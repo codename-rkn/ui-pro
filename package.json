@@ -1,10 +1,13 @@
 {
   "dependencies": {
     "@hotwired/turbo-rails": "^7.1.1",
-    "@rails/webpacker": "^5.4.4",
-    "chart.js": "^4.3.0"
+    "@rails/webpacker": "5.4.4",
+    "chart.js": "^4.3.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "webpack-dev-server": "^4.13.1"
   }
 }

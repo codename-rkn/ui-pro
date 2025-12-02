@@ -51,7 +51,7 @@ gem 'concurrent-ruby', '1.3.4'
 gem 'mutex_m'
 
 group :doc do
-    gem 'sdoc', '~> 0.4.0'
+    # gem 'sdoc', '~> 0.4.0'
 end
 
 group :development do
