@@ -13,7 +13,11 @@ class ApplicationController < ActionController::Base
 
     private
     def set_time_zone
+      if !Settings.timezone.blank?
         Time.use_zone( Settings.timezone ) { yield }
+      else
+        yield
+      end
     end
 
 end
