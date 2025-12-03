@@ -45,8 +45,9 @@
 
 </div>
 
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
+<div class="alert alert-secondary" role="alert">
+  <ul class="nav nav-tabs nav-pills" id="myTab" role="tablist">
+ <li class="nav-item" role="presentation">
     <button class="nav-link active" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes" type="button" role="tab" aria-controls="notes" aria-selected="true">Notes</button>
   </li>
   <li class="nav-item" role="presentation">
@@ -90,7 +91,7 @@
                   <% end %>
 
                   <%= link_to attachment do %>
-                    <%= attachment.name %>
+                    <%U= attachment.name %>
                   <% end %>
                 </li>
               <% end %>
@@ -114,6 +115,7 @@
     <br/>
     <br/>
   </div>
+</div>
 </div>
 
 <hr/>
