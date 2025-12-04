@@ -84,31 +84,3 @@ group :development, :test do
     gem 'awesome_print'
     gem 'pry-byebug'
 end
-
-if File.exist? '../../qadron/cuboid'
-    gem 'cuboid', path: '../../qadron/cuboid'
-end
-
-if File.exist? '../../scnr/scnr'
-    gem 'scnr', path: '../../scnr/scnr'
-end
-
-if File.exist? '../../scnr/engine'
-    gem 'scnr-engine', path: '../../scnr/engine'
-end
-
-if File.exist? '../../scnr/application'
-    gem 'scnr-application', path: '../../scnr/application'
-end
-
-if File.exist? '../rkn'
-    gem 'rkn', path: '../rkn'
-else
-    gem 'rkn'
-end
-
-if File.exist? '../application'
-    gem 'rkn-application', path: '../application'
-else
-    gem 'rkn-application'
-end
