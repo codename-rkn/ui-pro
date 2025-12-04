@@ -536,7 +536,7 @@ DEPENDENCIES
   simple_form
   spring
   sprockets
-  sqlite3
+  sqlite3 (= 2.8.1)
   sys-proctable
   turbo-rails
   tzinfo-data
