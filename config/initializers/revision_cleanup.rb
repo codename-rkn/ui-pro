@@ -1,4 +1,4 @@
-return if File.basename($0) == 'rake'
+return if File.basename($0) == 'rake' || ENV['PACKAGING']
 
 Rails.configuration.after_initialize do
 Revision.active.each do |revision|
