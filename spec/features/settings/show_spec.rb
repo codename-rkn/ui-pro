@@ -215,8 +215,8 @@ feature 'Edit global settings' do
                     expect(subject.dom_pool_size).to eq 10
                 end
 
-                scenario 'can set Time to summary' do
-                    fill_in 'Time to summary', with: 10
+                scenario 'can set Time to live' do
+                    fill_in 'Time to live', with: 10
                     submit
 
                     expect(subject.dom_worker_time_to_live).to eq 10

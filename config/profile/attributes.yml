@@ -92,7 +92,7 @@ dom_wait_for_elements: >
   a page whose URL matches the given patterns.
 dom_pool_size: 'Amount of browser workers to keep in the pool and put to work.'
 dom_job_timeout: 'Maximum allowed time for each job in seconds.'
-dom_worker_time_to_live: 'Time-to-summary of each browser (before re-spawning) counted in jobs.'
+dom_worker_time_to_live: 'Time-to-live of each browser (before re-spawning) counted in jobs.'
 dom_ignore_images:
   notice: >
     If images don't play a part in the functionality of the web application it's
