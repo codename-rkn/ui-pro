@@ -34,7 +34,7 @@ PATH
 PATH
   remote: ../../scnr/scnr
   specs:
-    scnr (1.9.3.1)
+    scnr (1.9.3.2)
 
 PATH
   remote: ../application
@@ -47,7 +47,7 @@ PATH
 PATH
   remote: ../rkn
   specs:
-    rkn (1.6.3.1)
+    rkn (1.6.3.2)
 
 GEM
   remote: https://rubygems.org/
