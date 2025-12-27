@@ -50,7 +50,7 @@ PATH
 PATH
   remote: ../rkn
   specs:
-    rkn (1.6.3.2)
+    rkn (1.6.4)
 
 GEM
   remote: https://rubygems.org/
